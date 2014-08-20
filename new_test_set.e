@@ -64,6 +64,40 @@ feature -- Test routines
 			--assert ("The cell´s value cant be 1", not(cell.value = 4))
 		--end
 
+	TWO_POTENCY_TEST_1
+			-- pair value but not power of 2
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			assert ("18 is not power of 2", not (cell.two_potency (18)))
+		end
+	TWO_POTENCY_TEST_2
+			-- odd value
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			assert ("27 is not power of 2", not(cell.two_potency (27)))
+		end
+
+	TWO_POTENCY_TEST_3
+			--
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			assert ("1 is power of 2", cell.two_potency (1))
+		end
+
+	TWO_POTENCY_TEST_4
+			--
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			assert ("16 is power  of 2", cell.two_potency (16))
+		end
 
 
 end
