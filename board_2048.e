@@ -23,7 +23,7 @@ feature
  	columns : INTEGER
 
  	-- Board Constructor
- 	make(n, m : INTEGER) is
+ 	make(n, m : INTEGER)
     -- Create a matrix with n x m dimensions, with all elements initialized with the default value of T
 
  	require
@@ -49,5 +49,5 @@ feature
 
  	ensure
  		dimensions : lines = n and columns = m
-
+	end
 end
