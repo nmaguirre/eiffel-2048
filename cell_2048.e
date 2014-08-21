@@ -73,6 +73,11 @@ feature {ANY} -- Initialization
 
 	end
 
+	is_available:BOOLEAN
+		--Returns true if value is 0
+		do
+			Result:= (value = 0)
+		end
 
 
 end
