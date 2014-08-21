@@ -8,7 +8,7 @@ class
 
 	BOARD_2048 [T->CELL_2048]
 
-creation
+create
 
     make
 
