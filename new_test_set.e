@@ -170,6 +170,25 @@ feature -- Test routines
 			end
 		end
 
+	IS_AVAILABLE_TEST_WITH_0
+			--A cell with value zero is available.
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			assert("available cell",cell.is_available)
+		end
+
+	IS_AVAILABLE_TEST_WITH_VALUE
+			--A cell with value different to zero is not available.
+		local
+			cell : CELL_2048
+		do
+			create cell.make_with_value (8)
+			assert("cell is not available", not(cell.is_available))
+		end
+
+
 end
 
 
