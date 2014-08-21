@@ -14,6 +14,7 @@ feature {ANY}
 	value: INTEGER
 
 feature {ANY} -- Initialization
+
 	make
 		-- Create a new cell with default value
 		do
@@ -31,6 +32,15 @@ feature {ANY} -- Initialization
 			value_set: value = new_val
 		end
 
+	set_value (new_value : INTEGER)
+		-- Update the value of a cell with new_value
+		require
+			two_potency(new_value) and (new_value>=0) and (new_value /= 1)
+		do
+			value := new_value
+		ensure
+			value = new_value
+		end
 
 	two_potency(val:INTEGER):BOOLEAN
 		-- Returns True if val is power of 2
