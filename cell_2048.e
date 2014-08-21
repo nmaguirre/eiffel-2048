@@ -42,6 +42,12 @@ feature {ANY} -- Initialization
 			value = new_value
 		end
 
+	get_value:INTEGER
+		--Returns the value of a cell
+		do
+			Result:=value
+		end
+
 	two_potency(val:INTEGER):BOOLEAN
 		-- Returns True if val is power of 2
 	require
