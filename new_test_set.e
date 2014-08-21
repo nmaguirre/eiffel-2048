@@ -130,6 +130,45 @@ feature -- Test routines
 			assert ("16 is power  of 2", cell.two_potency (16))
 		end
 
+	SET_VALUE_TEST_WITH_0
+			--Set value of a cell with 0
+		local
+			cell : CELL_2048
+		do
+			create cell.make_with_value (2)
+			cell.set_value (0)
+			assert("0 is the new value of the cell",cell.value=0)
+		end
+
+	SET_VALUE_TEST_WITH_A_POWER_OF_TWO_DISTINCT_TO_1
+			--Set value of a cell with a given number which is a power of two distinct to one
+		local
+			cell : CELL_2048
+		do
+			create cell.make
+			cell.set_value (16)
+			assert("16 is the new value of the cell",cell.value=16)
+		end
+
+	SET_VALUE_TEST_WITH_INVALID_NUMBER
+		 	--Set value of a cell with a given number which is not a power of two should raise an exception
+		local
+			ok, second_time : BOOLEAN
+			cell : CELL_2048
+		do
+			if not second_time then
+				ok := true;
+				create cell.make
+				cell.set_value (19)
+				ok := false;
+			end
+			assert("routine failed, as expected",ok)
+		rescue
+			second_time := true;
+			if ok then
+				retry
+			end
+		end
 
 end
 
