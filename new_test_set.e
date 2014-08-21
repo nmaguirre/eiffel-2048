@@ -55,14 +55,45 @@ feature -- Test routines
 		end
 
 
-	--CREATION_TEST_CONTRUCTOR_WITH_VALUE_2
-			-- Creation test with determinate value constructor
-		--local
-			--cell : CELL_2048
-		--do
-			--create cell.make_with_value (1)
-			--assert ("The cell´s value cant be 1", not(cell.value = 4))
-		--end
+	CREATION_TEST_CONTRUCTOR_WITH_VALUE_TEST_NEGATIVO_1
+			-- Creation test with non two potency number
+		local
+  			ok, second_time: BOOLEAN
+  			cell: CELL_2048
+		do
+    		if not second_time then
+          		ok := True
+          		create cell.make_with_value (7) -- Must throw an exception
+          		ok := False
+    		end
+    		assert ("The rutine has to fail", ok)
+		rescue
+     		second_time := True
+     		if ok then   -- ok = true means that the rutine failed
+           		retry
+    		end
+		end
+
+
+	CREATION_TEST_CONTRUCTOR_WITH_VALUE_TEST_NEGATIVO_2
+			-- Creation test with 1 value
+		local
+  			ok, second_time: BOOLEAN
+  			cell: CELL_2048
+		do
+    		if not second_time then
+          		ok := True
+          		create cell.make_with_value (1) -- Must throw an exception
+          		ok := False
+    		end
+    		assert ("The rutine has to fail", ok)
+		rescue
+     		second_time := True
+     		if ok then   -- ok = true means that the rutine failed
+           		retry
+    		end
+		end
+
 
 	TWO_POTENCY_TEST_1
 			-- pair value but not power of 2
