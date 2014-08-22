@@ -47,10 +47,11 @@ feature
 feature
 
 	set_cell(row: INTEGER; col: INTEGER; value: INTEGER)
+		-- Set cell in [row,col] position with a determinate value
 	do
-
+		elements.item(row,col).set_value (value)
 	end
-	
+
 feature -- Status report
 
 	nr_of_filled_cells: INTEGER
