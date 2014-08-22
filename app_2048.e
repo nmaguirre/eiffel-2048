@@ -17,8 +17,11 @@ feature {NONE} -- Initialization
 	make
 			-- Run application.
 		do
-			--| Add your code here
-			print ("Hello Eiffel World!%N")
+			print ("Game Eiffel-2048 not fully implemented yet!%N")
 		end
+
+feature -- Implementation
+
+	controller: CONTROLLER_2048
 
 end
