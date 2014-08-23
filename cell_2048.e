@@ -10,7 +10,7 @@ class
 create
 	make, make_with_value
 
-feature {ANY}
+feature {ANY} -- Status report
 
 	value: INTEGER
 
@@ -32,6 +32,8 @@ feature {ANY} -- Initialization
 			value_set: value = new_val
 		end
 
+feature {ANY} -- Status setting
+
 	set_value (new_value: INTEGER)
 			-- Update the value of a cell with new_value
 		require
@@ -42,11 +44,17 @@ feature {ANY} -- Initialization
 			value = new_value
 		end
 
+feature {ANY} -- Obsolete
+
 	get_value: INTEGER
 			--Returns the value of a cell
+		obsolete
+			"Use 'value' instead "
 		do
 			Result := value
 		end
+
+feature {ANY} -- Miscellaneous
 
 	two_potency (val: INTEGER): BOOLEAN
 			-- Returns True if val is power of 2
