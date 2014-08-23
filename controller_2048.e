@@ -113,6 +113,7 @@ feature --Movement commands
 			    tx := ty + 1
 				if board.elements.item(tx,ty).is_available then
 				   board.elements.item(tx,ty).set_value(2)
+				   marca_zero := True
 				end --end if
 			end --end loop
 		end	--end do	   		
