@@ -44,15 +44,6 @@ feature {ANY} -- Status setting
 			value = new_value
 		end
 
-feature {ANY} -- Obsolete
-
-	get_value: INTEGER
-			--Returns the value of a cell
-		obsolete
-			"Use 'value' instead "
-		do
-			Result := value
-		end
 
 feature {ANY} -- Miscellaneous
 
