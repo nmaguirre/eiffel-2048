@@ -78,10 +78,14 @@ feature {ANY} -- Miscellaneous
 			Result := potency
 		end
 
-	is_available: BOOLEAN
-			--Returns true if value is 0
+	is_available:BOOLEAN
+		--Returns true if value is 0
+		require
+			value /= Void
 		do
-			Result := (value = 0)
+			Result:= (value = 0)
+		ensure
+			value = 0
 		end
 
 invariant
