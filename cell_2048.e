@@ -44,6 +44,14 @@ feature {ANY} -- Status setting
 			value = new_value
 		end
 
+feature {ANY}
+
+	get_value: INTEGER
+			--Returns the value of a cell
+	
+		do
+			Result := value
+		end
 
 feature {ANY} -- Miscellaneous
 

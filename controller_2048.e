@@ -30,8 +30,56 @@ feature --Movement commands
 
 	up
 		--Command that moves the cells to the uppermost possible point of the game board
-	do
-	end
+		local
+			i, v, j: INTEGER
+
+		do
+
+			from
+			 	i := 4
+			until
+			 	i = 1
+			loop
+				from
+					j := 1
+				until
+					j = 4
+				loop
+
+				if board.elements.item(i, j).get_value /= 0 then
+					if 	board.elements.item(i-1, j).get_value /= 0 then
+						if board.elements.item(i, j).get_value = board.elements.item(i-1, j).get_value then
+							v := board.elements.item(i, j).get_value + board.elements.item(i-1, j).get_value
+							board.set_cell (i-1, j, v)
+						end
+					else
+					    if board.elements.item(i-2 , j).get_value /= 0 then
+						   if board.elements.item(i , j).get_value = board.elements.item(i - 2, j).get_value then
+						      v := board.elements.item(i, j).get_value + board.elements.item(i-2, j).get_value
+							  board.set_cell(i-2, j, v)
+						   else
+						      board.set_cell(i-1, j, board.elements.item(i, j).get_value)
+						   end
+						else
+						   if board.elements.item(i-3 , j).get_value /= 0 then
+						      if board.elements.item(i , j).get_value = board.elements.item(i - 3, j).get_value then
+						    	 v := board.elements.item(i, j).get_value + board.elements.item(i-3, j).get_value
+								 board.set_cell (i-3, j, v)
+						      else board.set_cell (i-2, j, board.elements.item(i, j).get_value)
+						      end
+						   end
+						end
+					end --end else if
+
+				end --end first if
+
+			    end --end from j
+
+			end --end from i
+
+			set_random
+
+		end --end do
 
 	down --Command that moves the cells to the lowermost possible point of the game board
 		do
