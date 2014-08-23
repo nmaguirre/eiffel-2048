@@ -6,15 +6,15 @@ note
 
 class
 
-	BOARD_2048 [T->CELL_2048]
+	BOARD_2048
 
-creation
+create
 
-    make
+    make, make_empty
 
 feature {ANY}
 
-	 elements : ARRAY[ARRAY[T]]
+	 elements : ARRAY2[CELL_2048]
 
 feature
 
@@ -22,8 +22,13 @@ feature
  	lines : INTEGER
  	columns : INTEGER
 
+	make_empty
+	do
+
+	end
+
  	-- Board Constructor
- 	make(n, m : INTEGER) is
+ 	make(n, m : INTEGER)
     -- Create a matrix with n x m dimensions, with all elements initialized with the default value of T
 
  	require
@@ -31,23 +36,24 @@ feature
 
  	local
  		i : INTEGER
- 		aux : ARRAY[T]
  	do
- 		lines := n
- 		columns := m
- 		!!elements.make(1,columns)
 
- 		from i:=1
-
- 		until i > columns
-
- 		loop
- 			!!aux.make(1, lines)
- 			elements.put(aux,i)
- 			i := i + 1
- 	end
 
  	ensure
  		dimensions : lines = n and columns = m
+	end
+
+
+feature
+
+	set_cell(row: INTEGER; col: INTEGER; value: INTEGER)
+		-- Set cell in [row,col] position with a determinate value
+	do
+		elements.item(row,col).set_value (value)
+	end
+
+feature -- Status report
+
+	nr_of_filled_cells: INTEGER
 
 end
