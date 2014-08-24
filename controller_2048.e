@@ -14,7 +14,7 @@ feature -- Initialisation
 
 	make_with_board(new_board: BOARD_2048)
 	do
-
+		board := new_board
 	end
 
 	make
