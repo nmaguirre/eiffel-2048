@@ -49,8 +49,12 @@ feature
 
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
 			-- Set cell in [row,col] position with a determinate value
+		require
+			(row >= 0 and row < 4) and (col >= 0 and col < 4) and elements.item (row, col).two_potency (value) and value >=0 and value >=1
 		do
 			elements.item (row, col).set_value (value)
+		ensure
+			elements.item (row, col).two_potency (value) and elements.item (row, col).value >=0 and elements.item (row, col).value >=1
 		end
 
 	initialise
