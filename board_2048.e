@@ -23,7 +23,12 @@ feature
 	columns: INTEGER
 
 	make_empty
+		-- Creates an empty board (all cells with default value)
+		local
+			default_cell: CELL_2048
 		do
+			create default_cell.make
+			create elements.make_filled (default_cell, 4, 4)
 		end
 
 		-- Board Constructor
