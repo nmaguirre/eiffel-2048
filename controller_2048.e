@@ -40,6 +40,11 @@ feature -- Game State
 			-- Indicates whether the game is finished or not.
 			-- Game finishes when either 2048 is reached, or the entire board is filled.
 
+	last_random_cell_coordinates: TUPLE[INTEGER,INTEGER]
+			-- Returns the coordinates of th last randomly introduced
+			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
+			-- or if the game state is the initial state.
+
 feature -- Movement commands
 
 	up
