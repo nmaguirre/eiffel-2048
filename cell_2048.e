@@ -86,7 +86,7 @@ feature {ANY} -- Miscellaneous
 		end
 
 	is_available: BOOLEAN
-		--Returns true if a cell is available, that is that value is 0.
+			--Returns true if a cell is available, that is that value is 0.
 		require
 			value /= void
 		do
