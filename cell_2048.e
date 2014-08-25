@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {CELL_2048}."
+	description: "Class that represents a cell of a 2048 board."
 	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "August 25, 2014"
+	revision: "0.01"
 
 class
 	CELL_2048
@@ -13,11 +13,16 @@ create
 feature {ANY} -- Status report
 
 	value: INTEGER
+		-- Returns the value stored in the cell
+		-- When the value is zero, it means that the
+		-- cell is not set.
+		-- Value should otherwise be a power of two (greater than one)
 
 feature {ANY} -- Initialization
 
 	make
 			-- Create a new cell with default value
+			-- Cell should be unset
 		do
 			value := 0
 		end
@@ -25,7 +30,8 @@ feature {ANY} -- Initialization
 	make_with_value (new_val: INTEGER)
 			-- Create a new cell with determinated value
 		require
-			two_potency (new_val) and (new_val >= 0) and (new_val /= 1) -- Two potency condition not implemented
+			-- PRECONDITION SHOULD NOT USE TWO_POTENCY
+			--	two_potency (new_val) and (new_val >= 0) and (new_val /= 1) -- Two potency condition not implemented
 		do
 			value := new_val
 		ensure
@@ -37,7 +43,8 @@ feature {ANY} -- Status setting
 	set_value (new_value: INTEGER)
 			-- Update the value of a cell with new_value
 		require
-			two_potency (new_value) and (new_value >= 0) and (new_value /= 1)
+			-- PRECONDITION SHOULD NOT USE TWO_POTENCY
+			-- two_potency (new_value) and (new_value >= 0) and (new_value /= 1)
 		do
 			value := new_value
 		ensure
@@ -46,16 +53,17 @@ feature {ANY} -- Status setting
 
 feature {ANY}
 
-	get_value: INTEGER
-			--Returns the value of a cell
-	
-		do
-			Result := value
-		end
 
 feature {ANY} -- Miscellaneous
 
-	two_potency (val: INTEGER): BOOLEAN
+	is_valid_value(val: INTEGER): BOOLEAN
+		-- Returns true if value is either 0, or a power of two
+		-- greater than 1.
+	do
+
+	end
+
+	is_power_of_two (val: INTEGER): BOOLEAN
 			-- Returns True if val is power of 2
 		require
 			val >= 0
@@ -77,10 +85,8 @@ feature {ANY} -- Miscellaneous
 			Result := potency
 		end
 
-	is_available:BOOLEAN
+	is_available: BOOLEAN
 		--Returns true if value is 0
-		require
-			value /= Void
 		do
 			Result:= (value = 0)
 		ensure
@@ -88,8 +94,7 @@ feature {ANY} -- Miscellaneous
 		end
 
 invariant
-		--The created cell must have a positive value that is a potency of two to be a valid cell.
-		--This includes 0 (empty cell) as a valid value.
-	value >= 0 and two_potency (value) = True and value /= 1
+		--a cell must have either zero, or a value that is a power of two greater than 1
+	value >= 0 and is_power_of_two (value) = True and value /= 1
 
 end
