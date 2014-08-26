@@ -30,8 +30,7 @@ feature {ANY} -- Initialization
 	make_with_value (new_val: INTEGER)
 			-- Create a new cell with determinated value
 		require
-			-- PRECONDITION SHOULD NOT USE TWO_POTENCY
-			--	two_potency (new_val) and (new_val >= 0) and (new_val /= 1) -- Two potency condition not implemented
+			is_valid_value (new_val)
 		do
 			value := new_val
 		ensure
@@ -86,7 +85,7 @@ feature {ANY} -- Miscellaneous
 		end
 
 	is_available: BOOLEAN
-		--Returns true if a cell is available, that is that value is 0.
+			--Returns true if a cell is available, that is that value is 0.
 		require
 			value /= void
 		do

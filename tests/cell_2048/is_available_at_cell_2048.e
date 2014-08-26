@@ -30,7 +30,7 @@ feature -- Test routines
 			cell : CELL_2048
 		do
 			create cell.make_with_value (2)
-			assert ("The cell is not available", not cell.is_available )
+			assert ("The cell isn't available", not cell.is_available )
 		end
 
 end
