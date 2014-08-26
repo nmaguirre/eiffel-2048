@@ -26,6 +26,10 @@ feature -- Status
 
 	board: BOARD_2048
 
+feature {NONE}
+
+	coord_last_random_cell: TUPLE[INTEGER, INTEGER]
+
 feature --Movement commands
 
 	up
@@ -84,7 +88,7 @@ feature --Movement commands
 			set_random
 
 		end --end do
-		
+
 	down --Command that moves the cells to the lowermost possible point of the game board
 		do
 		end
@@ -118,8 +122,16 @@ feature --Movement commands
 				if board.elements.item(tx,ty).is_available then
 				   board.elements.item(tx,ty).set_value(2)
 				   marca_zero := True
+				   -- Set coord_last_random_cell with new random cell
+				   coord_last_random_cell := [tx, ty]
 				end --end if
 			end --end loop
 		end	--end do	   		
 
+
+	last_random_cell_coordinates: TUPLE[INTEGER, INTEGER]
+	-- Return a tuple with the coordinates of the last randomly set cell
+		do
+			Result := coord_last_random_cell
+		end
 end
