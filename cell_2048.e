@@ -100,7 +100,7 @@ feature {ANY} -- Miscellaneous
 		do
 			Result:= (value = 0)
 		ensure
-			(((value=0) and then (Result=True)) or else ((value/=0) and then (Result=False)))
+			Result = (value=0)
 		end
 
 invariant

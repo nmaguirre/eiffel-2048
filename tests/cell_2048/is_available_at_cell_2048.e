@@ -1,10 +1,10 @@
 note
 	description: "[
-		Eiffel tests that can be executed by testing tool.
+		Tests for the method is_available of class CELL_2048
 	]"
-	author: "EiffelStudio test wizard"
-	date: "$Date$"
-	revision: "$Revision$"
+	author: "facumolina"
+	date: "$August 26, 2014$"
+	revision:"$0.01$"
 	testing: "type/manual"
 
 class
