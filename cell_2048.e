@@ -7,6 +7,12 @@ note
 class
 	CELL_2048
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
 	make, make_with_value
 
@@ -17,6 +23,9 @@ feature {ANY} -- Status report
 		-- When the value is zero, it means that the
 		-- cell is not set.
 		-- Value should otherwise be a power of two (greater than one)
+
+	out: STRING
+		-- Provides a string representation of a cell (shows its value as a string)
 
 feature {ANY} -- Initialization
 
