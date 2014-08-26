@@ -1,9 +1,9 @@
 note
 	description: "[
-		Eiffel tests that can be executed by testing tool.
+		Tests for "is_valid_value" feature at "CELL_2048" class.
 	]"
-	author: "EiffelStudio test wizard"
-	date: "$Date$"
+	author: "Jheredia"
+	date: "26/08/2014"
 	revision: "$Revision$"
 	testing: "type/manual"
 
@@ -11,6 +11,7 @@ class
 	IS_VALID_VALUE_AT_CELL_2048
 
 inherit
+
 	EQA_TEST_SET
 
 feature -- Test routines
@@ -19,7 +20,7 @@ feature -- Test routines
 			-- Test this method with value = 1
 			-- Should return False
 		local
-			ivv : CELL_2048
+			ivv: CELL_2048
 		do
 			create ivv.make
 			assert ("1 is not a valid value, this test should return false", not ivv.is_valid_value (1))
@@ -32,7 +33,7 @@ feature -- Test routines
 			ivv: CELL_2048
 		do
 			create ivv.make
-			assert("2 is a valid value, this test should return true", ivv.is_valid_value(2))
+			assert ("2 is a valid value, this test should return true", ivv.is_valid_value (2))
 		end
 
 	is_valid_value_test_with_0
@@ -42,7 +43,7 @@ feature -- Test routines
 			ivv: CELL_2048
 		do
 			create ivv.make
-			assert("0 is a valid value, this test should return true", ivv.is_valid_value(0))
+			assert ("0 is a valid value, this test should return true", ivv.is_valid_value (0))
 		end
 
 	is_valid_value_test_with_negative_value
@@ -52,10 +53,7 @@ feature -- Test routines
 			ivv: CELL_2048
 		do
 			create ivv.make
-			assert("A negative value isn't a valid value, this test should return false",not ivv.is_valid_value (-1))
+			assert ("A negative value isn't a valid value, this test should return false", not ivv.is_valid_value (-1))
 		end
 
 end
-
-
-
