@@ -23,11 +23,10 @@ feature -- Initialisation
 	make
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
-	
-		do
-			last_random_cell_coordinates := [0,0]
-			create board.make
 
+		do
+			last_random_cell_coordinates := [0, 0]
+			create board.make
 		ensure
 			board /= Void
 		end
@@ -40,13 +39,13 @@ feature -- Game State
 
 	is_finished: BOOLEAN
 			-- Indicates whether the game is finished or not.
-			-- Game finishes when either 2048 is reached, or the entire board is filled.
+			-- Game finishes when either 2048 is reached, or if any movement is possible.
 		local
-			i, j: INTEGER
-			finished: BOOLEAN
+			i, j: INTEGER -- Auxiliary variables to navigate through the game board
+			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
 		do
 			finished := False
-			if board.nr_of_filled_cells = 16 then
+			if not board.can_move_up and not board.can_move_down and not board.can_move_left and not board.can_move_right then
 				Result := True
 			else
 				from
@@ -68,7 +67,7 @@ feature -- Game State
 			Result := finished
 		end
 
-	last_random_cell_coordinates: TUPLE[INTEGER,INTEGER]
+	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
 			-- Returns the coordinates of th last randomly introduced
 			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
 			-- or if the game state is the initial state.
