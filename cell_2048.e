@@ -69,21 +69,19 @@ feature {ANY} -- Miscellaneous
 	is_valid_value(val: INTEGER): BOOLEAN
 		-- Returns true if value is either 0, or a power of two
 		-- greater than 1.
-		--PRECONDITION: If the value is negative, then raise an exception.
-		--(val>=0)
-	require
-		value_gt_zero: (val>=0)
 	do
 		if val>1 then
-			if is_power_of_two(val) then --If the value it's greater than one then checks if it's a power of two.
-				Result := True
+			if is_power_of_two(val) then --If the value it's greater than 1 then checks if it's a power of two.
+				Result := True	--If value is power of two, returns True
 			end
 		end
-		if val = 0 then --Else, if the value, it's valid
+		if val = 0 then --Else, if the value it's 0 then returns True
 			Result := True
 		end
+		--If value is either negative or 1, Result remains False.
 		ensure
-			(((val = 1) and then (Result = False)) or else ((val=0) or (is_power_of_two(val)) and then (Result = True))) --Must ensure that Result has the correct values.
+			Result = (val=0 or (val>1 and is_power_of_two(val))) --Must ensure that Result value is correct, if the value is either 0 or a power of two
+																--Then it must be true, else, must be false.
 	end
 
 	is_power_of_two (val: INTEGER): BOOLEAN
