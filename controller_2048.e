@@ -24,10 +24,12 @@ feature -- Initialisation
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
 		do
-				-- Removed existing implementation because it makes use of a
-				-- board constructor that is wrong.
+			is_finished := False
+			last_random_cell_coordinates := [0,0]
+			create board.make
+
 		ensure
-			board /= Void
+			board /= Void; is_finished = False
 		end
 
 feature -- Game State
@@ -65,6 +67,11 @@ feature -- Game State
 			end
 			Result := finished
 		end
+
+	last_random_cell_coordinates: TUPLE[INTEGER,INTEGER]
+			-- Returns the coordinates of th last randomly introduced
+			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
+			-- or if the game state is the initial state.
 
 feature -- Movement commands
 

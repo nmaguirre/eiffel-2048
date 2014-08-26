@@ -7,6 +7,12 @@ note
 class
 	BOARD_2048
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
 	make, make_empty
 
@@ -50,7 +56,8 @@ feature -- Status report
 	nr_of_filled_cells: INTEGER
 		-- Returns the number of filled cells in the board
 
-
+	out: STRING
+		-- Provides a string representation of the board
 
 feature -- Status setting
 

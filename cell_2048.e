@@ -7,6 +7,12 @@ note
 class
 	CELL_2048
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
 	make, make_with_value
 
@@ -18,6 +24,9 @@ feature {ANY} -- Status report
 		-- cell is not set.
 		-- Value should otherwise be a power of two (greater than one)
 
+	out: STRING
+		-- Provides a string representation of a cell (shows its value as a string)
+
 feature {ANY} -- Initialization
 
 	make
@@ -25,13 +34,16 @@ feature {ANY} -- Initialization
 			-- Cell should be unset
 		do
 			value := 0
+		ensure
+			value = 0
 		end
 
+
 	make_with_value (new_val: INTEGER)
-			-- Create a new cell with determinated value
+			-- creates a cell initialized with a user-provided value
+
 		require
-			-- PRECONDITION SHOULD NOT USE TWO_POTENCY
-			--	two_potency (new_val) and (new_val >= 0) and (new_val /= 1) -- Two potency condition not implemented
+			is_valid_value (new_val)
 		do
 			value := new_val
 		ensure
@@ -51,16 +63,27 @@ feature {ANY} -- Status setting
 			value = new_value
 		end
 
-feature {ANY}
-
 
 feature {ANY} -- Miscellaneous
 
 	is_valid_value(val: INTEGER): BOOLEAN
 		-- Returns true if value is either 0, or a power of two
 		-- greater than 1.
+		--PRECONDITION: If the value is negative, then raise an exception.
+		--(val>=0)
+	require
+		value_gt_zero: (val>=0)
 	do
-
+		if val>1 then
+			if is_power_of_two(val) then --If the value it's greater than one then checks if it's a power of two.
+				Result := True
+			end
+		end
+		if val = 0 then --Else, if the value, it's valid
+			Result := True
+		end
+		ensure
+			(((val = 1) and then (Result = False)) or else ((val=0) or (is_power_of_two(val)) and then (Result = True))) --Must ensure that Result has the correct values.
 	end
 
 	is_power_of_two (val: INTEGER): BOOLEAN
@@ -86,11 +109,11 @@ feature {ANY} -- Miscellaneous
 		end
 
 	is_available: BOOLEAN
-		--Returns true if value is 0
+			--Returns true if a cell is available, that is that value is 0.
 		do
 			Result:= (value = 0)
 		ensure
-			value = 0
+			Result = (value=0)
 		end
 
 invariant
