@@ -97,10 +97,10 @@ feature {ANY} -- Miscellaneous
 
 	is_available: BOOLEAN
 			--Returns true if a cell is available, that is that value is 0.
-		require
-			value /= void
 		do
 			Result:= (value = 0)
+		ensure
+			(((value=0) and then (Result=True)) or else ((value/=0) and then (Result=False)))
 		end
 
 invariant
