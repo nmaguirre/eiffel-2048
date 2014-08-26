@@ -40,7 +40,44 @@ feature -- Initialisation
 		-- except for two randomly picked cells, which must be set with either 2 or 4.
 		-- Values to set the filled cells are chosen randomly. Positions of the two filled
 		-- cells are chosen randomly.
+		local
+		    random_sequence : RANDOM
+			first_random_cell_row : INTEGER
+			first_random_cell_col : INTEGER
+			second_random_cell_row : INTEGER
+			second_random_cell_col : INTEGER
+
+			first_random_value_cell: INTEGER
+			second_random_value_cell: INTEGER
+			first_cell: CELL_2048
+			second_cell: CELL_2048
 		do
+			make_empty()
+			create random_sequence.make;
+
+			from
+				first_random_cell_row := random_sequence.next_random(0) \\ 4;
+				first_random_cell_col := random_sequence.next_random(0) \\ 4;
+				second_random_cell_row := random_sequence.next_random(0) \\ 4;
+				second_random_cell_col := random_sequence.next_random(0) \\ 4;
+			until
+				first_random_cell_row /= second_random_cell_row or first_random_cell_col /= second_random_cell_col
+			loop
+				first_random_cell_row := random_sequence.next_random(0) \\ 4;
+				first_random_cell_col := random_sequence.next_random(0) \\ 4;
+				second_random_cell_row := random_sequence.next_random(0) \\ 4;
+				second_random_cell_col := random_sequence.next_random(0) \\ 4;
+			end
+
+
+			first_random_value_cell := (random_sequence.next_random(0) \\ 2 + 1) * 2;
+			second_random_value_cell := (random_sequence.next_random(0) \\ 2 + 1) * 2;
+
+			create first_cell.make_with_value (first_random_value_cell)
+			create second_cell.make_with_value (second_random_value_cell)
+
+			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
+			elements.put (second_cell, second_random_cell_row, second_random_cell_col)
 		end
 
 feature -- Status report
