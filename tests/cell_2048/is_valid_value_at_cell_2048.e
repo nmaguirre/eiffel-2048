@@ -1,9 +1,9 @@
 note
 	description: "[
-		Eiffel tests that can be executed by testing tool.
+		Tests for "is_valid_value" feature at "CELL_2048" class.
 	]"
-	author: "EiffelStudio test wizard"
-	date: "$Date$"
+	author: "Jheredia"
+	date: "26/08/2014"
 	revision: "$Revision$"
 	testing: "type/manual"
 
