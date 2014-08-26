@@ -39,6 +39,32 @@ feature -- Game State
 	is_finished: BOOLEAN
 			-- Indicates whether the game is finished or not.
 			-- Game finishes when either 2048 is reached, or the entire board is filled.
+		local
+			i, j: INTEGER
+			finished: BOOLEAN
+		do
+			finished := False
+			if board.nr_of_filled_cells = 16 then
+				Result := True
+			else
+				from
+					j := 1
+				until
+					j = 4
+				loop
+					from
+						i := 1
+					until
+						i = 4 or finished = True
+					loop
+						finished := board.elements.item (i, j).value = 2048
+						i := i + 1
+					end
+					j := j + 1
+				end
+			end
+			Result := finished
+		end
 
 feature -- Movement commands
 
