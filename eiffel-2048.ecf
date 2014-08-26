@@ -19,6 +19,7 @@
 				<exclude>/.git$</exclude>
 			</file_rule>
 			<tests name="acceptance_tests" location=".\eiffel-2048\acceptance_tests\"/>
+			<tests name="controller_2048" location="\home\sokky\eiffel-2048\tests\controller_2048\"/>
 		</cluster>
 	</target>
 </system>
