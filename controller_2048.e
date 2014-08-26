@@ -90,8 +90,48 @@ feature --Movement commands
 		end --end do
 
 	down --Command that moves the cells to the lowermost possible point of the game board
+
+		local
+			i ,j ,k : INTEGER
+
 		do
-		end
+
+			from
+				i := 1
+			until
+				i >= 4
+			loop -- columns
+				from
+					j := 1
+				until
+					j >= 4
+				loop -- rows
+					if board.elements.item (i, j).get_value /= 0 then
+						k := j
+						j := j+1
+						from
+							-- search for the next element /= 0
+						until
+							(j>4) and (board.elements.item (i, j) /= 0)
+						loop
+							j := j+1
+						end
+						if j<=4 then -- if search is succesful
+							if board.elements.item (i, k).get_value = board.elements.item (i, j).get_value  then
+								board.set_cell (i, j, (board.elements.item (i, k).get_value + board.elements.item (i, j).get_value))
+								board.set_cell (i, k, 0)
+							end
+						end
+					else
+						j := j+1
+					end -- end if /=0
+				end -- end loop j
+				i := i+1
+			end -- end loop i
+
+			set_random
+
+		end -- end do
 
 	left --Command that moves the cells to the leftrmost possible point of the game board
 		do
