@@ -23,13 +23,13 @@ feature -- Initialisation
 	make
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
+	
 		do
-			is_finished := False
 			last_random_cell_coordinates := [0,0]
 			create board.make
 
 		ensure
-			board /= Void; is_finished = False
+			board /= Void
 		end
 
 feature -- Game State

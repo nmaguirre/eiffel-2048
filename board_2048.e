@@ -59,6 +59,21 @@ feature -- Status report
 	out: STRING
 		-- Provides a string representation of the board
 
+	is_full: BOOLEAN
+		-- Indicates if all cells in the board are set or not
+
+	can_move_left: BOOLEAN
+		-- Indicates whether the board would change through a movement to the left
+
+	can_move_right: BOOLEAN
+		-- Indicates whether the board would change through a movement to the right
+
+	can_move_up: BOOLEAN
+		-- Indicates whether the board would change through an up movement
+
+	can_move_down: BOOLEAN
+		-- Indicates whether the board would change through a down movement
+
 feature -- Status setting
 
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)

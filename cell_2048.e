@@ -55,8 +55,7 @@ feature {ANY} -- Status setting
 	set_value (new_value: INTEGER)
 			-- Update the value of a cell with new_value
 		require
-			-- PRECONDITION SHOULD NOT USE TWO_POTENCY
-			-- two_potency (new_value) and (new_value >= 0) and (new_value /= 1)
+			is_valid_value (new_value)
 		do
 			value := new_value
 		ensure
