@@ -18,12 +18,14 @@ feature -- Initialisation
 			new_board /= Void
 		do
 			board := new_board
+		ensure
+			board = new_board
 		end
 
 	make
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
-	
+
 		do
 			last_random_cell_coordinates := [0,0]
 			create board.make
