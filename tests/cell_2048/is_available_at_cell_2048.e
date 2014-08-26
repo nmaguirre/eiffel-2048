@@ -24,7 +24,7 @@ feature -- Test routines
 			assert ("The cell is available", cell.is_available )
 		end
 
-	is_available_ocupated_cell_test
+	is_available_on_occupied_cell_test
 			-- Test for not available cell
 		local
 			cell : CELL_2048
