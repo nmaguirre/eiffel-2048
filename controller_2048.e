@@ -30,6 +30,7 @@ feature {NONE}
 
 	coord_last_random_cell: TUPLE[INTEGER, INTEGER]
 
+
 feature --Movement commands
 
 	up
@@ -93,9 +94,9 @@ feature --Movement commands
 
 		local
 			i ,j ,k : INTEGER
-
+			bool : BOOLEAN
 		do
-
+			bool := False
 			from
 				i := 1
 			until
@@ -120,6 +121,8 @@ feature --Movement commands
 							if board.elements.item (i, k).get_value = board.elements.item (i, j).get_value  then
 								board.set_cell (i, j, (board.elements.item (i, k).get_value + board.elements.item (i, j).get_value))
 								board.set_cell (i, k, 0)
+								j := j+1
+								bool := True
 							end
 						end
 					else
@@ -129,8 +132,9 @@ feature --Movement commands
 				i := i+1
 			end -- end loop i
 
-			set_random
-
+			if bool = True then
+				set_random
+			end
 		end -- end do
 
 	left --Command that moves the cells to the leftrmost possible point of the game board
@@ -174,4 +178,5 @@ feature --Movement commands
 		do
 			Result := coord_last_random_cell
 		end
+
 end
