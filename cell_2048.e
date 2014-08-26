@@ -116,6 +116,6 @@ feature {ANY} -- Miscellaneous
 
 invariant
 		--a cell must have either zero, or a value that is a power of two greater than 1
-	value >= 0 and is_power_of_two (value) = True and value /= 1
+	value = 0 or (is_power_of_two (value) and value /= 1)
 
 end
