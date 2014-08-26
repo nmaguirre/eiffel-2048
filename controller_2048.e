@@ -23,7 +23,7 @@ feature -- Initialisation
 	make
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
-	
+
 		do
 			last_random_cell_coordinates := [0,0]
 			create board.make
@@ -106,12 +106,53 @@ feature -- Movement commands
 				--			set_random_free_cell
 		end --end do
 
-	down
-			-- Moves the cells to the bottom of the game board.
-			-- Movement colapses cells with the same value.
-			-- It adds one more random cell with value 2 or 4, after the movement.
+	down --Command that moves the cells to the lowermost possible point of the game board
+
+		local
+			i ,j ,k : INTEGER
+			bool : BOOLEAN
+
 		do
-		end
+			bool := False
+			from
+				i := 1
+			until
+				i >= 4
+			loop -- columns
+				from
+					j := 1
+				until
+					j >= 4
+				loop -- rows
+					if board.elements.item (i, j).value /= 0 then
+						k := j
+						j := j+1
+						from
+							-- search for the next element /= 0
+						until
+							(j>4) and (board.elements.item (i, j) /= 0)
+						loop
+							j := j+1
+						end
+						if j<=4 then -- if search is succesful
+							if board.elements.item (i, k).value = board.elements.item (i, j).value  then
+								board.set_cell (i, j, (board.elements.item (i, k).value + board.elements.item (i, j).value))
+								board.set_cell (i, k, 0)
+								j := j+1
+								bool := True
+							end
+						end
+					else
+						j := j+1
+					end -- end if /=0
+				end -- end loop j
+				i := i+1
+			end -- end loop i
+
+			if bool = True then
+				set_random_free_cell
+			end
+		end -- end do
 
 	left
 			-- Moves the cells to the leftmost possible point of the game board.
@@ -155,5 +196,4 @@ feature {NONE} -- Auxiliary routines
 				--				end --end if
 				--			end --end loop
 		end --end do
-
 end
