@@ -20,8 +20,10 @@
 			</file_rule>
 			<tests name="acceptance_tests" location=".\acceptance_tests\"/>
 			<cluster name="tests" location=".\tests\">
-				<cluster name="cell_2048" location=".\tests\cell_2048\"/>
-				<tests name="controller_2048" location="\home\angelo\eiffel-2048\tests\controller_2048\"/>
+		                <tests name="controller_2048" location=".\tests\controller_2048\"/>
+		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
+		                <tests name="board_2048" location=".\tests\board_2048\"/>
+		                <tests name="app_2048" location=".\tests\app_2048\"/>
 			</cluster>
 		</cluster>
 	</target>
