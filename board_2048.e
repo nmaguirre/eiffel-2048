@@ -59,6 +59,9 @@ feature -- Status report
 	out: STRING
 		-- Provides a string representation of the board
 
+	is_full: BOOLEAN
+		-- Indicates if all cells in the board are set or not
+
 feature -- Status setting
 
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
