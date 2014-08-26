@@ -8,6 +8,7 @@ class
 	CELL_2048
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -19,13 +20,13 @@ create
 feature {ANY} -- Status report
 
 	value: INTEGER
-		-- Returns the value stored in the cell
-		-- When the value is zero, it means that the
-		-- cell is not set.
-		-- Value should otherwise be a power of two (greater than one)
+			-- Returns the value stored in the cell
+			-- When the value is zero, it means that the
+			-- cell is not set.
+			-- Value should otherwise be a power of two (greater than one)
 
 	out: STRING
-		-- Provides a string representation of a cell (shows its value as a string)
+			-- Provides a string representation of a cell (shows its value as a string)
 
 feature {ANY} -- Initialization
 
@@ -37,7 +38,6 @@ feature {ANY} -- Initialization
 		ensure
 			value = 0
 		end
-
 
 	make_with_value (new_val: INTEGER)
 			-- creates a cell initialized with a user-provided value
@@ -62,26 +62,27 @@ feature {ANY} -- Status setting
 			value = new_value
 		end
 
-
 feature {ANY} -- Miscellaneous
 
-	is_valid_value(val: INTEGER): BOOLEAN
-		-- Returns true if value is either 0, or a power of two
-		-- greater than 1.
-	do
-		if val>1 then
-			if is_power_of_two(val) then --If the value it's greater than 1 then checks if it's a power of two.
-				Result := True	--If value is power of two, returns True
+	is_valid_value (val: INTEGER): BOOLEAN
+			-- Returns true if value is either 0, or a power of two
+			-- greater than 1.
+		do
+				--If the value it's greater than 1 then checks if it's a power of two.
+			if val > 1 then
+					--If value is power of two, returns True
+				if is_power_of_two (val) then
+					Result := True
+				end
 			end
-		end
-		if val = 0 then --Else, if the value it's 0 then returns True
-			Result := True
-		end
-		--If value is either negative or 1, Result remains False.
+				--Else, if the value it's 0 then returns True
+			if val = 0 then
+				Result := True
+			end
+				--If value is either negative or 1, Result remains False.
 		ensure
-			Result = (val=0 or (val>1 and is_power_of_two(val))) --Must ensure that Result value is correct, if the value is either 0 or a power of two
-																--Then it must be true, else, must be false.
-	end
+			Result = (val = 0 or (val > 1 and is_power_of_two (val)))
+		end
 
 	is_power_of_two (val: INTEGER): BOOLEAN
 			-- Returns True if val is power of 2
@@ -108,9 +109,9 @@ feature {ANY} -- Miscellaneous
 	is_available: BOOLEAN
 			--Returns true if a cell is available, that is that value is 0.
 		do
-			Result:= (value = 0)
+			Result := (value = 0)
 		ensure
-			Result = (value=0)
+			Result = (value = 0)
 		end
 
 invariant
