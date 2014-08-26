@@ -38,7 +38,7 @@ feature -- Test routines
 				controller: CONTROLLER_2048
 			do
 				create controller.make
-				assert ("The number of filled cells should be two", controller.board.nr_of_filled_cells = 2 )
+				assert ("board is non-void", controller.board /= Void )
 			end
 
 end
