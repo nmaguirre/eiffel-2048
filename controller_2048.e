@@ -18,6 +18,8 @@ feature -- Initialisation
 			new_board /= Void
 		do
 			board := new_board
+		ensure
+			board = new_board
 		end
 
 	make

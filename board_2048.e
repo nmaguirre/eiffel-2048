@@ -74,6 +74,9 @@ feature -- Status report
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
 
+	is_winning_board: BOOLEAN
+		-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
+
 feature -- Status setting
 
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
