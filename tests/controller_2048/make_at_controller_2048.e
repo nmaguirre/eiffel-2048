@@ -18,7 +18,7 @@ feature -- Test routines
 			controller: CONTROLLER_2048
 		do
 			create controller.make
-			assert ("is_finished must be false", controller.is_finished = FALSE)
+			assert ("is_finished must be false", controller.is_finished = False)
 		end
 
 
