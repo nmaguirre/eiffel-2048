@@ -31,7 +31,8 @@ feature {ANY} -- Initialization
 
 
 	make_with_value (new_val: INTEGER)
-			-- Create a new cell with determinated value
+			-- creates a cell initialized with a user-provided value
+
 		require
 			is_valid_value (new_val)
 		do
