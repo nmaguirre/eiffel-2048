@@ -85,24 +85,24 @@ feature {ANY} -- Miscellaneous
 
 	is_power_of_two (val: INTEGER): BOOLEAN
 			-- Returns True if val is power of 2
-		require
-			val >= 0
 		local
 			i: INTEGER
-			potency: BOOLEAN
+			power_of_two: BOOLEAN
 		do
-			from
-				potency := True
-				i := val
-			until
-				i <= 1 or not potency
-			loop
-				if i \\ 2 /= 0 then
-					potency := False
+			if val > 0 then -- If val is negative or zero
+				from
+					power_of_two := True
+					i := val
+				until
+					i <= 1 or not power_of_two
+				loop
+					if i \\ 2 /= 0 then
+						power_of_two := False
+					end
+					i := i // 2
 				end
-				i := i // 2
+				Result := power_of_two
 			end
-			Result := potency
 		end
 
 	is_available: BOOLEAN
