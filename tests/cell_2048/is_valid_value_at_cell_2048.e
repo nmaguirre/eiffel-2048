@@ -50,20 +50,9 @@ feature -- Test routines
 			-- Should fail as this method doesn't accept negative integers as input
 		local
 			ivv: CELL_2048
-			control, second, fail: BOOLEAN
 		do
-			if not second then
-				fail := True
-				create ivv.make
-				control := ivv.is_valid_value (-1)
-				fail := False
-			end
-			assert("Routine Failed, -1 is not a valid value", fail)
-			rescue
-				second := True
-				if fail then
-					retry
-				end
+			create ivv.make
+			assert("A negative value isn't a valid value, this test should return false",not ivv.is_valid_value (-1))
 		end
 
 end
