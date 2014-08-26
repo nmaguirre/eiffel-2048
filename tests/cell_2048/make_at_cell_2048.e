@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {MAKE_AT_CELL_2048}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+	description: "Test class for routine make at CELL_2048"
+	author: "lputruele"
+	date: "August 26, 2014"
+	revision: "0.01"
 
 class
 	MAKE_AT_CELL_2048

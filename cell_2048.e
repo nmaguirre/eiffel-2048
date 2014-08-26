@@ -25,7 +25,10 @@ feature {ANY} -- Initialization
 			-- Cell should be unset
 		do
 			value := 0
+		ensure
+			value = 0
 		end
+
 
 	make_with_value (new_val: INTEGER)
 			-- Create a new cell with determinated value
