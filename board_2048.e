@@ -64,12 +64,11 @@ feature -- Status setting
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
 			-- Set cell in [row,col] position with a given value
 		require
-			-- WRONG PRECONDITION REMOVED
+			row>=1 and col>=1 and elements.item (row,col).is_valid_value (value)
 		do
-			elements.item (row, col).set_value (value)
+			elements.item (row,col).set_value (value) --Set the new value in cell
 		ensure
-			-- POSTCONDITION MUST NOT USE TWO_POTENCY
-			-- elements.item (row, col).two_potency (value) and elements.item (row, col).value >=0 and elements.item (row, col).value >=1
+			elements.item (row,col) = value --Must ensure that cell has the correct value
 		end
 
 feature {NONE} -- Auxiliary routines
