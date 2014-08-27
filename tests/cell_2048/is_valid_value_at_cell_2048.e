@@ -3,8 +3,8 @@ note
 		Tests for "is_valid_value" feature at "CELL_2048" class.
 	]"
 	author: "Jheredia"
-	date: "26/08/2014"
-	revision: "$Revision$"
+	date: "August 26, 2014"
+	revision: "0.01"
 	testing: "type/manual"
 
 class
