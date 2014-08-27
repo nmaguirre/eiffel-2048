@@ -1,8 +1,8 @@
 note
-	description: "Test of the make_at_controller constructor in class CONTROLLER_2048."
+	description: "Test of the make constructor in class CONTROLLER_2048."
 	author: "ggiovannini"
 	date: "August 26, 2014"
-	revision: "0.1"
+	revision: "0.01"
 
 class
 	MAKE_AT_CONTROLLER_2048
@@ -19,7 +19,7 @@ feature -- Test routines
 			controller: CONTROLLER_2048
 		do
 			create controller.make
-			assert ("is_finished must be false", controller.is_finished = False)
+			assert ("is_finished must be false", not controller.is_finished)
 		end
 
 	last_random_cell_coordinates_value_default
