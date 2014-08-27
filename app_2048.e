@@ -30,7 +30,7 @@ feature {NONE} -- Initialization
 			print ("|w : UP          |%N")
 			print ("|s : DOWN        |%N")
 			print ("|----------------|%N")
-			controller.make
+			create controller.make
 			io.putstring (controller.board.out)
 			from
 
