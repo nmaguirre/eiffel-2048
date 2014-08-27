@@ -4,7 +4,7 @@ note
 	]"
 	author: "Jheredia"
 	date: "August 26, 2014"
-	revision: "0.01"
+	revision: "0.02"
 	testing: "type/manual"
 
 class
