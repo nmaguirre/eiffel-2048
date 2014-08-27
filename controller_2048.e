@@ -33,6 +33,11 @@ feature -- Initialisation
 			board /= Void
 		end
 
+feature {NONE}
+
+	coord_last_random_cell: TUPLE[INTEGER, INTEGER]
+			-- Tuple containing the coordinates of the last random cell.
+
 feature -- Game State
 
 	board: BOARD_2048
@@ -73,6 +78,9 @@ feature -- Game State
 			-- Returns the coordinates of th last randomly introduced
 			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
 			-- or if the game state is the initial state.
+		do
+			Result := coord_last_random_cell
+		end
 
 feature -- Movement commands
 
