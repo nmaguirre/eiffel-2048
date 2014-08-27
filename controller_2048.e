@@ -251,6 +251,7 @@ feature {NONE} -- Auxiliary routines
 				--				if board.elements.item (tx, ty).is_available then
 				--					board.elements.item (tx, ty).set_value (2)
 				--					marca_zero := True
+				--					coord_last_random_cell = [tx, ty]
 				--				end --end if
 				--			end --end loop
 		end --end do
