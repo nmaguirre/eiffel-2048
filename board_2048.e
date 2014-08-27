@@ -58,6 +58,30 @@ feature -- Status report
 
 	out: STRING
 		-- Provides a string representation of the board
+		local
+			i: INTEGER
+			j: INTEGER
+			output: STRING
+		do
+			output:=""
+			from
+				i:= 0
+			until
+				i< 4
+			loop
+				from
+					j:= 0
+				until
+					j< 4
+				loop
+					output.append_string ("|")
+					output.append_string (elements.item (i, j).out)
+				end
+					output.append_string ("|")
+					output.append_string("\n")
+			end
+			Result := output
+		end
 
 	is_full: BOOLEAN
 		-- Indicates if all cells in the board are set or not
