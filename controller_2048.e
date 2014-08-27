@@ -27,9 +27,9 @@ feature -- Initialisation
 			-- classes that represent and take care of the logic of the game.
 
 		do
-
+			coord_last_random_cell := [0, 0]
 			create board.make
-			
+
 		ensure
 			board /= Void
 		end
