@@ -74,8 +74,33 @@ feature -- Status report
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
 
-	is_winning_board: BOOLEAN
+	is_winning_board : BOOLEAN
 		-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
+		require
+			elements.height=4 and elements.width=4
+		local
+			i,j : INTEGER
+			is_winning : BOOLEAN
+		do
+			from
+				i := 1
+			until
+				i > 4 or is_winning
+			loop
+				from
+					j := 1
+				until
+					j > 4 or is_winning
+				loop
+					if elements.item (i,j).value = 2048 then
+						is_winning := True
+					end
+					j := j + 1
+				end
+				i := i + 1
+			end
+			Result := is_winning
+		end
 
 feature -- Status setting
 
