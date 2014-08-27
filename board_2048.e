@@ -58,6 +58,48 @@ feature -- Status report
 
 	out: STRING
 		-- Provides a string representation of the board
+		local
+			i: INTEGER
+			j: INTEGER
+			output: STRING
+		do
+			output:=""
+			from
+				i:= 0
+			until
+				i< 4
+			loop
+				from
+					j:= 0
+				until
+					j< 4
+				loop
+					output.append_string ("|")
+					output.append_string (elements.item (i, j).out)
+				end
+					output.append_string ("|")
+					output.append_string("\n")
+			end
+			Result := output
+		end
+
+	is_full: BOOLEAN
+		-- Indicates if all cells in the board are set or not
+
+	can_move_left: BOOLEAN
+		-- Indicates whether the board would change through a movement to the left
+
+	can_move_right: BOOLEAN
+		-- Indicates whether the board would change through a movement to the right
+
+	can_move_up: BOOLEAN
+		-- Indicates whether the board would change through an up movement
+
+	can_move_down: BOOLEAN
+		-- Indicates whether the board would change through a down movement
+
+	is_winning_board: BOOLEAN
+		-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
 
 feature -- Status setting
 

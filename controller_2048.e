@@ -18,19 +18,25 @@ feature -- Initialisation
 			new_board /= Void
 		do
 			board := new_board
+		ensure
+			board = new_board
 		end
 
 	make
 			-- Creates a controller from scratch. The controller must create the
 			-- classes that represent and take care of the logic of the game.
-		do
-			is_finished := False
-			last_random_cell_coordinates := [0,0]
-			create board.make
 
+		do
+			last_random_cell_coordinates := [0, 0]
+			create board.make
 		ensure
-			board /= Void; is_finished = False
+			board /= Void
 		end
+
+feature {NONE}
+
+	coord_last_random_cell: TUPLE[INTEGER, INTEGER]
+			-- Tuple containing the coordinates of the last random cell.
 
 feature -- Game State
 
@@ -40,12 +46,41 @@ feature -- Game State
 
 	is_finished: BOOLEAN
 			-- Indicates whether the game is finished or not.
-			-- Game finishes when either 2048 is reached, or the entire board is filled.
+			-- Game finishes when either 2048 is reached, or if any movement is possible.
+		local
+			i, j: INTEGER -- Auxiliary variables to navigate through the game board
+			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
+		do
+			finished := False
+			if not board.can_move_up and not board.can_move_down and not board.can_move_left and not board.can_move_right then
+				Result := True
+			else
+				from
+					j := 1
+				until
+					j = 4
+				loop
+					from
+						i := 1
+					until
+						i = 4 or finished = True
+					loop
+						finished := board.elements.item (i, j).value = 2048
+						i := i + 1
+					end
+					j := j + 1
+				end
+			end
+			Result := finished
+		end
 
-	last_random_cell_coordinates: TUPLE[INTEGER,INTEGER]
+	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
 			-- Returns the coordinates of th last randomly introduced
 			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
 			-- or if the game state is the initial state.
+		do
+			Result := coord_last_random_cell
+		end
 
 feature -- Movement commands
 
@@ -53,65 +88,128 @@ feature -- Movement commands
 			-- Moves the cells to the uppermost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
+		require
+			board.can_move_up
 		local
-			-- i, v, j: INTEGER
+			 i, k, j: INTEGER
 		do
-				-- UPDATE NOT USING GET_VALUE, WHICH IS OBSOLETE
-				--			from
-				--				j := 1
-				--			until
-				--				j = 4
-				--			loop
-				--				from
-				--					i := 4
-				--				until
-				--					i = 1
-				--				loop
-				--
-				--					if board.elements.item (i, j).get_value /= 0 then
-				--						if (i - 1 > 0) and (board.elements.item (i - 1, j).get_value /= 0) then
-				--							if board.elements.item (i, j).get_value = board.elements.item (i - 1, j).get_value then
-				--								v := board.elements.item (i, j).get_value + board.elements.item (i - 1, j).get_value
-				--								board.set_cell (i - 1, j, v)
-				--								i := i - 1
-				--							end
-				--						else
-				--							if (i - 2 > 0) and (board.elements.item (i - 2, j).get_value /= 0) then
-				--								if board.elements.item (i, j).get_value = board.elements.item (i - 2, j).get_value then
-				--									v := board.elements.item (i, j).get_value + board.elements.item (i - 2, j).get_value
-				--									board.set_cell (i - 2, j, v)
-				--									i := i - 1
-				--								else
-				--									board.set_cell (i - 1, j, board.elements.item (i, j).get_value)
-				--									i := i - 1
-				--								end
-				--							else
-				--								if (i - 3 > 0) and (board.elements.item (i - 3, j).get_value /= 0) then
-				--									if board.elements.item (i, j).get_value = board.elements.item (i - 3, j).get_value then
-				--										v := board.elements.item (i, j).get_value + board.elements.item (i - 3, j).get_value
-				--										board.set_cell (i - 3, j, v)
-				--										i := i - 1
-				--									else
-				--										board.set_cell (i - 2, j, board.elements.item (i, j).get_value)
-				--										i := i - 1
-				--									end
-				--								end
-				--							end
-				--						end
-				--					end
-				--				end --end from i
-				--				j := j + 1
-				--			end --end from j
-
-				--			set_random_free_cell
+			--First I add the cells that can be added	
+			from
+				j := 1
+			until
+				j > 4
+			loop
+				from
+					i := 1
+				until
+					i >= 4
+				loop
+					if board.elements.item (i, j).value /= 0 then
+						k := i + 1;
+						from
+							-- search for the next element /= 0
+						until
+							(k>4) or (board.elements.item (k, j).value /= 0)
+						loop
+							k:= k + 1;
+						end
+						if (k<=4) then
+							if (board.elements.item (i, j).value = board.elements.item (k, j).value) then
+								board.set_cell (i, j, (board.elements.item (k,j).value + board.elements.item (i, j).value))
+								board.set_cell (k,j, 0)
+								i := k + 1
+							else
+								i := k
+							end
+						end
+					else
+						i := i + 1
+					end
+				end --end loop i
+				j := j + 1
+			end --end loop j
+			-- occupy available cells at the top.
+			from --
+				j := 1
+			until
+				j > 4
+			loop
+				from
+					i := 1
+				until
+					i >= 4
+				loop
+					if board.elements.item (i, j).value = 0 then
+						k := i + 1;
+						from
+							-- search for the next element /= 0
+						until
+							(k>4) or (board.elements.item (k, j).value /= 0)
+						loop
+							k:= k + 1;
+						end
+						if (k<=4) then
+							board.set_cell (i, j, board.elements.item (k, j).value)
+							board.set_cell (k,j, 0)
+							i := i + 1
+						end
+					else
+						i := i + 1
+					end
+				end --end loop i
+				j := j + 1
+			end --end loop j			
+			set_random_free_cell
 		end --end do
 
-	down
-			-- Moves the cells to the bottom of the game board.
-			-- Movement colapses cells with the same value.
-			-- It adds one more random cell with value 2 or 4, after the movement.
+
+	down --Command that moves the cells to the lowermost possible point of the game board
+
+		local
+			i ,j ,k : INTEGER
+			bool : BOOLEAN
+
 		do
-		end
+			bool := False
+			from
+				i := 1
+			until
+				i >= 4
+			loop -- columns
+				from
+					j := 1
+				until
+					j >= 4
+				loop -- rows
+					if board.elements.item (i, j).value /= 0 then
+						k := j
+						j := j+1
+						from
+							-- search for the next element /= 0
+						until
+							(j>4) and (board.elements.item (i, j) /= 0)
+						loop
+							j := j+1
+						end
+						if j<=4 then -- if search is succesful
+							if board.elements.item (i, k).value = board.elements.item (i, j).value  then
+								board.set_cell (i, j, (board.elements.item (i, k).value + board.elements.item (i, j).value))
+								board.set_cell (i, k, 0)
+								j := j+1
+								bool := True
+							end
+						end
+					else
+						j := j+1
+					end -- end if /=0
+				end -- end loop j
+				i := i+1
+			end -- end loop i
+
+			if bool = True then
+				set_random_free_cell
+			end
+		end -- end do
 
 	left
 			-- Moves the cells to the leftmost possible point of the game board.
@@ -155,5 +253,4 @@ feature {NONE} -- Auxiliary routines
 				--				end --end if
 				--			end --end loop
 		end --end do
-
 end
