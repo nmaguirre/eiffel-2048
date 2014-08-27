@@ -30,7 +30,7 @@ feature -- Test routines
 			-- New test routine
 
 		local
-			res, ok, second_time: BOOLEAN
+			ok, second_time: BOOLEAN
 			board : BOARD_2048
 		do
 			if not second_time then
@@ -52,7 +52,7 @@ feature -- Test routines
 			-- New test routine
 
 		local
-			res, ok, second_time: BOOLEAN
+			ok, second_time: BOOLEAN
 			board : BOARD_2048
 		do
 			if not second_time then
@@ -72,7 +72,7 @@ feature -- Test routines
 
 	set_cell_in_negative_row
 		local
-			res, ok, second_time: BOOLEAN
+			ok, second_time: BOOLEAN
 			board : BOARD_2048
 		do
 			if not second_time then
@@ -92,7 +92,7 @@ feature -- Test routines
 
 	set_cell_in_negative_column
 		local
-			res, ok, second_time: BOOLEAN
+			ok, second_time: BOOLEAN
 			board : BOARD_2048
 		do
 			if not second_time then
