@@ -28,7 +28,7 @@ feature -- Test routines
 			controller: CONTROLLER_2048
 		do
 			create controller.make
-			assert ("cell coordinates are (0,0)", (controller.last_random_cell_coordinates.at (1) = 0) and (controller.last_random_cell_coordinates.at (2) = 0))
+			assert ("cell coordinates are (0,0)", (controller.coord_last_random_cell.at (1) = 0) and (controller.coord_last_random_cell.at (2) = 0))
 		end
 
 	test_initialized_board
