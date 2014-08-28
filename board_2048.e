@@ -122,20 +122,22 @@ feature -- Status report
 		do
 			output:=""
 			from
-				i:= 0
+				i:= 1
 			until
-				i< 4
+				i > 4
 			loop
 				from
-					j:= 0
+					j:= 1
 				until
-					j< 4
+					j> 4
 				loop
 					output.append_string ("|")
 					output.append_string (elements.item (i, j).out)
+					j := j+1
 				end
-					output.append_string ("|")
-					output.append_string("\n")
+				output.append_string ("|")
+				output.append_string("\n")
+				i:=i+1
 			end
 			Result := output
 		end
