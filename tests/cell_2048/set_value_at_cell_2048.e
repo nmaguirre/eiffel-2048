@@ -13,40 +13,64 @@ inherit
 
 feature
 
-	set_value_test_with_correct_value
+	set_value_test_with_correct_value_equals_2
+	--Test this method with value = 2
 		local
 			cell: CELL_2048
 		do
-			create cell.make_with_value (0)
+			create cell.make
 			cell.set_value (2)
 			assert ("cell value should be 2", cell.value = 2)
 		end
 
-	set_value_test_with_correct_value2
+	set_value_test_with_correct_value_equals_1024
+	--Test this method with value = 1024
 		local
 			cell: CELL_2048
 		do
-			create cell.make_with_value (0)
-			cell.set_value (1028)
-			assert ("cell value should be 2", cell.value = 1028)
+			create cell.make
+			cell.set_value (1024)
+			assert ("cell value should be 1028", cell.value = 1024)
 		end
 
-	set_value_test_with_wrong_value
+	set_value_test_with_wrong_value_equals_1999
+	--Test this method with value = 1999
 		local
-			cell: CELL_2048
+			ok, second_time : BOOLEAN
+			cell : CELL_2048
 		do
-			create cell.make_with_value (0)
-			cell.set_value (1999) -- the value of cell should not change
-			assert ("cell value should be 0", cell.value = 0)
+			if not second_time then
+				ok := true;
+				create cell.make
+				cell.set_value (1999) -- Must throw an exception
+				ok := false;
+			end
+			assert("routine failed, as expected",ok)
+		rescue
+			second_time := true;
+			if ok then  -- ok = true means that the rutine failed
+				retry
+			end
 		end
 
-	set_value_test_with_wrong_value2
+	set_value_test_with_wrong_value_equals_500
+	--Test this method with value = 500
 		local
-			cell: CELL_2048
+			ok, second_time : BOOLEAN
+			cell : CELL_2048
 		do
-			create cell.make_with_value (0)
-			cell.set_value (3) -- the value of cell should not change
-			assert ("cell value should be 0", cell.value = 0)
+			if not second_time then
+				ok := true;
+				create cell.make
+				cell.set_value (500) -- Must throw an exception
+				ok := false;
+			end
+			assert("routine failed, as expected",ok)
+		rescue
+			second_time := true;
+			if ok then  -- ok = true means that the rutine failed
+				retry
+			end
 		end
 
 end

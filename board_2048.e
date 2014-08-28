@@ -40,7 +40,43 @@ feature -- Initialisation
 		-- except for two randomly picked cells, which must be set with either 2 or 4.
 		-- Values to set the filled cells are chosen randomly. Positions of the two filled
 		-- cells are chosen randomly.
+		local
+		    random_sequence : RANDOM
+			first_random_cell_row : INTEGER
+			first_random_cell_col : INTEGER
+			second_random_cell_row : INTEGER
+			second_random_cell_col : INTEGER
+
+			first_cell: CELL_2048
+			second_cell: CELL_2048
+
 		do
+			make_empty()
+
+			--initialize random seed
+		    create random_sequence.set_seed (get_random_seed())
+
+			--generate two different random positions
+			from
+				first_random_cell_row  := get_random (random_sequence, 4) + 1;
+				first_random_cell_col  := get_random (random_sequence, 4) + 1;
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
+			until
+				first_random_cell_row /= second_random_cell_row or first_random_cell_col /= second_random_cell_col
+			loop
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
+			end
+
+			-- create cells
+
+			create first_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
+			create second_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
+
+			-- puts cells
+			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
+			elements.put (second_cell, second_random_cell_row, second_random_cell_col)
 		end
 
 feature -- Status report
@@ -99,6 +135,37 @@ feature -- Status report
 
 	can_move_right: BOOLEAN
 		-- Indicates whether the board would change through a movement to the right
+		require
+			elements /= Void and rows >= 0 and columns >= 0
+		local
+			i, j, k: INTEGER
+			move_ok : BOOLEAN
+		do
+			from
+				i := 0
+			until
+				i > columns or move_ok
+			loop
+				from
+					j:= 0
+					k:= 1
+				until
+					k >= columns or move_ok
+				loop
+					if ((elements.item (i,j).value = elements.item (i,k).value) or (elements.item(i,j).value = 0)) then
+						-- evaluates if the value is equal to the right or if value is equal 0
+						move_ok := True
+					end
+					j:= k
+					k:= k+1
+				end
+					i:= i+1
+			end
+				Result := move_ok
+		ensure
+			elements /= Void and rows >= 0 and columns >= 0
+		end
+
 
 	can_move_up: BOOLEAN
 		-- Indicates whether the board would change through an up movement
@@ -152,6 +219,37 @@ feature -- Status setting
 
 feature {NONE} -- Auxiliary routines
 
+	get_random_cell_two_or_four (random_sequence: RANDOM) : INTEGER
+		local
+			random_value: INTEGER
 
+		do
+			random_value := (get_random (random_sequence, 2) + 1) * 2
+			Result := random_value
+		end
+
+	get_random_seed() : INTEGER
+		local
+			l_time: TIME
+	    	l_seed: INTEGER
+		do
+			create l_time.make_now
+		    l_seed := l_time.hour
+		    l_seed := l_seed * 60 + l_time.minute
+		    l_seed := l_seed * 60 + l_time.second
+		    l_seed := l_seed * 1000 + l_time.milli_second
+		    Result := l_seed
+		end
+
+	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
+		--
+		require
+			ceil >= 0
+		do
+			random_sequence.forth
+			Result := random_sequence.item \\ ceil;
+		ensure
+			Result < ceil
+		end
 
 end
