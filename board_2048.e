@@ -40,7 +40,42 @@ feature -- Initialisation
 		-- except for two randomly picked cells, which must be set with either 2 or 4.
 		-- Values to set the filled cells are chosen randomly. Positions of the two filled
 		-- cells are chosen randomly.
+		local
+		    random_sequence : RANDOM
+			first_random_cell_row : INTEGER
+			first_random_cell_col : INTEGER
+			second_random_cell_row : INTEGER
+			second_random_cell_col : INTEGER
+
+			first_cell: CELL_2048
+			second_cell: CELL_2048
+
 		do
+			make_empty()
+
+			--initialize random seed
+		    create random_sequence.set_seed (get_random_seed())
+
+			--generate two different random positions
+			from
+				first_random_cell_row  := get_random (random_sequence, 4) + 1;
+				first_random_cell_col  := get_random (random_sequence, 4) + 1;
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
+			until
+				first_random_cell_row /= second_random_cell_row or first_random_cell_col /= second_random_cell_col
+			loop
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
+			end
+
+			-- create cells
+			first_cell := get_random_cell_two_or_four(random_sequence)
+			second_cell := get_random_cell_two_or_four(random_sequence)
+
+			-- puts cells
+			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
+			elements.put (second_cell, second_random_cell_row, second_random_cell_col)
 		end
 
 feature -- Status report
@@ -85,6 +120,14 @@ feature -- Status report
 
 	is_full: BOOLEAN
 		-- Indicates if all cells in the board are set or not
+		do
+			if nr_of_filled_cells = 16 then -- Board is full when all 16 cells are filled
+				Result := True
+			else
+				Result := False
+			end
+		ensure Result = (nr_of_filled_cells = 16)
+		end
 
 	can_move_left: BOOLEAN
 		-- Indicates whether the board would change through a movement to the left
@@ -94,6 +137,35 @@ feature -- Status report
 
 	can_move_up: BOOLEAN
 		-- Indicates whether the board would change through an up movement
+		require
+			elements /= Void and rows >=2
+		local
+			i,j,k: INTEGER
+			can_move: BOOLEAN
+		do
+			from
+				i := 0
+			until
+				i > columns or can_move
+			loop
+				from
+					j := rows - 1
+					k := rows - 2
+				until
+					k <= 0 or can_move
+				loop
+					if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
+					then
+						-- Two cells have the same value or the cell of up is a free cell
+						can_move := True
+					end
+					j := k
+					k := k-1
+				end
+				i := i+1
+			end
+			Result := can_move
+		end
 
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
@@ -140,6 +212,38 @@ feature -- Status setting
 
 feature {NONE} -- Auxiliary routines
 
+	get_random_cell_two_or_four(random_sequence: RANDOM) : CELL_2048
+		local
+			random_value: INTEGER
+			cell: CELL_2048
+		do
+			random_value := (get_random (random_sequence, 2) + 1) * 2
+			cell.make_with_value (random_value)
+			Result := cell
+		end
 
+	get_random_seed() : INTEGER
+		local
+			l_time: TIME
+	    	l_seed: INTEGER
+		do
+			create l_time.make_now
+		    l_seed := l_time.hour
+		    l_seed := l_seed * 60 + l_time.minute
+		    l_seed := l_seed * 60 + l_time.second
+		    l_seed := l_seed * 1000 + l_time.milli_second
+		    Result := l_seed
+		end
+
+	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
+		--
+		require
+			ceil >= 0
+		do
+			random_sequence.forth
+			Result := random_sequence.item \\ ceil;
+		ensure
+			Result < ceil
+		end
 
 end
