@@ -34,13 +34,13 @@ feature -- Positive Tests
 			from
 				j := 1
 			until
-				j >= board.columns-1
+				j > board.columns
 				loop
 					k := 2
 					from
-						i := board.rows-1
+						i := board.rows
 					until
-						i <= 1
+						i < 1
 					loop
 						board.set_cell (i, j, k)
 						i := i - 1
@@ -60,14 +60,14 @@ feature -- Positive Tests
 			do
 				create board.make_empty
 				from
-					j := 0
+					j := 1
 				until
-					j >= board.columns
+					j > board.columns
 					loop
 						from
-							i := board.rows-1
+							i := board.rows -1
 						until
-							i <= 0
+							i < 1
 						loop
 							board.set_cell (i, j, 2)
 							i := i - 1
@@ -86,7 +86,7 @@ feature -- Positive Tests
 			do
 				create board.make_empty
 				from
-					j := 0
+					j := 1
 				until
 					j >= board.columns
 					loop
@@ -94,7 +94,7 @@ feature -- Positive Tests
 						from
 							i := board.rows-2
 						until
-							i <= 0
+							i < 1
 						loop
 							board.set_cell (i, j, k)
 							i := i - 1

@@ -29,9 +29,24 @@ feature -- Initialisation
 		-- Creates an empty board of 4x4 cells (all cells with default value)
 		local
 			default_cell: CELL_2048
+			i,j: INTEGER
 		do
-			create default_cell.make
-			create elements.make_filled (default_cell, Rows, Columns )
+			create elements.make_filled (Void, Rows, Columns )
+			from
+				i := 1
+			until
+				i > Rows
+			loop
+				from
+					j := 1
+				until
+					j > Columns
+				loop
+					create default_cell.make
+					elements.put (default_cell, i, j)
+				end
+			end
+
 
 		ensure
 			QTYcolumns:elements.width = 4
@@ -189,13 +204,13 @@ feature -- Status report
 	can_move_up: BOOLEAN
 		-- Indicates whether the board would change through an up movement
 		require
-			elements /= Void and rows >=2
+			elements /= Void
 		local
 			i,j,k: INTEGER
 			can_move: BOOLEAN
 		do
 			from
-				i := 0
+				i := 1
 			until
 				i > columns or can_move
 			loop
@@ -203,7 +218,7 @@ feature -- Status report
 					j := rows - 1
 					k := rows - 2
 				until
-					k <= 0 or can_move
+					k < 1  or can_move
 				loop
 					if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
 					then
