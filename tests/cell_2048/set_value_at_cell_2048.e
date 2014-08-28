@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {SET_VALUE_AT_CELL_2048}."
+	description: "Test class for routine set_value at CELL_2048"
 	author: "alangonzalez93"
 	date: "August 26 2014"
 	revision: "0.01"
