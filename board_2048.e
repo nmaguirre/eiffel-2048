@@ -71,10 +71,6 @@ feature -- Initialisation
 			first_random_cell_col : INTEGER
 			second_random_cell_row : INTEGER
 			second_random_cell_col : INTEGER
-
-			first_cell: CELL_2048
-			second_cell: CELL_2048
-
 		do
 			make_empty
 
