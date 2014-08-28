@@ -224,77 +224,61 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 
+		--require
+		--	board.can_move_right
+
 		local
-			i, j, v: INTEGER
+			i ,j ,k, sum : INTEGER
+			marca        : BOOLEAN
 		do
+			marca := false
 			from
-			 	i := 1
+				i := 1
 			until
-			 	i > 4
-			loop
+				i >= 4
+			loop -- rows
 				from
 					j := 4
 				until
-					j < 1
-				loop
-					if board.elements.item(i, j).value /= 0 then
-					   if (j-1 > 0) and (board.elements.item(i, j-1).value /= 0) then
-					      if board.elements.item(i, j).value = board.elements.item(i, j-1).value then
-						     v := board.elements.item(i, j).value + board.elements.item(i, j-1).value
-							 board.set_cell(i, j, 0)
-							 board.set_cell(i, j-1, 0)
-							 position_right(i, v)
-							 j := j - 1
-						  else
-						     v := board.elements.item(i, j).value
-						     board.set_cell(i, j, 0)
-							 position_right(i, v)
-							 j := j - 1
-					  	  end
- 					   else
-						  if (j-2 > 0) and (board.elements.item(i, j-2).value /= 0) then
-							 if board.elements.item(i, j).value = board.elements.item(i, j-2).value then
-							    v := board.elements.item(i, j).value + board.elements.item(i, j-2).value
-							    board.set_cell(i, j, 0)
-							    board.set_cell(i, j-2, 0)
-							    position_right(i, v)
-							    j := j - 1
-							 else
-							 	v := board.elements.item(i, j).value
-							    board.set_cell(i, j, 0)
-							    position_right(i, v)
-							    j := j - 1
-							 end
-						  else
-							 if (j-3 > 0) and (board.elements.item(i, j-3).value /= 0) then
-							    if board.elements.item(i, j).value = board.elements.item(i, j-3).value then
-							       v := board.elements.item(i, j).value + board.elements.item(i, j-3).value
-								   board.set_cell(i, j, 0)
-								   board.set_cell(i, j-3, 0)
-								   position_right(i, v)
-								   j := j - 1
-							    else
-							       v := board.elements.item(i, j).value
-							       board.set_cell(i, j, 0)
-							       position_right(i, v)
-						    	   j := j - 1
-						    	end
-						     else
-						     	v := board.elements.item(i, j).value
-						     	board.set_cell(i, j, 0)
-						     	position_right(i, v)
-						     	j := j - 1
-							 end
-					      end
-					   end
+					j <= 1
+				loop -- columns
+					if board.elements.item (i, j).value /= 0 then
+						k := j
+						j := j - 1
+						from
+
+						until
+							(j < 1) or (board.elements.item (i, j) /= 0)
+						loop
+							j := j - 1
+						end
+						if j >= 1 then -- if search is succesful
+     					   if board.elements.item (i, k).value = board.elements.item (i, j).value  then
+						   	  sum := (board.elements.item (i, k).value + board.elements.item (i, j).value)
+							  board.set_cell (i, j, 0)
+							  board.set_cell (i, k, 0)
+							  position_right (i, sum)
+							  marca := true
+							  j := k - 1
+						   else
+						      position_right (i, board.elements.item (i, k).value)
+						      j := k - 1
+						   end
+						else
+						   if board.elements.item (i, k).value /= 0 then
+						   	  position_right (i, board.elements.item (i, k).value)
+						   end
+						end
 					else
-					   j := j - 1
-            	    end
-			    end --end loop i
-                i := i + 1
-			end --end loop j
-			set_random_free_cell
-		end --end do
+						j := j - 1
+					end -- end if
+				end -- end loop j
+				i := i + 1
+			end -- end loop i
+		--if marca = true then
+			  -- set_random_free_cell
+		--	end
+		end -- end do
 
 feature {NONE} -- Auxiliary routines
 
@@ -309,7 +293,6 @@ feature {NONE} -- Auxiliary routines
 			positionx    : RANDOM
 			positiony    : RANDOM
 		do
-<<<<<<< HEAD
 			create positionx.make
 			create positiony.make
 			from
@@ -327,25 +310,7 @@ feature {NONE} -- Auxiliary routines
 				   marca_zero := True
 				end --end if
 			end --end loop
-=======
-				-- SEE THE COMMENT. METHOD DOES NOT DO WHAT IS SUPPOSED TO
-				--			from
-				--				marca_zero := False
-				--			until
-				--				marca_zero = True
-				--			loop
-				--				tx := positionx.next_random (3)
-				--				tx := tx + 1
-				--				ty := positiony.next_random (3)
-				--				tx := ty + 1
-				--				if board.elements.item (tx, ty).is_available then
-				--					board.elements.item (tx, ty).set_value (2)
-				--					marca_zero := True
-				--					coord_last_random_cell = [tx, ty]
-				--				end --end if
-				--			end --end loop
->>>>>>> develop
-		end --end do
+		end
 
 	calc_two_four : INTEGER
 		-- Insert randomly calculates whether two or four
