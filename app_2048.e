@@ -40,25 +40,25 @@ feature {NONE} -- Initialization
 				--read character
 				io.read_character
 				--move left
-				if io.last_character.is_equal ('a') then
+				if io.last_character.is_equal ('a') and controller.board.can_move_left then
 					controller.left
 					--update board
 					io.put_string (controller.board.out)
 				end
 				--move down
-				if io.last_character.is_equal ('s') then
+				if io.last_character.is_equal ('s') and controller.board.can_move_down then
 					controller.down
 					--update board
 					io.put_string (controller.board.out)
 				end
 				--move right
-				if io.last_character.is_equal ('d') then
+				if io.last_character.is_equal ('d') and controller.board.can_move_right then
 					controller.right
 					--update board
 					io.put_string (controller.board.out)
 				end
 				--move up
-				if io.last_character.is_equal ('w') then
+				if io.last_character.is_equal ('w') and controller.board.can_move_up then
 					controller.up
 					--update board
 					io.put_string (controller.board.out)
