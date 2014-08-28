@@ -102,6 +102,44 @@ feature -- Status report
 
 	can_move_up: BOOLEAN
 		-- Indicates whether the board would change through an up movement
+		require
+			elements /= Void and rows >=2
+		local
+			i: INTEGER
+			j: INTEGER
+			k: INTEGER
+			can_move: BOOLEAN
+		do
+			if(nr_of_filled_cells/=(columns*rows))
+			then
+				-- The board has free cell/s
+				from
+					i := 0
+				until
+					i > columns or can_move
+				loop
+					from
+						j := rows - 1
+						k := rows - 2
+					until
+						k <= 0 or can_move
+					loop
+						if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
+						then
+							-- Two cells have the same value or the cell of up is a free cell
+							can_move := True
+						end
+						j := k
+						k := k-1
+					end
+					i := i+1
+				end
+				Result := can_move
+			else
+				-- No free cells in the board can't move
+				Result := False
+			end
+		end
 
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
