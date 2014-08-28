@@ -178,11 +178,11 @@ feature -- Status setting
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
 			-- Set cell in [row,col] position with a given value
 		require
-			row>=1 and col>=1 and elements.item (row,col).is_valid_value (value)
+			valid_range : (row>=1 and row<=4 and col>=1 and col<=4) valid_value : (elements.item (row,col).is_valid_value (value))
 		do
 			elements.item (row,col).set_value (value) --Set the new value in cell
 		ensure
-			elements.item (row,col) = value --Must ensure that cell has the correct value
+			elements.item (row,col).value = value --Must ensure that cell has the correct value
 		end
 
 feature {NONE} -- Auxiliary routines
