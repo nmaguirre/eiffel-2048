@@ -47,35 +47,33 @@ feature -- Initialisation
 			second_random_cell_row : INTEGER
 			second_random_cell_col : INTEGER
 
-			first_random_value_cell: INTEGER
-			second_random_value_cell: INTEGER
 			first_cell: CELL_2048
 			second_cell: CELL_2048
+
 		do
 			make_empty()
-			create random_sequence.make;
 
+			--initialize random seed
+		    create random_sequence.set_seed (get_random_seed())
+
+			--generate two different random positions
 			from
-				first_random_cell_row := random_sequence.next_random(0) \\ 4;
-				first_random_cell_col := random_sequence.next_random(0) \\ 4;
-				second_random_cell_row := random_sequence.next_random(0) \\ 4;
-				second_random_cell_col := random_sequence.next_random(0) \\ 4;
+				first_random_cell_row  := get_random (random_sequence, 4) + 1;
+				first_random_cell_col  := get_random (random_sequence, 4) + 1;
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
 			until
 				first_random_cell_row /= second_random_cell_row or first_random_cell_col /= second_random_cell_col
 			loop
-				first_random_cell_row := random_sequence.next_random(0) \\ 4;
-				first_random_cell_col := random_sequence.next_random(0) \\ 4;
-				second_random_cell_row := random_sequence.next_random(0) \\ 4;
-				second_random_cell_col := random_sequence.next_random(0) \\ 4;
+				second_random_cell_row := get_random (random_sequence, 4) + 1;
+				second_random_cell_col := get_random (random_sequence, 4) + 1;
 			end
 
+			-- create cells
+			first_cell := get_random_cell_two_or_four(random_sequence)
+			second_cell := get_random_cell_two_or_four(random_sequence)
 
-			first_random_value_cell := (random_sequence.next_random(0) \\ 2 + 1) * 2;
-			second_random_value_cell := (random_sequence.next_random(0) \\ 2 + 1) * 2;
-
-			create first_cell.make_with_value (first_random_value_cell)
-			create second_cell.make_with_value (second_random_value_cell)
-
+			-- puts cells
 			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
 			elements.put (second_cell, second_random_cell_row, second_random_cell_col)
 		end
@@ -126,6 +124,38 @@ feature -- Status setting
 
 feature {NONE} -- Auxiliary routines
 
+	get_random_cell_two_or_four(random_sequence: RANDOM) : CELL_2048
+		local
+			random_value: INTEGER
+			cell: CELL_2048
+		do
+			random_value := (get_random (random_sequence, 2) + 1) * 2
+			cell.make_with_value (random_value)
+			Result := cell
+		end
 
+	get_random_seed() : INTEGER
+		local
+			l_time: TIME
+	    	l_seed: INTEGER
+		do
+			create l_time.make_now
+		    l_seed := l_time.hour
+		    l_seed := l_seed * 60 + l_time.minute
+		    l_seed := l_seed * 60 + l_time.second
+		    l_seed := l_seed * 1000 + l_time.milli_second
+		    Result := l_seed
+		end
+
+	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
+		--
+		require
+			ceil >= 0
+		do
+			random_sequence.forth
+			Result := random_sequence.item \\ ceil;
+		ensure
+			Result < ceil
+		end
 
 end
