@@ -95,8 +95,9 @@ feature -- Initialisation
 			end
 
 			-- create cells
-			first_cell := get_random_cell_two_or_four(random_sequence)
-			second_cell := get_random_cell_two_or_four(random_sequence)
+
+			create first_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
+			create second_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
 
 			-- puts cells
 			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
@@ -146,11 +147,7 @@ feature -- Status report
 	is_full: BOOLEAN
 		-- Indicates if all cells in the board are set or not
 		do
-			if nr_of_filled_cells = 16 then -- Board is full when all 16 cells are filled
-				Result := True
-			else
-				Result := False
-			end
+			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure Result = (nr_of_filled_cells = 16)
 		end
 
@@ -159,6 +156,37 @@ feature -- Status report
 
 	can_move_right: BOOLEAN
 		-- Indicates whether the board would change through a movement to the right
+		require
+			elements /= Void and rows >= 0 and columns >= 0
+		local
+			i, j, k: INTEGER
+			move_ok : BOOLEAN
+		do
+			from
+				i := 0
+			until
+				i > columns or move_ok
+			loop
+				from
+					j:= 0
+					k:= 1
+				until
+					k >= columns or move_ok
+				loop
+					if ((elements.item (i,j).value = elements.item (i,k).value) or (elements.item(i,j).value = 0)) then
+						-- evaluates if the value is equal to the right or if value is equal 0
+						move_ok := True
+					end
+					j:= k
+					k:= k+1
+				end
+					i:= i+1
+			end
+				Result := move_ok
+		ensure
+			elements /= Void and rows >= 0 and columns >= 0
+		end
+
 
 	can_move_up: BOOLEAN
 		-- Indicates whether the board would change through an up movement
@@ -203,23 +231,22 @@ feature -- Status setting
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
 			-- Set cell in [row,col] position with a given value
 		require
-			row>=1 and col>=1 and elements.item (row,col).is_valid_value (value)
+			valid_range : (row>=1 and row<=4 and col>=1 and col<=4) valid_value : (elements.item (row,col).is_valid_value (value))
 		do
 			elements.item (row,col).set_value (value) --Set the new value in cell
 		ensure
-			elements.item (row,col) = value --Must ensure that cell has the correct value
+			elements.item (row,col).value = value --Must ensure that cell has the correct value
 		end
 
 feature {NONE} -- Auxiliary routines
 
-	get_random_cell_two_or_four(random_sequence: RANDOM) : CELL_2048
+	get_random_cell_two_or_four (random_sequence: RANDOM) : INTEGER
 		local
 			random_value: INTEGER
-			cell: CELL_2048
+
 		do
 			random_value := (get_random (random_sequence, 2) + 1) * 2
-			cell.make_with_value (random_value)
-			Result := cell
+			Result := random_value
 		end
 
 	get_random_seed() : INTEGER
