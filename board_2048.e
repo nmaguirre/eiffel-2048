@@ -70,8 +70,9 @@ feature -- Initialisation
 			end
 
 			-- create cells
-			first_cell := get_random_cell_two_or_four(random_sequence)
-			second_cell := get_random_cell_two_or_four(random_sequence)
+
+			create first_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
+			create second_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
 
 			-- puts cells
 			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
@@ -187,14 +188,13 @@ feature -- Status setting
 
 feature {NONE} -- Auxiliary routines
 
-	get_random_cell_two_or_four(random_sequence: RANDOM) : CELL_2048
+	get_random_cell_two_or_four (random_sequence: RANDOM) : INTEGER
 		local
 			random_value: INTEGER
-			cell: CELL_2048
+
 		do
 			random_value := (get_random (random_sequence, 2) + 1) * 2
-			cell.make_with_value (random_value)
-			Result := cell
+			Result := random_value
 		end
 
 	get_random_seed() : INTEGER
