@@ -106,16 +106,16 @@ Feature: Game appropriately reacts to basic movements, and basic game logic. Thi
 
         Scenario: Moving right makes you lose 
                 Given the game board is in state
-                        |2 |4 |2 |4 |
-                        |2 |4 |2 |4 |
-                        |8 |4 |2 |4 |
-                        |8 |4 |2 |  |
+                        |2  |4  |8  |32  |
+                        |4  |8  |16 |64  |
+                        |8  |16 |32 |128 |
+                        |32 |64 |256|    |
                 When I move right
                 Then I should obtain exactly
-                        |2 |4 |2 |4 |
-                        |2 |4 |2 |4 |
-                        |8 |4 |2 |4 |
-                        |x |8 |4 |2 |
+                        |2  |4  |8  |32  |
+                        |4  |8  |16 |64  |
+                        |8  |16 |32 |128 |
+                        |x  |32 |64 |256 |
                 And x should be either 4 or 2
                 And the user should be informed he lost (game over)        
                 And the game should finish
