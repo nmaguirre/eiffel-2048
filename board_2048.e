@@ -32,7 +32,7 @@ feature -- Initialisation
 		do
 			create default_cell.make
 			create elements.make_filled (default_cell, Rows, Columns )
-			nr_of_filled_cells :=0
+		
 		ensure
 			QTYcolumns:elements.width = 4
 			QTYrows : elements.height = 4
