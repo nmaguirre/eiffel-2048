@@ -12,12 +12,29 @@ inherit
 
 feature
 
-	creation_test_make_empty
+	make_empty_qty_columns_correct
 		local
 			board : BOARD_2048
 		do
 			create board.make_empty
-			assert("Size Element == 16",board.elements.count = 16)
+			assert("QTY Columns correct",board.elements.width = 4)
 		end
+
+	make_empty_qty_rows_correct
+		local
+			board : BOARD_2048
+		do
+			create board.make_empty
+			assert("QTY Rows correct",board.elements.height = 4)
+		end
+
+	make_empty_all_are_default_values
+		local
+			board: BOARD_2048
+		do
+			create board.make_empty
+			assert("All default values", board.elements.all_default)
+		end
+
 
 end

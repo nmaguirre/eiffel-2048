@@ -33,6 +33,7 @@ feature -- Initialisation
 			i : INTEGER
 			j : INTEGER
 		do
+			create elements.make (4, 4)
 			from
 				i := 1
 			until
@@ -44,14 +45,16 @@ feature -- Initialisation
 					j<=4
 				loop
 					create default_cell.make
-					elements.put (default_cell, i, j)
+					elements.item(i,j) := default_cell
 					j := j+1
 				end
 				i:=i+1
 			end
 
 		ensure
-			count: elements.count = 16
+			columns:elements.width = 4
+			rows : elements.height = 4
+			elements.all_default
 
 		end
 
