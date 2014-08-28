@@ -108,35 +108,28 @@ feature -- Status report
 			i,j,k: INTEGER
 			can_move: BOOLEAN
 		do
-			if(not is_full)
-			then
-				-- The board has free cell/s
+			from
+				i := 0
+			until
+				i > columns or can_move
+			loop
 				from
-					i := 0
+					j := rows - 1
+					k := rows - 2
 				until
-					i > columns or can_move
+					k <= 0 or can_move
 				loop
-					from
-						j := rows - 1
-						k := rows - 2
-					until
-						k <= 0 or can_move
-					loop
-						if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
-						then
-							-- Two cells have the same value or the cell of up is a free cell
-							can_move := True
-						end
-						j := k
-						k := k-1
+					if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
+					then
+						-- Two cells have the same value or the cell of up is a free cell
+						can_move := True
 					end
-					i := i+1
+					j := k
+					k := k-1
 				end
-				Result := can_move
-			else
-				-- No free cells in the board can't move
-				Result := False
+				i := i+1
 			end
+			Result := can_move
 		end
 
 	can_move_down: BOOLEAN
