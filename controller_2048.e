@@ -189,11 +189,81 @@ feature -- Movement commands
 		end
 
 	right
-			-- Moves the cells to the leftmost possible point of the game board.
+			-- Moves the cells to the rightmost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
+
+		local
+			i, j, v: INTEGER
 		do
-		end
+			from
+			 	i := 1
+			until
+			 	i > 4
+			loop
+				from
+					j := 4
+				until
+					j < 1
+				loop
+					if board.elements.item(i, j).value /= 0 then
+					   if (j-1 > 0) and (board.elements.item(i, j-1).value /= 0) then
+					      if board.elements.item(i, j).value = board.elements.item(i, j-1).value then
+						     v := board.elements.item(i, j).value + board.elements.item(i, j-1).value
+							 board.set_cell(i, j, 0)
+							 board.set_cell(i, j-1, 0)
+							 position_right(i, v)
+							 j := j - 1
+						  else
+						     v := board.elements.item(i, j).value
+						     board.set_cell(i, j, 0)
+							 position_right(i, v)
+							 j := j - 1
+					  	  end
+ 					   else
+						  if (j-2 > 0) and (board.elements.item(i, j-2).value /= 0) then
+							 if board.elements.item(i, j).value = board.elements.item(i, j-2).value then
+							    v := board.elements.item(i, j).value + board.elements.item(i, j-2).value
+							    board.set_cell(i, j, 0)
+							    board.set_cell(i, j-2, 0)
+							    position_right(i, v)
+							    j := j - 1
+							 else
+							 	v := board.elements.item(i, j).value
+							    board.set_cell(i, j, 0)
+							    position_right(i, v)
+							    j := j - 1
+							 end
+						  else
+							 if (j-3 > 0) and (board.elements.item(i, j-3).value /= 0) then
+							    if board.elements.item(i, j).value = board.elements.item(i, j-3).value then
+							       v := board.elements.item(i, j).value + board.elements.item(i, j-3).value
+								   board.set_cell(i, j, 0)
+								   board.set_cell(i, j-3, 0)
+								   position_right(i, v)
+								   j := j - 1
+							    else
+							       v := board.elements.item(i, j).value
+							       board.set_cell(i, j, 0)
+							       position_right(i, v)
+						    	   j := j - 1
+						    	end
+						     else
+						     	v := board.elements.item(i, j).value
+						     	board.set_cell(i, j, 0)
+						     	position_right(i, v)
+						     	j := j - 1
+							 end
+					      end
+					   end
+					else
+					   j := j - 1
+            	    end
+			    end --end loop i
+                i := i + 1
+			end --end loop j
+			set_random_free_cell
+		end --end do
 
 feature {NONE} -- Auxiliary routines
 
@@ -202,25 +272,66 @@ feature {NONE} -- Auxiliary routines
 			-- Position of unset cell is chosen randomly.
 			-- Value to set the cell (2 or 4) chosen randomly.
 		local
-			--			marca_zero: BOOLEAN
-			--			tx, ty: INTEGER
-			--			positionx: RANDOM
-			--			positiony: RANDOM
+			marca_zero   : BOOLEAN
+			tx, ty       : INTEGER
+			random_value : INTEGER
+			positionx    : RANDOM
+			positiony    : RANDOM
 		do
-				-- SEE THE COMMENT. METHOD DOES NOT DO WHAT IS SUPPOSED TO
-				--			from
-				--				marca_zero := False
-				--			until
-				--				marca_zero = True
-				--			loop
-				--				tx := positionx.next_random (3)
-				--				tx := tx + 1
-				--				ty := positiony.next_random (3)
-				--				tx := ty + 1
-				--				if board.elements.item (tx, ty).is_available then
-				--					board.elements.item (tx, ty).set_value (2)
-				--					marca_zero := True
-				--				end --end if
-				--			end --end loop
+			create positionx.make
+			create positiony.make
+			from
+				marca_zero := False
+			until
+				marca_zero = True
+			loop
+				tx := positionx.next_random(3)
+				tx := tx + 1
+				ty := positiony.next_random(3)
+				ty := ty + 1
+				if board.elements.item(tx, ty).is_available then
+				   random_value := calc_two_four
+				   board.elements.item(tx, ty).set_value(random_value)
+				   marca_zero := True
+				end --end if
+			end --end loop
 		end --end do
+
+	calc_two_four : INTEGER
+		-- Insert randomly calculates whether two or four
+		local
+			random_value : INTEGER
+			random       : RANDOM
+		do
+		    create random.make
+		    random_value := random.next_random(5)
+		    if random_value = 0 then
+		       Result := 4
+		    else
+		       Result := 2
+		    end
+		ensure
+			Result = 2 or Result = 4
+		end
+
+	position_right(row, val: INTEGER)
+        -- Method that receives as a parameter a row, and verifies the position which is more to the right
+        -- which is empty in that row and also inserts the value passed as parameter
+		local
+			column: INTEGER
+		do
+			from
+			 	column := 4
+			until
+		 		column < 1
+		 	loop
+		 		if board.elements.item(row, column).value = 0 then
+		 		   board.set_cell(row, column, val)
+		 		   column := 0
+		 		else
+		 		   column := column - 1
+		 		end --end if
+		 	end --end loop
+		end --end do		
+
 end
