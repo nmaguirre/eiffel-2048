@@ -41,6 +41,8 @@ feature -- Test routines
 			board.set_cell (4, 3, 2)
 			board.set_cell (4, 4, 2)
 			create controller.make_with_board (board)
+			assert ("can move right!", controller.board.can_move_right)
+				-- moving right
 			controller.right
 			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
@@ -129,6 +131,49 @@ feature -- Test routines
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
 					assert ("corner has a 4", controller.board.elements [4, 4].value = 4)
 					assert ("(4,3) has a 2", controller.board.elements [3, 4].value = 2)
+					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
+					assert ("coordinates of new cell is not (4,4)", row_new /= 4 or col_new /= 4)
+					assert ("coordinates of new cell is not (4,3)", row_new /= 4 or col_new /= 3)
+					assert ("new cell has a 2 or a 4", controller.board.elements [row_new, col_new].value = 2 or controller.board.elements [row_new, col_new].value = 4)
+				else
+					assert ("invalid coordinate", False)
+				end
+			else
+				assert ("invalid coordinate", False)
+			end
+		end
+
+	move_right_with_colapsing_cells_and_residual_tail
+			-- Scenario: Moving right changes board state with crashing cells with
+			--              similar values leaving other residual matching cells
+			-- 		Given the game board is in state
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |2 |2 |4 |
+			-- 		When I move right
+			-- 		And the randomly picked coordinate for the new cell is (x,y)
+			-- 		Then I should obtain
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |  |4 |4 |
+			-- 		And (x,y) must be different from (4,4) and (4,3)
+			-- 		And the board in position (x,y) should be filled with 2 or 4.
+		local
+			board: BOARD_2048
+			controller: CONTROLLER_2048
+		do
+			create board.make_empty
+			board.set_cell (4, 2, 2)
+			board.set_cell (4, 3, 2)
+			board.set_cell (4, 4, 4)
+			create controller.make_with_board (board)
+			controller.right
+			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
+				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
+					assert ("corner has a 4", controller.board.elements [4, 4].value = 4)
+					assert ("(4,3) has a 4", controller.board.elements [3, 4].value = 4)
 					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
 					assert ("coordinates of new cell is not (4,4)", row_new /= 4 or col_new /= 4)
 					assert ("coordinates of new cell is not (4,3)", row_new /= 4 or col_new /= 3)

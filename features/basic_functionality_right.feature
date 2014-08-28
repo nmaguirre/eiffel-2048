@@ -69,7 +69,7 @@ Feature: Game appropriately reacts to basic movements, and basic game logic. Thi
                         |  |  |  |  |
                         |  |  |  |  |
                         |  |  |  |  |
-                        |  |  |4 |2 |
+                        |  |  |4 |4 |
                 And (x,y) must be different from (4,4) and (4,3)
                 And the board in position (x,y) should be filled with 2 or 4.
 
