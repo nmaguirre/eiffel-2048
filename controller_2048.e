@@ -48,7 +48,6 @@ feature -- Game State
 			-- Indicates whether the game is finished or not.
 			-- Game finishes when either 2048 is reached, or if any movement is possible.
 		local
-			i, j: INTEGER -- Auxiliary variables to navigate through the game board
 			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
 		do
 			finished := False
