@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {OUT_OF_BOARD_2048}."
+	description: "Summary description for {OUT_AT_BOARD_2048}."
 	author: "javieriocejo"
 	date: "August 27, 2014"
 	revision: "00.1"
 
 class
-	OUT_OF_BOARD_2048
+	OUT_AT_BOARD_2048
 
 inherit
 	EQA_TEST_SET
