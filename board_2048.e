@@ -29,32 +29,14 @@ feature -- Initialisation
 		-- Creates an empty board of 4x4 cells (all cells with default value)
 		local
 			default_cell: CELL_2048
-			i : INTEGER
-			j : INTEGER
 		do
-			create elements.make (rows, columns)
-			from
-				i := 1
-			until
-				i <= rows
-			loop
-				from
-					j:= 1
-				until
-					j<=columns
-				loop
-					create default_cell.make
-					elements.item(i,j) := default_cell
-					j := j+1
-				end
-				i:=i+1
-			end
-
+			create default_cell.make
+			create elements.make_filled (default_cell, Rows, Columns )
+			nr_of_filled_cells :=0
 		ensure
 			QTYcolumns:elements.width = 4
 			QTYrows : elements.height = 4
 			elements.all_default
-
 		end
 
 		-- Board Constructor
@@ -96,11 +78,11 @@ feature -- Initialisation
 
 feature -- Status report
 
-	rows: INTEGER = 4
+	Rows: INTEGER = 4
 		-- Number of rows in the board
 		-- Should be constantly 4
 
-	columns: INTEGER = 4
+	Columns: INTEGER = 4
 		-- Number of columns in the board
 		-- Should be constantly 4
 
