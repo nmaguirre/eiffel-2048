@@ -88,6 +88,30 @@ feature -- Status report
 
 	nr_of_filled_cells: INTEGER
 		-- Returns the number of filled cells in the board
+		local
+			num: INTEGER
+			i: INTEGER
+			j: INTEGER
+		do
+			from
+				i := 1
+			until
+				i = 4
+			loop
+				from
+					j :=1
+				until
+					j = 4
+				loop
+					if not (elements.item (i, j) = 0) then
+						num := num+1
+					end
+					j := j+1
+				end
+				i := i+1
+			end
+			Result := num
+		end
 
 	out: STRING
 		-- Provides a string representation of the board
