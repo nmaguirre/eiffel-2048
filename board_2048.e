@@ -85,6 +85,14 @@ feature -- Status report
 
 	is_full: BOOLEAN
 		-- Indicates if all cells in the board are set or not
+		do
+			if nr_of_filled_cells = 16 then -- Board is full when all 16 cells are filled
+				Result := True
+			else
+				Result := False
+			end
+		ensure Result = (nr_of_filled_cells = 16)
+		end
 
 	can_move_left: BOOLEAN
 		-- Indicates whether the board would change through a movement to the left
