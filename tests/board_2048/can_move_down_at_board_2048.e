@@ -40,6 +40,7 @@ feature -- Test routines
 			create board.make_empty
 			board.set_cell(3,4,2)
 			board.set_cell(4,4,4)
+
 			assert ("Can not move down", not board.can_move_down)
 		end
 
@@ -51,7 +52,6 @@ feature -- Test routines
 		do
 			if not second_time then
 				ok := True
-				create board.make
 				res := board.can_move_down
 				ok := False
 			end
