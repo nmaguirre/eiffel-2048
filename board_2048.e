@@ -32,7 +32,7 @@ feature -- Initialisation
 		do
 			create default_cell.make
 			create elements.make_filled (default_cell, Rows, Columns )
-		
+
 		ensure
 			QTYcolumns:elements.width = 4
 			QTYrows : elements.height = 4
@@ -103,7 +103,7 @@ feature -- Status report
 				until
 					j = 4
 				loop
-					if not (elements.item (i, j) = 0) then
+					if not (elements.item (i, j).value = 0) then
 						num := num+1
 					end
 					j := j+1
