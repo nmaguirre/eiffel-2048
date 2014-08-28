@@ -15,26 +15,15 @@ inherit
 
 feature -- Test routines
 
-	make_with_board_with_empty_board_test
-			-- Test with an empty board
-		local
-			controller: CONTROLLER_2048
-			board: BOARD_2048
-		do
-			create board.make_empty
-			create controller.make_with_board (board)
-			assert ("The number of filled cells should be zero", controller.board.nr_of_filled_cells = 0)
-		end
-
 	make_with_board_with_default_board_test
-			-- Test with an standart initialised board
+			-- Test with an empty board
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
 		do
 			create board.make
 			create controller.make_with_board (board)
-			assert ("The number of filled cells should be two", controller.board.nr_of_filled_cells = 2)
+			assert ("The board of the controller is effectively set", controller.board = board)
 		end
 
 end
