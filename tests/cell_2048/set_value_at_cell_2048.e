@@ -40,15 +40,15 @@ feature
 			cell : CELL_2048
 		do
 			if not second_time then
-				ok := true;
+				ok := True;
 				create cell.make
 				cell.set_value (1999) -- Must throw an exception
-				ok := false;
+				ok := False;
 			end
 			assert("routine failed, as expected",ok)
 		rescue
-			second_time := true;
-			if ok then  -- ok = true means that the rutine failed
+			second_time := True;
+			if ok then  -- ok = True means that the rutine failed
 				retry
 			end
 		end
@@ -60,15 +60,15 @@ feature
 			cell : CELL_2048
 		do
 			if not second_time then
-				ok := true;
+				ok := True;
 				create cell.make
 				cell.set_value (500) -- Must throw an exception
-				ok := false;
+				ok := False;
 			end
 			assert("routine failed, as expected",ok)
 		rescue
-			second_time := true;
-			if ok then  -- ok = true means that the rutine failed
+			second_time := True;
+			if ok then  -- ok = True means that the rutine failed
 				retry
 			end
 		end
