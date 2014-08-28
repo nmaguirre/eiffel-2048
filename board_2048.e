@@ -75,10 +75,10 @@ feature -- Initialisation
 			second_cell: CELL_2048
 
 		do
-			make_empty()
+			make_empty
 
 			--initialize random seed
-		    create random_sequence.set_seed (get_random_seed())
+		    create random_sequence.set_seed (get_random_seed)
 
 			--generate two different random positions
 			from
@@ -93,14 +93,9 @@ feature -- Initialisation
 				second_random_cell_col := get_random (random_sequence, 4) + 1;
 			end
 
-			-- create cells
-
-			create first_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
-			create second_cell.make_with_value (get_random_cell_two_or_four (random_sequence))
-
-			-- puts cells
-			elements.put (first_cell, first_random_cell_row, first_random_cell_col)
-			elements.put (second_cell, second_random_cell_row, second_random_cell_col)
+			-- set cells
+			set_cell (first_random_cell_row, first_random_cell_col, get_random_cell_two_or_four (random_sequence))
+			set_cell (second_random_cell_row, second_random_cell_col, get_random_cell_two_or_four (random_sequence))
 		end
 
 feature -- Status report
@@ -222,8 +217,33 @@ feature -- Status report
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
 
-	is_winning_board: BOOLEAN
+	is_winning_board : BOOLEAN
 		-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
+		require
+			elements.height=4 and elements.width=4
+		local
+			i,j : INTEGER
+			is_winning : BOOLEAN
+		do
+			from
+				i := 1
+			until
+				i > 4 or is_winning
+			loop
+				from
+					j := 1
+				until
+					j > 4 or is_winning
+				loop
+					if (elements.item (i,j).value = 2048) then
+						is_winning := True
+					end
+					j := j + 1
+				end
+				i := i + 1
+			end
+			Result := is_winning
+		end
 
 feature -- Status setting
 
@@ -240,6 +260,7 @@ feature -- Status setting
 feature {NONE} -- Auxiliary routines
 
 	get_random_cell_two_or_four (random_sequence: RANDOM) : INTEGER
+		-- Randomly returns two or four
 		local
 			random_value: INTEGER
 
@@ -248,7 +269,8 @@ feature {NONE} -- Auxiliary routines
 			Result := random_value
 		end
 
-	get_random_seed() : INTEGER
+	get_random_seed : INTEGER
+		-- Returns a seed for random sequences
 		local
 			l_time: TIME
 	    	l_seed: INTEGER
@@ -262,7 +284,7 @@ feature {NONE} -- Auxiliary routines
 		end
 
 	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
-		--
+		-- Returns a random integer  minor that ceil from a random sequence
 		require
 			ceil >= 0
 		do
