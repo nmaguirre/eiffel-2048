@@ -253,4 +253,55 @@ feature -- Test routines
 			assert ("winning board!", controller.board.is_winning_board)
 		end
 
+	move_right_makes_you_lose
+			-- Scenario: Moving right makes you lose
+			--		Given the game board is in state
+			--                        |2 |4 |2 |4 |
+			--                        |2 |4 |2 |4 |
+			--                        |8 |4 |2 |4 |
+			--                        |8 |4 |2 |  |
+			--		When I move right
+			--		Then I should obtain exactly
+			--                        |2 |4 |2 |4 |
+			--                        |2 |4 |2 |4 |
+			--                        |8 |4 |2 |4 |
+			--                        |x |8 |4 |2 |
+			-- 		And x should be either 4 or 2
+			--		And the user should be informed he lost (game over)
+			--		And the game should finish
+		local
+			board: BOARD_2048
+			controller: CONTROLLER_2048
+		do
+			create board.make_empty
+			board.set_cell (1, 1, 2)
+			board.set_cell (1, 2, 4)
+			board.set_cell (1, 3, 2)
+			board.set_cell (1, 4, 4)
+			board.set_cell (2, 1, 2)
+			board.set_cell (2, 2, 4)
+			board.set_cell (2, 3, 2)
+			board.set_cell (2, 4, 4)
+			board.set_cell (3, 1, 8)
+			board.set_cell (3, 2, 4)
+			board.set_cell (3, 3, 2)
+			board.set_cell (3, 4, 4)
+			board.set_cell (4, 1, 8)
+			board.set_cell (4, 2, 4)
+			board.set_cell (4, 3, 2)
+			create controller.make_with_board (board)
+			controller.right
+			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
+				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
+					assert ("game finished", controller.is_finished)
+					assert ("user did not win!", not controller.board.is_winning_board)
+					assert ("coordinates of new cell is (4,1)", row_new /= 4 or col_new /= 1)
+				else
+					assert ("invalid coordinate", False)
+				end
+			else
+				assert ("invalid coordinate", False)
+			end
+		end
+
 end
