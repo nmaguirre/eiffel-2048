@@ -186,4 +186,42 @@ feature -- Test routines
 			end
 		end
 
+	move_right_not_changing_board
+			-- Scenario: Moving right does not change the board
+			-- 		Given the game board is in state
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |8 |4 |2 |
+			-- 		When I move right
+			-- 		Then I should obtain exactly
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |  |  |  |
+			--                        |  |8 |4 |2 |
+		local
+			board: BOARD_2048
+			controller: CONTROLLER_2048
+		do
+			create board.make_empty
+			board.set_cell (4, 2, 8)
+			board.set_cell (4, 3, 4)
+			board.set_cell (4, 4, 2)
+			create controller.make_with_board (board)
+			controller.right
+			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
+				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
+					assert ("corner has a 2", controller.board.elements [4, 4].value = 2)
+					assert ("(4,3) has a 4", controller.board.elements [3, 4].value = 4)
+					assert ("(4,2) has an 8", controller.board.elements [3, 4].value = 8)
+					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
+					assert ("coordinates of new cell is (0,0), no new cell", row_new /= 0 or col_new /= 0)
+					else
+					assert ("invalid coordinate", False)
+				end
+			else
+				assert ("invalid coordinate", False)
+			end
+		end
+
 end
