@@ -105,12 +105,10 @@ feature -- Status report
 		require
 			elements /= Void and rows >=2
 		local
-			i: INTEGER
-			j: INTEGER
-			k: INTEGER
+			i,j,k: INTEGER
 			can_move: BOOLEAN
 		do
-			if(nr_of_filled_cells/=(columns*rows))
+			if(not is_full)
 			then
 				-- The board has free cell/s
 				from
