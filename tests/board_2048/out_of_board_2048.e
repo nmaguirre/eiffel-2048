@@ -21,17 +21,17 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 			board: BOARD_2048
 		do
 			create board.make
-			assert ("String is not empty", board.out.count!=0)
+			assert ("String is not empty", board.out.count/=0)
 		end
 
-	string_has_even amount_of_numbers
+	string_has_even_amount_of_numbers
 			-- symbols
 			-- Must return TRUE
 		local
 			board: BOARD_2048
 		do
 			create board.make
-			assert ("String is not empty", board.out.count\\2==0)
+			assert ("String is not empty", board.out.count\\2/=0)
 		end
 
 
