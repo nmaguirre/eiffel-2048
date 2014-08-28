@@ -22,21 +22,21 @@ feature -- Test routines
 			i,j: INTEGER
 		do
 			create board.make
-			from
-				j := 0
+			from 		-- Fill the board with cells
+				j := 1
 			until
-				j = 16
+				j = 4
+			loop
+				from
+					i := 1
+				until
+					i = 4
 				loop
-					from
-						i := 0
-					until
-						i = 16
-					loop
-						board.set_cell (i, j, 2)
-						i := i + 1
-					end
-					j := j + 1
+					board.set_cell (i, j, 2)
+					i := i + 1
 				end
+				j := j + 1
+			end
 			assert ("Board is full.", board.is_full)
 		end
 

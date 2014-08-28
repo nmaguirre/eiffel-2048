@@ -48,7 +48,7 @@ feature -- Test routines
 
 	is_valid_value_test_with_negative_value
 			-- Tests this method with value = -1
-			-- Should fail as this method doesn't accept negative integers as input
+			-- Should return false.
 		local
 			ivv: CELL_2048
 		do
