@@ -149,26 +149,24 @@ feature -- Status report
 		require
 			elements /= Void and rows >= 0 and columns >= 0
 		local
-			i, j, k: INTEGER
+			i, j: INTEGER
 			move_ok : BOOLEAN
 		do
 			from
-				i := 0
+				i := 1
 			until
 				i > columns or move_ok
 			loop
 				from
-					j:= 0
-					k:= 1
+					j:= 1
 				until
-					k >= columns or move_ok
+					(j+1) >= columns or move_ok
 				loop
-					if ((elements.item (i,j).value = elements.item (i,k).value) or (elements.item(i,j).value = 0)) then
+					if ((elements.item (i,j).value = elements.item (i,j+1).value) or (elements.item(i,j).value = 0)) then
 						-- evaluates if the value is equal to the right or if value is equal 0
 						move_ok := True
 					end
-					j:= k
-					k:= k+1
+					j:= j+1
 				end
 					i:= i+1
 			end
