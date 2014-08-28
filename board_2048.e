@@ -122,11 +122,7 @@ feature -- Status report
 	is_full: BOOLEAN
 		-- Indicates if all cells in the board are set or not
 		do
-			if nr_of_filled_cells = 16 then -- Board is full when all 16 cells are filled
-				Result := True
-			else
-				Result := False
-			end
+			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure Result = (nr_of_filled_cells = 16)
 		end
 
