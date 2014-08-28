@@ -26,7 +26,18 @@ feature {ANY} -- Status report
 			-- Value should otherwise be a power of two (greater than one)
 
 	out: STRING
-			-- Provides a string representation of a cell (shows its value as a string)
+		-- Provides a string representation of a cell (shows its value as a string)
+		local
+			s: STRING
+		do
+			create s.make_empty
+			if value = 0 then
+				s := " " -- Zero is a blank space
+			else
+				s := value.out -- Any other value is shown as the corresponding number
+			end
+			Result := s
+		end
 
 feature {ANY} -- Initialization
 
