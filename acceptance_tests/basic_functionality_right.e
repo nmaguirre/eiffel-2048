@@ -216,12 +216,41 @@ feature -- Test routines
 					assert ("(4,2) has an 8", controller.board.elements [3, 4].value = 8)
 					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
 					assert ("coordinates of new cell is (0,0), no new cell", row_new /= 0 or col_new /= 0)
-					else
+				else
 					assert ("invalid coordinate", False)
 				end
 			else
 				assert ("invalid coordinate", False)
 			end
+		end
+
+	move_right_makes_you_win
+			-- Scenario: Moving right makes you win
+			--		Given the game board is in state
+			--                        |  |  |     |     |
+			--                        |  |  |     |     |
+			--                        |  |  |     |     |
+			--                        |  |  |1024 |1024 |
+			--		When I move right
+			--		Then I should obtain exactly
+			--                        |  |  |  |     |
+			--                        |  |  |  |     |
+			--                        |  |  |  |     |
+			--                        |  |  |  |2048 |
+			--		And the user should be informed he won
+			-- 		And the game should finish
+		local
+			board: BOARD_2048
+			controller: CONTROLLER_2048
+		do
+			create board.make_empty
+			board.set_cell (4, 3, 1024)
+			board.set_cell (4, 4, 1024)
+			create controller.make_with_board (board)
+			controller.right
+			assert ("corner has a 2048", controller.board.elements [4, 4].value = 2048)
+			assert ("game finished", controller.is_finished)
+			assert ("winning board!", controller.board.is_winning_board)
 		end
 
 end
