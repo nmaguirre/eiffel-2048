@@ -47,11 +47,11 @@ feature -- Initialisation
 					elements.put (default_cell, i, j)
 					j := j+1
 				end
-				i:i+1
+				i:=i+1
 			end
 
 		ensure
-			count: elements.count = 16 and elements.all_default
+			count: elements.count = 16
 
 		end
 
