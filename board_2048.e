@@ -78,15 +78,15 @@ feature -- Initialisation
 
 			--generate two different random positions
 			from
-				first_random_cell_row  := get_random (random_sequence, 4) + 1;
-				first_random_cell_col  := get_random (random_sequence, 4) + 1;
-				second_random_cell_row := get_random (random_sequence, 4) + 1;
-				second_random_cell_col := get_random (random_sequence, 4) + 1;
+				first_random_cell_row  := get_random (random_sequence, rows) + 1;
+				first_random_cell_col  := get_random (random_sequence, columns) + 1;
+				second_random_cell_row := get_random (random_sequence, rows) + 1;
+				second_random_cell_col := get_random (random_sequence, columns) + 1;
 			until
 				first_random_cell_row /= second_random_cell_row or first_random_cell_col /= second_random_cell_col
 			loop
-				second_random_cell_row := get_random (random_sequence, 4) + 1;
-				second_random_cell_col := get_random (random_sequence, 4) + 1;
+				second_random_cell_row := get_random (random_sequence, rows) + 1;
+				second_random_cell_col := get_random (random_sequence, columns) + 1;
 			end
 
 			-- set cells
@@ -263,6 +263,8 @@ feature {NONE} -- Auxiliary routines
 		do
 			random_value := (get_random (random_sequence, 2) + 1) * 2
 			Result := random_value
+		ensure
+			Result = 2 or Result = 4
 		end
 
 	get_random_seed : INTEGER
