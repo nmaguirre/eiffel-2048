@@ -33,7 +33,7 @@ feature
 			board: BOARD_2048
 		do
 			create board.make_empty
-			assert("All default values", board.elements.all_default)
+			assert("All default values", board.all_default (board.elements))
 		end
 
 

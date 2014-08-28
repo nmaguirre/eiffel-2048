@@ -32,15 +32,15 @@ feature -- Positive Tests
 		do
 			create board.make_empty
 			from
-				j := 0
+				j := 1
 			until
-				j >= board.columns
+				j >= board.columns-1
 				loop
 					k := 2
 					from
 						i := board.rows-1
 					until
-						i <= 0
+						i <= 1
 					loop
 						board.set_cell (i, j, k)
 						i := i - 1

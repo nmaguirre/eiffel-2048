@@ -36,7 +36,7 @@ feature -- Initialisation
 		ensure
 			QTYcolumns:elements.width = 4
 			QTYrows : elements.height = 4
-			elements.all_default
+			all_default(elements)
 		end
 
 		-- Board Constructor
@@ -326,5 +326,34 @@ feature {NONE} -- Auxiliary routines
 		ensure
 			Result < ceil
 		end
+
+feature{MAKE_EMPTY_AT_BOARD_2048}
+
+	all_default(elems: ARRAY2[CELL_2048]) : BOOLEAN
+		-- Corroborate if all cells have the default value
+		-- Default value in cell is 0
+		local
+			i, j: INTEGER
+		do
+			Result:= True
+			from
+				j := 1
+			until
+				j >= elems.width-1
+			loop
+				from
+					i := elems.height-1
+				until
+					i <= 1
+				loop
+					if not elements.item (i,j).value.is_equal (0) then
+						Result:= False
+					end
+					i := i - 1
+				end
+				j := j + 1
+			end
+		end
+
 
 end
