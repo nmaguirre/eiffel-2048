@@ -23,7 +23,7 @@ feature -- Test routines
 		do
 			create board.make_empty
 			board.set_cell(1,1,2)
-			assert ("2 is  a valid value of cell, this test should return true", board.elements.item(1,1) = 2)
+			assert ("2 is  a valid value of cell, this test should return true", board.elements.item(1,1).value = 2)
 		end
 
 	set_cell_with_negative_value
@@ -102,6 +102,46 @@ feature -- Test routines
 				ok := False
 			end
 			assert ("-1 is not a valid value of index, this test should return false", ok)
+			rescue
+			second_time := True
+			if ok then
+				retry
+			end
+
+		end
+
+	set_cell_with_row_index_out_of_range
+		local
+			ok, second_time: BOOLEAN
+			board : BOARD_2048
+		do
+			if not second_time then
+				ok := True
+				create board.make_empty
+				board.set_cell((6),1,2)
+				ok := False
+			end
+			assert ("6 is not a valid value of index, this test should return false", ok)
+			rescue
+			second_time := True
+			if ok then
+				retry
+			end
+
+		end
+
+	set_cell_with_column_index_out_of_range
+		local
+			ok, second_time: BOOLEAN
+			board : BOARD_2048
+		do
+			if not second_time then
+				ok := True
+				create board.make_empty
+				board.set_cell(1,6,2)
+				ok := False
+			end
+			assert ("6 is not a valid value of index, this test should return false", ok)
 			rescue
 			second_time := True
 			if ok then
