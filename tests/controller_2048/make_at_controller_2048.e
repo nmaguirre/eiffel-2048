@@ -22,15 +22,6 @@ feature -- Test routines
 			assert ("is_finished must be false", not controller.is_finished)
 		end
 
-	last_random_cell_coordinates_value_default
-			-- verifying that the test cell coordinates are (0,0)
-		local
-			controller: CONTROLLER_2048
-		do
-			create controller.make
-			assert ("cell coordinates are (0,0)", (controller.last_random_cell_coordinates.at (1) = 0) and (controller.last_random_cell_coordinates.at (2) = 0))
-		end
-
 	test_initialized_board
 			-- Test to verify that the board is initialized
 		local
