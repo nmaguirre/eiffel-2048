@@ -216,7 +216,7 @@ feature -- Status report
 				until
 					j > 4 or is_winning
 				loop
-					if elements.item (i,j).value = 2048 then
+					if (elements.item (i,j).value = 2048) then
 						is_winning := True
 					end
 					j := j + 1
