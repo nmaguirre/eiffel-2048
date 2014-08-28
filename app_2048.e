@@ -16,7 +16,7 @@ create
 feature {NONE} -- Initialization
 
 	make
-	local
+
 
 			-- Run application.
 		do
@@ -35,7 +35,7 @@ feature {NONE} -- Initialization
 			from
 
 			until
-				not controller.is_finished or not io.last_character.is_equal ('q')
+			 	controller.is_finished or  io.last_character.is_equal ('q')
 			loop
 				--read character
 				io.read_character
