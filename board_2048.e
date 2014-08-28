@@ -19,19 +19,41 @@ feature {ANY}
 feature -- Initialisation
 
 	make_empty
+		-- there is not pre-condition
+
 		-- Creates an empty board of 4x4 cells (all cells with default value)
 		local
 			default_cell: CELL_2048
+			i : INTEGER
+			j : INTEGER
 		do
-			create default_cell.make
-			create elements.make_filled (default_cell, 4, 4)
+			from
+				i := 1
+			until
+				i <= 4
+			loop
+				from
+					j:= 1
+				until
+					j<=4
+				loop
+					create default_cell.make
+					elements.put (default_cell, i, j)
+					j := j+1
+				end
+				i:i+1
+			end
+
+		ensure
+			count: elements.count = 16 and elements.all_default
+
 		end
 
 		-- Board Constructor
 
 	make
 		-- Creates a board of 4x4 cells, with all cells with default value (unset)
-		-- except for two randomly picked cells, which must be set with either 2 or 4.
+		-- except for two randomly picked cells, which must be set with eithers 2 or 4.
 		-- Values to set the filled cells are chosen randomly. Positions of the two filled
 		-- cells are chosen randomly.
 		do
