@@ -21,7 +21,6 @@ feature {ANY}
 	elements: ARRAY2 [CELL_2048]
 		-- Stores the game board. Indices for cells must go from 1 to 4, both
 		-- for rows and for columns.
-
 feature -- Initialisation
 
 	make_empty
@@ -33,16 +32,16 @@ feature -- Initialisation
 			i : INTEGER
 			j : INTEGER
 		do
-			create elements.make (4, 4)
+			create elements.make (rows, columns)
 			from
 				i := 1
 			until
-				i <= 4
+				i <= rows
 			loop
 				from
 					j:= 1
 				until
-					j<=4
+					j<=columns
 				loop
 					create default_cell.make
 					elements.item(i,j) := default_cell
@@ -52,8 +51,8 @@ feature -- Initialisation
 			end
 
 		ensure
-			columns:elements.width = 4
-			rows : elements.height = 4
+			QTYcolumns:elements.width = 4
+			QTYrows : elements.height = 4
 			elements.all_default
 
 		end
@@ -106,11 +105,11 @@ feature -- Initialisation
 
 feature -- Status report
 
-	rows: INTEGER
+	rows: INTEGER = 4
 		-- Number of rows in the board
 		-- Should be constantly 4
 
-	columns: INTEGER
+	columns: INTEGER = 4
 		-- Number of columns in the board
 		-- Should be constantly 4
 
