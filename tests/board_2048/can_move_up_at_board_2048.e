@@ -92,7 +92,7 @@ feature -- Positive Tests
 					loop
 						k := 2
 						from
-							i := board.rows-2
+							i := board.rows-1
 						until
 							i < 1
 						loop
@@ -104,30 +104,5 @@ feature -- Positive Tests
 					end
 				assert ("You can't move up, all cells is up.", not board.can_move_up)
 			end
-
-feature -- Negative Tests
-
-
-	can_move_up_test_with_void_board
-			-- Test this method with the void board should raise an exception
-			-- This test should return True
-		local
-			res, ok, second_time: BOOLEAN
-			board: BOARD_2048
-		do
-			if not second_time then
-				ok := True
-				create board.make
-				res := board.can_move_up
-				ok := False
-			end
-			assert ("Routine failed, as expected", ok)
-		rescue
-			second_time := True
-			if ok then
-				retry
-			end
-		end
-
 
 end

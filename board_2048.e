@@ -44,7 +44,9 @@ feature -- Initialisation
 				loop
 					create default_cell.make
 					elements.put (default_cell, i, j)
+					j := j+1
 				end
+				i := i+1
 			end
 
 
@@ -215,8 +217,8 @@ feature -- Status report
 				i > columns or can_move
 			loop
 				from
-					j := rows - 1
-					k := rows - 2
+					j := rows
+					k := rows - 1
 				until
 					k < 1  or can_move
 				loop
