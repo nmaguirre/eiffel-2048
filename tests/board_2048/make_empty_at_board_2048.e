@@ -17,24 +17,36 @@ feature
 			board : BOARD_2048
 		do
 			create board.make_empty
-			assert("QTY Columns correct",board.elements.width = 4)
-		end
-
-	make_empty_qty_rows_correct
-		local
-			board : BOARD_2048
-		do
-			create board.make_empty
-			assert("QTY Rows correct",board.elements.height = 4)
+			assert("QTY Cells correct",board.elements.count = 16)
 		end
 
 	make_empty_all_are_default_values
 		local
-			board: BOARD_2048
+			board : BOARD_2048
+			i : INTEGER
+			j : INTEGER
+			flag : BOOLEAN
 		do
 			create board.make_empty
-			assert("All default values", board.elements.all_default)
+			flag := True
+			from
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j > 4
+				loop
+					if board.elements.item (i,j).value /= 0 then
+						flag := False
+					end
+					j := j+1
+				end
+				i := i+1
+			end
+			assert("All default values", flag = True)
 		end
-
 
 end

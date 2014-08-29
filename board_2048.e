@@ -36,12 +36,12 @@ feature -- Initialisation
 			from
 				i := 1
 			until
-				i <= rows
+				i > rows
 			loop
 				from
 					j:= 1
 				until
-					j<=columns
+					j>columns
 				loop
 					create default_cell.make
 					elements.item(i,j) := default_cell
@@ -51,9 +51,8 @@ feature -- Initialisation
 			end
 
 		ensure
-			QTYcolumns:elements.width = 4
-			QTYrows : elements.height = 4
-			elements.all_default
+			QTYCells:elements.count = 16
+			notVoid: elements /= void
 
 		end
 
