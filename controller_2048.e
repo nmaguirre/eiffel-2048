@@ -33,7 +33,7 @@ feature -- Initialisation
 			board /= Void
 		end
 
-feature {NONE}
+feature {ANY}
 
 	coord_last_random_cell: TUPLE [INTEGER, INTEGER]
 			-- Tuple containing the coordinates of the last random cell.
