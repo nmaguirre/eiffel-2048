@@ -15,7 +15,7 @@ inherit
 
 feature -- Test routines
 
-	set_cell_with_valid_value
+	set_cell_with_valid_value --set_cell testing with a valid value and valid indices. It should save the value in the correct cell
 			-- New test routine
 
 		local
@@ -26,7 +26,7 @@ feature -- Test routines
 			assert ("2 is  a valid value of cell, this test should return true", board.elements.item(1,1).value = 2)
 		end
 
-	set_cell_with_negative_value
+	set_cell_with_negative_value --set_cell testing with a negative value and valid indices. It should break precondition
 			-- New test routine
 
 		local
@@ -48,7 +48,7 @@ feature -- Test routines
 
 		end
 
-	set_cell_with_invalid_value
+	set_cell_with_invalid_value --set_cell testing with a invalid value and valid indices. It should break precondition
 			-- New test routine
 
 		local
@@ -70,7 +70,7 @@ feature -- Test routines
 
 		end
 
-	set_cell_in_negative_row
+	set_cell_in_negative_row --set_cell testing with index out of range. It should break precondition
 		local
 			ok, second_time: BOOLEAN
 			board : BOARD_2048
@@ -90,7 +90,7 @@ feature -- Test routines
 
 		end
 
-	set_cell_in_negative_column
+	set_cell_in_negative_column --set_cell testing with index out of range. It should break precondition
 		local
 			ok, second_time: BOOLEAN
 			board : BOARD_2048
@@ -110,7 +110,7 @@ feature -- Test routines
 
 		end
 
-	set_cell_with_row_index_out_of_range
+	set_cell_with_row_index_out_of_range --set_cell testing with index out of range. It should break precondition
 		local
 			ok, second_time: BOOLEAN
 			board : BOARD_2048
@@ -130,7 +130,7 @@ feature -- Test routines
 
 		end
 
-	set_cell_with_column_index_out_of_range
+	set_cell_with_column_index_out_of_range --set_cell testing with index out of range. It should break precondition
 		local
 			ok, second_time: BOOLEAN
 			board : BOARD_2048
