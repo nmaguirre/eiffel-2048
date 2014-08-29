@@ -107,7 +107,6 @@ feature -- Status report
 		-- Returns the number of filled cells in the board
 
 	out: STRING
-		-- Provides a string representation of the board
 		local
 			i: INTEGER
 			j: INTEGER
@@ -115,14 +114,14 @@ feature -- Status report
 		do
 			output:=""
 			from
-				i:= 0
+				i:= 1
 			until
-				i< 4
+				i> rows
 			loop
 				from
-					j:= 0
+					j:= 1
 				until
-					j< 4
+					j>columns
 				loop
 					output.append_string ("|")
 					output.append_string (elements.item (i, j).out)
@@ -245,7 +244,8 @@ feature -- Status setting
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
 			-- Set cell in [row,col] position with a given value
 		require
-			valid_range : (row>=1 and row<=4 and col>=1 and col<=4) valid_value : (elements.item (row,col).is_valid_value (value))
+			valid_range : (row>=1 and row<=4 and col>=1 and col<=4)
+			valid_value : ((create {CELL_2048}.make).is_valid_value (value))
 		do
 			elements.item (row,col).set_value (value) --Set the new value in cell
 		ensure
