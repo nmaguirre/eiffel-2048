@@ -212,10 +212,10 @@ feature -- Test routines
 			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
 					assert ("corner has a 2", controller.board.elements [4, 4].value = 2)
-					assert ("(4,3) has a 4", controller.board.elements [3, 4].value = 4)
-					assert ("(4,2) has an 8", controller.board.elements [3, 4].value = 8)
+					assert ("(4,3) has a 4", controller.board.elements [4, 3].value = 4)
+					assert ("(4,2) has an 8", controller.board.elements [4, 2].value = 8)
 					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
-					assert ("coordinates of new cell is (0,0), no new cell", row_new /= 0 or col_new /= 0)
+					assert ("coordinates of new cell is (0,0), no new cell", row_new = 0 and col_new = 0)
 				else
 					assert ("invalid coordinate", False)
 				end
@@ -295,7 +295,7 @@ feature -- Test routines
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
 					assert ("game finished", controller.is_finished)
 					assert ("user did not win!", not controller.board.is_winning_board)
-					assert ("coordinates of new cell is (1,4)", row_new /= 1 and col_new /= 4)
+					assert ("coordinates of new cell is (1,4)", row_new = 1 and col_new = 4)
 				else
 					assert ("invalid coordinate", False)
 				end

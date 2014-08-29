@@ -213,9 +213,9 @@ feature -- Test routines
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
 					assert ("corner has an 8", controller.board.elements [4, 1].value = 8)
 					assert ("(4,2) has a 4", controller.board.elements [4, 2].value = 4)
-					assert ("(4,3) has a 2", controller.board.elements [4, 1].value = 2)
+					assert ("(4,3) has a 2", controller.board.elements [4, 3].value = 2)
 					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
-					assert ("coordinates of new cell is (0,0), no new cell", row_new /= 0 or col_new /= 0)
+					assert ("coordinates of new cell is (0,0), no new cell", row_new = 0 and col_new = 0)
 				else
 					assert ("invalid coordinate", False)
 				end
@@ -254,18 +254,18 @@ feature -- Test routines
 		end
 
 	move_left_makes_you_lose
-			--       Scenario: Moving left makes you lose
+			--        Scenario: Moving left makes you lose
 			--                Given the game board is in state
-			--                        |2 |4 |2 |4 |
-			--                        |2 |4 |2 |4 |
-			--                        |8 |4 |2 |8 |
-			--                        |  |4 |2 |8 |
+			--                        |2  |4  |8  |32  |
+			--                        |4  |8  |16 |64  |
+			--                        |8  |16 |32 |128 |
+			--                        |   |32 |64 |128 |
 			--                When I move left
 			--                Then I should obtain exactly
-			--                        |2 |4 |2 |4 |
-			--                        |2 |4 |2 |4 |
-			--                        |8 |4 |2 |8 |
-			--                        |4 |2 |8 |x |
+			--                        |2  |4  |8  |32  |
+			--                        |4  |8  |16 |64  |
+			--                        |8  |16 |32 |128 |
+			--                        |32 |64 |128| x  |
 			--                And x should be either 4 or 2
 			--                And the user should be informed he lost (game over)
 			--                And the game should finish
@@ -276,26 +276,26 @@ feature -- Test routines
 			create board.make_empty
 			board.set_cell (1, 1, 2)
 			board.set_cell (1, 2, 4)
-			board.set_cell (1, 3, 2)
-			board.set_cell (1, 4, 4)
-			board.set_cell (2, 1, 2)
-			board.set_cell (2, 2, 4)
-			board.set_cell (2, 3, 2)
-			board.set_cell (2, 4, 4)
+			board.set_cell (1, 3, 8)
+			board.set_cell (1, 4, 32)
+			board.set_cell (2, 1, 4)
+			board.set_cell (2, 2, 8)
+			board.set_cell (2, 3, 16)
+			board.set_cell (2, 4, 64)
 			board.set_cell (3, 1, 8)
-			board.set_cell (3, 2, 4)
-			board.set_cell (3, 3, 2)
-			board.set_cell (3, 4, 8)
-			board.set_cell (4, 2, 4)
-			board.set_cell (4, 3, 2)
-			board.set_cell (4, 4, 8)
+			board.set_cell (3, 2, 16)
+			board.set_cell (3, 3, 32)
+			board.set_cell (3, 4, 128)
+			board.set_cell (4, 2, 32)
+			board.set_cell (4, 3, 64)
+			board.set_cell (4, 4, 128)
 			create controller.make_with_board (board)
 			controller.left
 			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
 					assert ("game finished", controller.is_finished)
 					assert ("user did not win!", not controller.board.is_winning_board)
-					assert ("coordinates of new cell is (4,1)", row_new /= 4 or col_new /= 4)
+					assert ("coordinates of new cell is (4,4)", row_new = 4 and col_new = 4)
 				else
 					assert ("invalid coordinate", False)
 				end
