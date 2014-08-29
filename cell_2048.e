@@ -68,18 +68,7 @@ feature {ANY} -- Miscellaneous
 			-- Returns true if value is either 0, or a power of two
 			-- greater than 1.
 		do
-			--If the value it's greater than 1 then checks if it's a power of two.
-			if val > 1 then
-				--If value is power of two, returns True
-				if is_power_of_two (val) then
-					Result := True
-				end
-			end
-			--Else, if the value it's 0 then returns True
-			if val = 0 then
-				Result := True
-			end
-			--If value is either negative or 1, Result remains False.
+			Result := val = 0 or (val>1 and is_power_of_two(val))
 		ensure
 			Result = (val = 0 or (val > 1 and is_power_of_two (val)))
 		end
