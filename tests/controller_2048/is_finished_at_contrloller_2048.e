@@ -5,7 +5,7 @@ note
 	revision: "$Revision$"
 
 class
-	IS_FINISHED_AT_BOARD_2048
+	IS_FINISHED_AT_CONTROLLER_2048
 
 inherit
 
