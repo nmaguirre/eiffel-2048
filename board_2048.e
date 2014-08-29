@@ -108,7 +108,6 @@ feature -- Status report
 		-- Returns the number of filled cells in the board
 
 	out: STRING
-		-- Provides a string representation of the board
 		local
 			i: INTEGER
 			j: INTEGER
@@ -116,14 +115,14 @@ feature -- Status report
 		do
 			output:=""
 			from
-				i:= 0
+				i:= 1
 			until
-				i< 4
+				i> rows
 			loop
 				from
-					j:= 0
+					j:= 1
 				until
-					j< 4
+					j>columns
 				loop
 					output.append_string ("|")
 					output.append_string (elements.item (i, j).out)
