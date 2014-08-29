@@ -13,12 +13,21 @@ inherit
 feature
 
 	make_empty_qty_columns_correct
-		-- qty_columns_correct testing that the Quantity of Cells be the correct
+		-- qty_columns_correct testing that the Quantity of Columns be the correct
 		local
 			board : BOARD_2048
 		do
 			create board.make_empty
-			assert("QTY Cells correct",board.elements.count = 16)
+			assert("Quantity Columns correct",board.elements.width = 4)
+		end
+
+	make_empty_qty_rows_correct
+		-- qty_rows_correct testing that the Quantity of Rows be the correct
+		local
+			board : BOARD_2048
+		do
+			create board.make_empty
+			assert("Quantity Rows correct",board.elements.height = 4)
 		end
 
 	make_empty_all_are_default_values

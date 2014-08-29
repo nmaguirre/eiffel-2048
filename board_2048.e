@@ -51,7 +51,9 @@ feature -- Initialisation
 			end
 
 		ensure
-			QTYCells:elements.count = 16
+			quantity_columns:elements.width = 4
+			quantity_rows : elements.height = 4
+			total_indexes : elements.count = 16
 			notVoid: elements /= void
 
 		end
