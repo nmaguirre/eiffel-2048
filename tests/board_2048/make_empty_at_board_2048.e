@@ -18,7 +18,7 @@ feature
 			board : BOARD_2048
 		do
 			create board.make_empty
-			assert("Quantity Columns correct",board.elements.width = 4)
+			assert("Quantity Columns correct",board.elements.width = board.columns)
 		end
 
 	make_empty_qty_rows_correct
@@ -27,7 +27,7 @@ feature
 			board : BOARD_2048
 		do
 			create board.make_empty
-			assert("Quantity Rows correct",board.elements.height = 4)
+			assert("Quantity Rows correct",board.elements.height = board.rows)
 		end
 
 	make_empty_all_are_default_values
@@ -43,12 +43,12 @@ feature
 			from
 				i := 1
 			until
-				i > 4
+				i > board.rows
 			loop
 				from
 					j := 1
 				until
-					j > 4
+					j > board.columns
 				loop
 					if board.elements.item (i,j).value /= 0 then
 						flag := False

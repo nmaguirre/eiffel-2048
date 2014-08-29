@@ -51,9 +51,9 @@ feature -- Initialisation
 			end
 
 		ensure
-			quantity_columns:elements.width = 4
-			quantity_rows : elements.height = 4
-			total_indexes : elements.count = 16
+			quantity_columns:elements.width = columns
+			quantity_rows : elements.height = rows
+			total_indexes : elements.count = rows * columns
 			notVoid: elements /= void
 
 		end
