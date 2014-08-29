@@ -21,9 +21,7 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 			board: BOARD_2048
 		do
 			create board.make_empty
-			assert ("String is not empty", board.out.count\\2=0)
+			assert ("String has even characters", board.out.count\\2=0)
 		end
-
-
 
 end
