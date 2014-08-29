@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {DOWN_CONTROLLER_2048}."
+	description: "Summary description for {RIGHT_CONTROLLER_2048}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -51,10 +51,10 @@ feature --Test routines
 			   controller.board.elements.item(2, 4).value = 2 and
 			   controller.board.elements.item(3, 4).value = 2
 		       then
-	           correct_movs := true
+	           correct_movs := True
 			   assert("The board has moved right correctly", correct_movs)
 			else
-	           correct_movs := false
+	           correct_movs := False
 			   assert("The board has not moved right correctly", correct_movs)
 			end
 		end
