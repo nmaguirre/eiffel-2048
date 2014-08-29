@@ -13,6 +13,7 @@ inherit
 feature
 
 	make_empty_qty_columns_correct
+		-- qty_columns_correct testing that the Quantity of Cells be the correct
 		local
 			board : BOARD_2048
 		do
@@ -21,6 +22,7 @@ feature
 		end
 
 	make_empty_all_are_default_values
+		-- all_are_default_values testing that all elements of the board are the default cell (0)
 		local
 			board : BOARD_2048
 			i : INTEGER
