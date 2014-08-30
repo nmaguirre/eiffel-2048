@@ -14,26 +14,26 @@ inherit
 feature -- Rutine is_power_of_two at CELL_2048 class tests
 
 
-	string_is_not_empty
-			-- Test if the string is not empty
-			-- Must return TRUE
-		local
-			board: BOARD_2048
-		do
-			create board.make
-			assert ("String is not empty", board.out.count/=0)
-		end
-
 	string_has_even_amount_of_numbers
 			-- symbols
 			-- Must return TRUE
 		local
 			board: BOARD_2048
 		do
-			create board.make
-			assert ("String is not empty", board.out.count\\2/=0)
+			create board.make_empty
+			assert ("String has even characters", board.out.count\\2=0)
 		end
 
+	string_is_not_empty
+			-- symbols
+			-- Must return TRUE
+		local
+			board: BOARD_2048
+		do
+			create board.make_empty
+			print(board.out)
+			assert ("String is not empty", board.out.count/=0)
+		end
 
 
 end
