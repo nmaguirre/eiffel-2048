@@ -50,11 +50,9 @@ feature --Test routines
 			   controller.board.elements.item(2, 4).value = 2 and
 			   controller.board.elements.item(3, 4).value = 2
 		       then
-		       print("The board has moved right correctly")
-			   --assert("The board has moved right correctly", True)
+			   assert("The board has moved right correctly", True)
 			else
-			   print("The board has not moved right correctly")
-			   --assert("The board has not moved right correctly", False)
+			   assert("The board has moved right correctly", False)
 			end
 		end
 
@@ -117,9 +115,9 @@ feature --Test routines
 				i := i + 1
 			end --end loop i	
 			if count_incorrect > 0 then
-			   print("The value of some cells is not valid")
+			   assert("All cells have valid values", False)
 			else
-			   print("All cells have valid values")
+			   assert("All cells have valid values", True)
 			end
 		end --end do
 
