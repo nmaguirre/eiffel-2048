@@ -33,7 +33,7 @@ feature -- Initialisation
 			board /= Void
 		end
 
-feature {NONE}
+feature {ANY}
 
 	coord_last_random_cell: TUPLE [INTEGER, INTEGER]
 			-- Tuple containing the coordinates of the last random cell.
@@ -48,7 +48,6 @@ feature -- Game State
 			-- Indicates whether the game is finished or not.
 			-- Game finishes when either 2048 is reached, or if any movement is possible.
 		local
-			i, j: INTEGER -- Auxiliary variables to navigate through the game board
 			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
 		do
 			finished := False
@@ -225,60 +224,68 @@ feature -- Movement commands
 		end
 
 	right
-			-- Moves the cells to the leftmost possible point of the game board.
+			-- Moves the cells to the rightmost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
+		--require
+			--board.can_move_right
 		local
-			i, j, k, l, sum: INTEGER
-			marca: BOOLEAN
+			i, j, k: INTEGER
 		do
-			marca := false
 			from
 				i := 1
 			until
-				i = 4
-			loop -- rows
+				i > 4
+			loop
 				from
 					j := 4
 				until
-					j = 1
-				loop -- columns
-					if board.elements.item (i, j).value /= 0 then
-						k := j
-						l := j - 1
+					j <= 1
+				loop
+					if board.elements.item(i, j).value /= 0 then
+						k := j - 1;
 						from
 						until
-							(l <= 1) or (board.elements.item (i, j) /= 0)
+							(k < 1) or (board.elements.item(i, k).value /= 0)
 						loop
-							l := l - 1
-						end -- end loop l
-						if l >= 1 then -- if search is succesful
-							if board.elements.item (i, k).value = board.elements.item (i, l).value then
-								sum := (board.elements.item (i, k).value + board.elements.item (i, l).value)
-								board.set_cell (i, l, 0)
-								board.set_cell (i, k, 0)
-								position_right (i, sum)
-								marca := true
+							k := k - 1;
+						end
+						if (k >= 1) then
+							if (board.elements.item(i, j).value = board.elements.item(i, k).value) then
+								board.set_cell(i, j, (board.elements.item(i, k).value + board.elements.item(i, j).value))
+								board.set_cell(i, k, 0)
 								j := k - 1
 							else
-								position_right (i, board.elements.item (i, k).value)
-								j := k - 1
-							end
-						else
-							if board.elements.item (i, k).value /= 0 then
-								position_right (i, board.elements.item (i, k).value)
+								j := k
 							end
 						end
 					else
 						j := j - 1
-					end -- end if
-				end -- end loop j
+					end
+				end --end loop j
 				i := i + 1
-			end -- end loop i
-			if marca = true then
-				set_random_free_cell
-			end
-		end -- end do
+			end --end loop i
+
+			from --
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j >= 4
+				loop
+				    if board.elements.item(i, j).value /= 0 then
+				       position_right(i, board.elements.item (i, j).value)
+						j := j + 1;
+					else
+                        j := j + 1
+                    end --end if
+                end --end loop j
+			end --end loop i
+			set_random_free_cell
+		end --end do
 
 feature {NONE} -- Auxiliary routines
 
@@ -321,8 +328,8 @@ feature {NONE} -- Auxiliary routines
 			until
 				column < 1
 			loop
-				if board.elements.item (row, column).value = 0 then
-					board.set_cell (row, column, val)
+				if board.elements.item(row, column).value = 0 then
+					board.set_cell(row, column, val)
 					column := 0
 				else
 					column := column - 1
