@@ -206,8 +206,7 @@ feature -- Movement commands
 			-- Moves the cells to the rightmost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
-		--require
-			--board.can_move_right
+
 		local
 			i, j, k: INTEGER
 		do
@@ -222,29 +221,30 @@ feature -- Movement commands
 					j <= 1
 				loop
 					if board.elements.item(i, j).value /= 0 then
-						k := j - 1;
-						from
-						until
-							(k < 1) or (board.elements.item(i, k).value /= 0)
-						loop
-							k := k - 1;
-						end
-						if (k >= 1) then
-							if (board.elements.item(i, j).value = board.elements.item(i, k).value) then
-								board.set_cell(i, j, (board.elements.item(i, k).value + board.elements.item(i, j).value))
-								board.set_cell(i, k, 0)
-								j := k - 1
-							else
-								j := k
-							end
-						end
+					   if j > 1 then
+					   	  k := j - 1
+					      from
+					      until
+					        (k <= 1) or (board.elements.item(i, k).value /= 0)
+					 	  loop
+						  	 k := k - 1
+						  end
+						  if (k >= 1) then
+						  	 if (board.elements.item(i, j).value = board.elements.item(i, k).value) then
+							 	 board.set_cell(i, j, (board.elements.item(i, k).value + board.elements.item(i, j).value))
+								 board.set_cell(i, k, 0)
+								 j := k - 1
+							 else
+								 j := k
+							 end
+						  end
+					   end
 					else
 						j := j - 1
 					end
 				end --end loop j
 				i := i + 1
 			end --end loop i
-
 			from --
 				i := 1
 			until
@@ -253,7 +253,7 @@ feature -- Movement commands
 				from
 					j := 1
 				until
-					j >= 4
+					j > 4
 				loop
 				    if board.elements.item(i, j).value /= 0 then
 				       position_right(i, board.elements.item (i, j).value)
