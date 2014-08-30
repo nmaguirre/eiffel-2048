@@ -148,10 +148,10 @@ feature -- Movement commands
 		end --end do
 
 	down --Command that moves the cells to the lowermost possible point of the game board
-		-- require
-			--board.can_move_down (still not implemented in board)
+		 require
+			board.can_move_down
 		local
-			i ,j ,k : INTEGER
+			i ,j ,aux : INTEGER
 		do
 			-- add all possible cells downward
 			from -- columns
@@ -165,7 +165,7 @@ feature -- Movement commands
 					j <= 1
 				loop
 					if board.elements.item (i, j).value /= 0 then
-						k := j
+						aux := j
 						j := j-1
 						from
 							-- search for the next element /= 0
@@ -174,8 +174,8 @@ feature -- Movement commands
 							j := j-1
 						end
 						if j>=1 then -- if search is succesful
-							if board.elements.item (i, k).value = board.elements.item (i, j).value  then
-								board.set_cell (i, k, (board.elements.item (i, k).value + board.elements.item (i, j).value))
+							if board.elements.item (i, aux).value = board.elements.item (i, j).value  then
+								board.set_cell (i, aux, (board.elements.item (i, aux).value + board.elements.item (i, j).value))
 								board.set_cell (i, j, 0)
 								j := j-1
 							end
