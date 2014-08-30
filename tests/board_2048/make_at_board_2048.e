@@ -15,7 +15,7 @@ inherit
 
 feature -- Test routines
 
-	MAKE_AT_BOARD_2048
+	make_at_board_2048
 			-- New test routine
 		local
 			board: BOARD_2048
