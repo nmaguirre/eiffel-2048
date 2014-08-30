@@ -25,8 +25,7 @@ feature {ANY} -- Status report
 			-- cell is not set.
 			-- Value should otherwise be a power of two (greater than one)
 
-	out: STRING
-			-- Provides a string representation of a cell (shows its value as a string)
+
 
 feature {ANY} -- Initialization
 
@@ -39,6 +38,7 @@ feature {ANY} -- Initialization
 			value = 0
 		end
 
+
 	make_with_value (new_val: INTEGER)
 			-- creates a cell initialized with a user-provided value
 
@@ -49,6 +49,7 @@ feature {ANY} -- Initialization
 		ensure
 			value_set: value = new_val
 		end
+
 
 feature {ANY} -- Status setting
 
@@ -94,6 +95,20 @@ feature {ANY} -- Miscellaneous
 				Result := power_of_two
 			end
 		end
+
+		out:STRING
+				-- Provides a string representation of a cell (shows its value as a string)
+				local
+					t: STRING
+				do
+
+				 	  if value = 0 then
+				 	  	t := ""
+				 	  	else  t := value.out
+
+				 	  end
+				Result := t
+				end
 
 	is_available: BOOLEAN
 			--Returns true if a cell is available, that is that value is 0.
