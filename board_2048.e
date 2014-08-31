@@ -107,6 +107,33 @@ feature -- Status report
 
 	nr_of_filled_cells: INTEGER
 		-- Returns the number of filled cells in the board
+		require
+			elements /= Void
+
+		local
+			filled_cells: INTEGER
+			i: INTEGER
+			j: INTEGER
+		do
+			from
+				i := 1
+			until
+				i > rows
+			loop
+				from
+					j := 1
+				until
+					j > columns
+				loop
+					if not (elements.item (i, j).value = 0) then
+						filled_cells := filled_cells + 1
+					end
+					j := j+1
+				end
+				i := i+1
+			end
+			Result := filled_cells
+		end
 
 	out: STRING
 		local
