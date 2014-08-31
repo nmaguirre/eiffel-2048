@@ -1,10 +1,10 @@
 note
 	description: "[
-		Eiffel tests that can be executed by testing tool.
+		Test class for routine make at BOARD_2048 
 	]"
-	author: "EiffelStudio test wizard"
-	date: "$Date$"
-	revision: "$Revision$"
+	author: "Facundo Munoz"
+	date: "30/08/2013"
+	revision: "1.0"
 	testing: "type/manual"
 
 class
