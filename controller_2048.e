@@ -99,13 +99,15 @@ feature -- Movement commands
 							k := k + 1;
 						end
 						if (k <= 4) then
-							if (board.elements.item (i, j).value = board.elements.item (k, j).value) then
+							if (board.elements.item (i, j) .value = board.elements.item (k, j).value) then
 								board.set_cell (i, j, (board.elements.item (k, j).value + board.elements.item (i, j).value))
 								board.set_cell (k, j, 0)
 								i := k + 1
 							else
 								i := k
 							end
+						else
+							i := k
 						end
 					else
 						i := i + 1
@@ -137,6 +139,8 @@ feature -- Movement commands
 							board.set_cell (i, j, board.elements.item (k, j).value)
 							board.set_cell (k, j, 0)
 							i := i + 1
+						else
+							i := k
 						end
 					else
 						i := i + 1

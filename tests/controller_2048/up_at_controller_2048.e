@@ -11,7 +11,11 @@ inherit
 
 	feature -- Test routines
 
-		test_up_with_empty_board
+		test_up_with_cant_move_up
+				--  2 |	2 | 2 | 2
+				--	4 | 4 | 4 | 4
+				--	2 | 2 | 2 | 2
+				--	4 | 4 | 4 | 4	
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
@@ -19,8 +23,24 @@ inherit
 		do
 			if not second_time then
           		ok := True
-				create board.make_empty
+				create board.make
 				create controller.make_with_board (board)
+				controller.board.set_cell (1, 1, 2)
+				controller.board.set_cell (2, 1, 4)
+				controller.board.set_cell (3, 1, 2)
+				controller.board.set_cell (4, 1, 4)
+				controller.board.set_cell (1, 2, 2)
+				controller.board.set_cell (2, 2, 4)
+				controller.board.set_cell (3, 2, 2)
+				controller.board.set_cell (4, 2, 4)
+				controller.board.set_cell (1, 3, 2)
+				controller.board.set_cell (2, 3, 4)
+				controller.board.set_cell (3, 3, 2)
+				controller.board.set_cell (4, 3, 4)
+				controller.board.set_cell (1, 4, 2)
+				controller.board.set_cell (2, 4, 4)
+				controller.board.set_cell (3, 4, 2)
+				controller.board.set_cell (4, 4, 4)
 				controller.up -- Must throw an exception
 				ok := False
 			end
@@ -40,6 +60,7 @@ inherit
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
+			aux: INTEGER
 		do
 			create board.make
 			create controller.make_with_board (board)
@@ -51,11 +72,13 @@ inherit
 			controller.board.set_cell (2, 2, 0)
 			controller.board.set_cell (3, 2, 4)
 			controller.board.set_cell (4, 2, 4)
+			aux := controller.board.nr_of_filled_cells
 			controller.up
 			assert (" the value of cell [1,1] must be 4 ", controller.board.elements.item (1, 1).value = 4)
 			assert (" the value of cell [2,1] must be 2 ", controller.board.elements.item (2, 1).value = 2)
 			assert (" the value of cell [3,1] must be 4 ", controller.board.elements.item (3, 1).value = 4)
 			assert (" the value of cell [1,2] must be 8 ", controller.board.elements.item (1, 2).value = 8)
+			assert (" the number of filled cells must be less", aux > controller.board.nr_of_filled_cells)
 		end
 
 	test_up_with_can_move_up_with_out_colapses
