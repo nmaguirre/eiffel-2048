@@ -41,27 +41,36 @@ feature {NONE} -- Initialization
 				io.read_character
 				--move left
 				if io.last_character.is_equal ('a') then
-					controller.left
-					--update board
-					io.put_string (controller.board.out)
+					if controller.board.can_move_left then
+						controller.left
+						--update board
+						io.put_string (controller.board.out)
+					end
+
 				end
 				--move down
 				if io.last_character.is_equal ('s') then
-					controller.down
-					--update board
-					io.put_string (controller.board.out)
+					if controller.board.can_move_down then
+						controller.down
+						--update board
+						io.put_string (controller.board.out)
+					end
 				end
 				--move right
 				if io.last_character.is_equal ('d') then
-					controller.right
-					--update board
-					io.put_string (controller.board.out)
+					if controller.board.can_move_right then
+						controller.right
+						--update board
+						io.put_string (controller.board.out)
+					end
 				end
 				--move up
 				if io.last_character.is_equal ('w') then
-					controller.up
-					--update board
-					io.put_string (controller.board.out)
+					if controller.board.can_move_up then
+						controller.up
+						--update board
+						io.put_string (controller.board.out)
+					end
 				end
 				--exit
 
