@@ -25,12 +25,12 @@ feature -- Test routines
 			from 		-- Fill the board with cells
 				j := 1
 			until
-				j = 4
+				j > board.rows
 			loop
 				from
 					i := 1
 				until
-					i = 4
+					i > board.columns
 				loop
 					board.set_cell (i, j, 2)
 					i := i + 1
