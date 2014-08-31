@@ -60,12 +60,12 @@ feature -- Test routines
 		do
 			create board.make_empty
 			from
-				i := 2  -- the first column is empty
+				i := 1
 			until
 				i > board.rows
 			loop
 				from
-					j:= 2
+					j:= 2  -- the first column is empty
 					k:= 2
 				until
 					j>board.columns
