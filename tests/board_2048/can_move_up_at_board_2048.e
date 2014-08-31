@@ -2,7 +2,7 @@ note
 	description: "Test class for routine can_move_up of the BOARD_2048 class"
 	author: "Matias-Bernal"
 	date: "28/08/2014"
-	revision: "1.1"
+	revision: "1.2"
 
 class
 	CAN_MOVE_UP_AT_BOARD_2048
@@ -32,15 +32,15 @@ feature -- Positive Tests
 		do
 			create board.make_empty
 			from
-				j := 0
+				j := 1
 			until
-				j >= board.columns
+				j > board.columns
 				loop
 					k := 2
 					from
-						i := board.rows-1
+						i := board.rows
 					until
-						i <= 0
+						i < 1
 					loop
 						board.set_cell (i, j, k)
 						i := i - 1
@@ -60,14 +60,14 @@ feature -- Positive Tests
 			do
 				create board.make_empty
 				from
-					j := 0
+					j := 1
 				until
-					j >= board.columns
+					j > board.columns
 					loop
 						from
-							i := board.rows-1
+							i := board.rows -1
 						until
-							i <= 0
+							i < 1
 						loop
 							board.set_cell (i, j, 2)
 							i := i - 1
@@ -86,48 +86,22 @@ feature -- Positive Tests
 			do
 				create board.make_empty
 				from
-					j := 0
+					j := 1
 				until
-					j >= board.columns
+					j > board.columns
 					loop
-						k := 2
 						from
-							i := board.rows-2
+							k := 2
+							i := 1
 						until
-							i <= 0
+							i > board.rows -1
 						loop
 							board.set_cell (i, j, k)
-							i := i - 1
+							i := i + 1
 							k := k*2
 						end
 						j := j + 1
 					end
 				assert ("You can't move up, all cells is up.", not board.can_move_up)
 			end
-
-feature -- Negative Tests
-
-
-	can_move_up_test_with_void_board
-			-- Test this method with the void board should raise an exception
-			-- This test should return True
-		local
-			res, ok, second_time: BOOLEAN
-			board: BOARD_2048
-		do
-			if not second_time then
-				ok := True
-				create board.make
-				res := board.can_move_up
-				ok := False
-			end
-			assert ("Routine failed, as expected", ok)
-		rescue
-			second_time := True
-			if ok then
-				retry
-			end
-		end
-
-
 end
