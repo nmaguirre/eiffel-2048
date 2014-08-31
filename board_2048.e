@@ -203,7 +203,7 @@ feature -- Status report
 	can_move_right: BOOLEAN
 		-- Indicates whether the board would change through a movement to the right
 		require
-			elements /= Void and rows >= 0 and columns >= 0
+			elements /= Void
 		local
 			i, j: INTEGER
 			move_ok : BOOLEAN
@@ -216,9 +216,9 @@ feature -- Status report
 				from
 					j:= 1
 				until
-					(j+1) >= columns or move_ok
+					(j+1) > columns or move_ok
 				loop
-					if ((elements.item (i,j).value = elements.item (i,j+1).value) or (elements.item(i,j).value = 0)) then
+					if ((elements.item (i,j).value = elements.item (i,j+1).value) or (elements.item(i,j+1).value = 0)) then
 						-- evaluates if the value is equal to the right or if value is equal 0
 						move_ok := True
 					end
@@ -228,7 +228,7 @@ feature -- Status report
 			end
 				Result := move_ok
 		ensure
-			elements /= Void and rows >= 0 and columns >= 0
+			elements /= Void and rows > 1 and columns > 1
 		end
 
 
