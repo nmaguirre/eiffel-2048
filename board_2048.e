@@ -239,6 +239,35 @@ feature -- Status report
 
 	can_move_down: BOOLEAN
 		-- Indicates whether the board would change through a down movement
+		require
+			elements/=Void
+		local
+			i,j:INTEGER
+			can_move:BOOLEAN
+		do
+			from
+				i:= 1
+				can_move:= False
+			until
+				i>rows-1 or can_move
+			loop
+				from
+					j:= 1
+				until
+					j>columns or can_move
+				loop
+					if not (elements.item (i,j).value=0) then
+						if (elements.item (i+1,j).value=0) or (elements.item (i+1,j).value=elements.item (i,j).value) then
+							--if the cell below is empty or has the same value, then you can move down
+							can_move:= True
+						end
+					end
+					j:=j+1
+				end
+				i:=i+1
+			end
+			Result:=can_move
+		end
 
 	is_winning_board : BOOLEAN
 		-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
