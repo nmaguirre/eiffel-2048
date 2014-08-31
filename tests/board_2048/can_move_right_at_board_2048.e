@@ -31,14 +31,15 @@ feature -- Test routines
 		do
 			create board.make_empty
 			from
-				i := 0
+				i := 1
 			until
-				i >= board.columns
+				i > board.rows
 			loop
 				from
 					k:= 2
+					j:= 1
 				until
-					j>= board.rows
+					j> board.columns
 				loop
 					board.set_cell (i, j, k)
 					j:= j+1
@@ -59,14 +60,15 @@ feature -- Test routines
 		do
 			create board.make_empty
 			from
-				i := 1  -- the first column is empty
+				i := 2  -- the first column is empty
 			until
-				i >= board.columns
+				i > board.rows
 			loop
 				from
+					j:= 2
 					k:= 2
 				until
-					j>= board.rows
+					j>board.columns
 				loop
 					board.set_cell (i, j, k)
 					j:= j+1
