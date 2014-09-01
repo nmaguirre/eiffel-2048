@@ -2,7 +2,7 @@ note
 	description: "Test of 'up' in class CONTROLLER_2048."
 	author: "jjaimez"
 	date: "August 27, 2014"
-	revision: " "
+	revision: "0.01"
 class
 	UP_AT_CONTROLLER_2048
 
@@ -12,6 +12,8 @@ inherit
 	feature -- Test routines
 
 		test_up_with_cant_move_up
+				--  Scenario: can't move up, pre condition is violated.
+				-- Given the game board is in state, when I move up the funtion throw an error.
 				--  2 |	2 | 2 | 2
 				--	4 | 4 | 4 | 4
 				--	2 | 2 | 2 | 2
@@ -53,10 +55,18 @@ inherit
 		end
 
 	test_up_with_can_move_up_with_colapses
+			-- Scenario: Moving up changes board state collapsing crashing cells with similar and different values.
+			-- Given the game board is in state
 			--  2 |	0 | x | x
 			--	2 | 0 | x | x
 			--	2 | 4 | x | x
 			--	4 | 4 | x | x
+			-- When i move up, then I should obtain
+			--  4 |	8 | x | x
+			--	2 | 0 | x | x
+			--	4 | 0 | x | x
+			--	0 | 0 | x | x
+
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
@@ -81,10 +91,17 @@ inherit
 			assert (" the number of filled cells must be less", aux > controller.board.nr_of_filled_cells)
 		end
 
-	test_up_with_can_move_up_with_out_colapses
+	test_move_up_movement_of_cells
+			--  Scenario: Moving up changes board state moving all cells to the topmost  empty cell.
+			-- Given the game board is in state
 			--  x |	x | 0 | x
 			--	x | x | 0 | x
 			--	x | x | 2 | x
+			--	x | x | 0 | x
+			-- When i move up, then I should obtain
+			--  x |	x | 2 | x
+			--	x | x | 0 | x
+			--	x | x | 0 | x
 			--	x | x | 0 | x
 		local
 			controller: CONTROLLER_2048
@@ -100,11 +117,14 @@ inherit
 			assert (" the value of cell [1,3] must be 2 ", controller.board.elements.item (1, 3).value = 2)
 		end
 
-	test_up_with_can_move_up_with_out_colapses_2
+	test_move_up_not_movement_of_cells
+			--  Scenario: Moving up don't changes board state.
+			-- Given the game board is in state
 			--  x |	x | x | 2
 			--	x | x | x | 0
 			--	x | x | x | 0
 			--	x | x | x | 0
+			-- When i move up, then I should obtain the same board.
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
