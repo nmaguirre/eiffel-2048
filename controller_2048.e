@@ -232,6 +232,9 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 
+		require
+			board.can_move_right
+
 		local
 			i, j, k: INTEGER
 		do
