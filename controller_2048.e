@@ -269,10 +269,11 @@ feature -- Movement commands
 					end
 				end --end loop j
 				i := i + 1
-			end --end loop i
+			end --end loop i		
+
 			from --
 				i := 1
-			until
+		    until
 				i > 4
 			loop
 				from
@@ -287,6 +288,7 @@ feature -- Movement commands
                         j := j + 1
                     end --end if
                 end --end loop j
+                i := i + 1
 			end --end loop i
 			set_random_free_cell
 		end --end do
