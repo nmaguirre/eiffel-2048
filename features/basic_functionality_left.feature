@@ -69,7 +69,7 @@ Feature: Game appropriately reacts to basic movements, and basic game logic. Thi
                         |  |  |  |  |
                         |  |  |  |  |
                         |  |  |  |  |
-                        |4 |2 |  |  |
+                        |4 |4 |  |  |
                 And (x,y) must be different from (4,1) and (4,2)
                 And the board in position (x,y) should be filled with 2 or 4.
 
@@ -106,16 +106,16 @@ Feature: Game appropriately reacts to basic movements, and basic game logic. Thi
 
         Scenario: Moving left makes you lose 
                 Given the game board is in state
-                        |2 |4 |2 |4 |
-                        |2 |4 |2 |4 |
-                        |8 |4 |2 |8 |
-                        |  |4 |2 |8 |
+                        |2  |4  |8  |32  |
+                        |4  |8  |16 |64  |
+                        |8  |16 |32 |128 |
+                        |   |32 |64 |128 |
                 When I move left
                 Then I should obtain exactly
-                        |2 |4 |2 |4 |
-                        |2 |4 |2 |4 |
-                        |8 |4 |2 |8 |
-                        |4 |2 |8 |x |
+                        |2  |4  |8  |32  |
+                        |4  |8  |16 |64  |
+                        |8  |16 |32 |128 |
+                        |32 |64 |128| x  |
                 And x should be either 4 or 2
                 And the user should be informed he lost (game over)        
                 And the game should finish
