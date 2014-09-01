@@ -157,7 +157,7 @@ feature -- Status report
 					j:=j+1
 				end
 					output.append_string ("|")
-					output.append_string("\n")
+					output.append_string("%N")
 					i:=i+1
 			end
 			Result := output
