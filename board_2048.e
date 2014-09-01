@@ -154,9 +154,11 @@ feature -- Status report
 				loop
 					output.append_string ("|")
 					output.append_string (elements.item (i, j).out)
+					j:=j+1
 				end
 					output.append_string ("|")
 					output.append_string("\n")
+					i:=i+1
 			end
 			Result := output
 		end
