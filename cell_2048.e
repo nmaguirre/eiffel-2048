@@ -25,6 +25,19 @@ feature {ANY} -- Status report
 			-- cell is not set.
 			-- Value should otherwise be a power of two (greater than one)
 
+   out:STRING
+				-- Provides a string representation of a cell (shows its value as a string)
+				local
+					t: STRING
+				do
+
+				 	  if value = 0 then
+				 	  	t := ""
+				 	  	else  t := value.out
+
+				 	  end
+				Result := t
+				end
 
 
 feature {ANY} -- Initialization
@@ -96,19 +109,7 @@ feature {ANY} -- Miscellaneous
 			end
 		end
 
-		out:STRING
-				-- Provides a string representation of a cell (shows its value as a string)
-				local
-					t: STRING
-				do
 
-				 	  if value = 0 then
-				 	  	t := ""
-				 	  	else  t := value.out
-
-				 	  end
-				Result := t
-				end
 
 	is_available: BOOLEAN
 			--Returns true if a cell is available, that is that value is 0.
