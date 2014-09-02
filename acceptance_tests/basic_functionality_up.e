@@ -208,20 +208,7 @@ feature -- Test routines
 			board.set_cell (1, 3, 4)
 			board.set_cell (1, 4, 2)
 			create controller.make_with_board (board)
-			controller.up
-			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
-				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
-					assert ("corner has a 2", controller.board.elements [1, 4].value = 2)
-					assert ("(1,3) has a 4", controller.board.elements [1, 3].value = 4)
-					assert ("(1,2) has an 8", controller.board.elements [1, 2].value = 8)
-					assert ("board has three filled cells", controller.board.nr_of_filled_cells = 3)
-					assert ("coordinates of new cell is (0,0), no new cell", row_new /= 0 or col_new /= 0)
-				else
-					assert ("invalid coordinate", False)
-				end
-			else
-				assert ("invalid coordinate", False)
-			end
+			assert ("cannot move up", not board.can_move_up)
 		end
 
 	move_up_makes_you_win
