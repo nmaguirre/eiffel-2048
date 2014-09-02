@@ -59,7 +59,7 @@ feature -- Test routines
 			assert ("[2,3] has an 8", controller.board.elements.item(2,3).value=8)
 			assert ("[3,3] has an 8", controller.board.elements.item(3,3).value=8)
 			assert ("[4,3] has an 8", controller.board.elements.item(4,3).value=8)
-			-- assert ("board has 9 filled cells", controller.board.nr_of_filled_cells=9) set_random_free_cell is not implemented
+			assert ("board has 9 filled cells", controller.board.nr_of_filled_cells=9)
 		end
 
 	move_down_colapsing_cells_with_different_values
@@ -90,7 +90,7 @@ feature -- Test routines
 
 			assert ("[3,4] has a 2", controller.board.elements.item(3,4).value=2)
 			assert ("[4,4] has a 4", controller.board.elements.item(4,4).value=4)
-			-- assert ("board has 3 filled cells", controller.board.nr_of_filled_cells=3) set_random_free_cell is not implemented
+			assert ("board has 3 filled cells", controller.board.nr_of_filled_cells=3)
 		end
 
 	move_down_colapsing_cells_with_same_values
@@ -120,7 +120,7 @@ feature -- Test routines
 			controller.down
 
 			assert ("[4,4] has a 4", controller.board.elements.item(4,4).value=4)
-			-- assert ("board has 2 filled cells", controller.board.nr_of_filled_cells=2) set_random_free_cell is not implemented
+			assert ("board has 2 filled cells", controller.board.nr_of_filled_cells=2)
 		end
 
 	move_down_movement_of_cells
@@ -152,7 +152,7 @@ feature -- Test routines
 
 			assert ("[4,1] has a 2", controller.board.elements[4,1].value=2)
 			assert ("[4,2] has a 2", controller.board.elements[4,2].value=2)
-			-- assert ("board has 3 filled cells", controller.board.nr_of_filled_cells=3) set_random_free_cell is not implemented
+			assert ("board has 3 filled cells", controller.board.nr_of_filled_cells=3)
 		end
 
 	move_down_error
