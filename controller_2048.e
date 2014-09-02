@@ -151,8 +151,10 @@ feature -- Movement commands
 			set_random_free_cell
 		end --end do
 
-	down --Command that moves the cells to the lowermost possible point of the game board
-		 require
+	down -- Moves the cells to the lowermost possible point of the game board.
+		 -- Movement colapses cells with the same value.
+		 -- It adds one more random cell with value 2 or 4, after the movement.
+		require
 			board.can_move_down
 		local
 			i ,j ,aux : INTEGER
@@ -168,27 +170,28 @@ feature -- Movement commands
 				until
 					j <= 1
 				loop
-					if board.elements.item (i, j).value /= 0 then
-						aux := j
-						j := j-1
+					if board.elements.item (j, i).value /= 0 then
+						aux := j;
+						j := j-1;
 						from
 							-- search for the next element /= 0
-						until (j<1) and (board.elements.item (i, j) /= 0)
+						until
+							(j<1) or (board.elements.item (j, i).value /= 0)
 						loop
-							j := j-1
+							j := j-1;
 						end
 						if j>=1 then -- if search is succesful
-							if board.elements.item (i, aux).value = board.elements.item (i, j).value  then
-								board.set_cell (i, aux, (board.elements.item (i, aux).value + board.elements.item (i, j).value))
-								board.set_cell (i, j, 0)
-								j := j-1
+							if board.elements.item (aux, i).value = board.elements.item (j, i).value  then
+								board.set_cell (aux, i, (board.elements.item (aux, i).value + board.elements.item (j, i).value))
+								board.set_cell (j, i, 0)
+								j := j-1;
 							end
 						end
 					else
-						j := j-1
+						j := j-1;
 					end -- end if /=0
 				end -- end loop j
-				i := i + 1
+				i := i + 1;
 			end -- end loop i
 
 			--occupy all empty spaces downward
@@ -202,22 +205,21 @@ feature -- Movement commands
 				until
 					j = 1
 				loop
-					if ((board.elements.item (i, j).value = 0) and (board.elements.item (i, j-1).value) /= 0) then -- if i,j = 0 and the one above it is =/ 0
-						 board.set_cell(i, j, board.elements.item (i, j-1).value)
-						 board.set_cell(i, j-1, 0)
+					if ((board.elements.item (j, i).value = 0) and (board.elements.item (j-1, i).value) /= 0) then -- if j,i = 0 and the one above it is =/ 0
+						 board.set_cell(j, i, board.elements.item (j-1, i).value)
+						 board.set_cell(j-1, i, 0)
 						 if (j < 4) then --if not at the lowermost cell
-						 	j := j+1 -- continues moving downward until it reaches an ocupied cell
+						 	j := j+1; -- continues moving downward until it reaches an ocupied cell
 						 else
-						 	j := j-1 -- continues moving upward
+						 	j := j-1; -- continues moving upward
 						 end
 					else
-						j := j-1
+						j := j-1;
 					end
 				end -- end loop j
+				i := i+1;
 			end -- end loop i
 			set_random_free_cell
-		--ensure
-			--TODO
 		end -- end do
 
 	left
