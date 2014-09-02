@@ -88,7 +88,6 @@ feature -- Test routines
 			do
 				if not second_time then
 					ok:=True
-					create board.make
 					bool:= board.can_move_right
 					ok:= False
 				end
