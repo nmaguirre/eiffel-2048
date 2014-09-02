@@ -44,6 +44,25 @@ feature -- Initialisation
 
 	end
 
+	make_with_nickname(nick: STRING)
+	require
+		is_valid_nickname(nick)
+	do
+		nickname:=nick
+	end
+
+
+	make_with_nick_and_pass(nick, pass: STRING)
+	require
+		is_valid_password(pass)
+		is_valid_nickname(nick)
+	do
+		nickname:=nick
+		password:=pass
+	end
+
+	
+
 feature -- Status report
 	name: STRING
 	surname:STRING
