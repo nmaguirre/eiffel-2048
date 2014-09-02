@@ -7,6 +7,7 @@ note
 class
 	USER_2048
 
+
 create
 	make_new_user, make_existant_user, make_with_nickname, make_with_nick_and_pass
 
@@ -81,6 +82,17 @@ feature -- Status setting
 	save_game (new_game: BOARD_2048)
 	do
 
+	end
+
+	load_game
+		-- Load a saved_game
+	do
+--		if attached {USER_2048} retrieve_by_name("/.saved_games/"+nickname) as user_file then
+--			name := user_file.name
+--			surname := user_file.surname
+--			password := user_file.password
+--			game := user_file.game
+--		end
 	end
 
 feature -- Control methods
