@@ -238,7 +238,7 @@ feature -- Movement commands
 			board.can_move_right
 
 		local
-			i, j, k: INTEGER
+			i, j, k, v: INTEGER
 		do
 			from
 				i := 1
@@ -282,15 +282,17 @@ feature -- Movement commands
 				i > 4
 			loop
 				from
-					j := 1
+					j := 4
 				until
-					j > 4
+					j < 1
 				loop
 				    if board.elements.item(i, j).value /= 0 then
-				       position_right(i, board.elements.item (i, j).value)
-						j := j + 1;
+				    	v := board.elements.item (i, j).value
+				    	board.set_cell (i, j, 0)
+				        position_right(i, v)
+						j := j - 1;
 					else
-                        j := j + 1
+                        j := j - 1
                     end --end if
                 end --end loop j
                 i := i + 1
