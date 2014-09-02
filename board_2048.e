@@ -240,20 +240,24 @@ feature -- Status report
 			elements /= Void
 		local
 			i,j,k: INTEGER
-			can_move: BOOLEAN
+			can_move,cell_ocuped: BOOLEAN
 		do
 			from
 				i := 1
 			until
 				i >= columns or can_move
 			loop
+				cell_ocuped := false
 				from
 					j := rows
 					k := rows - 1
 				until
 					k < 1 or can_move
 				loop
-					if(elements.item (j, i).value = elements.item (k, i).value or elements.item(k, i).value = 0 )
+					if not cell_ocuped then
+						cell_ocuped := elements.item (j, i).value /= 0
+					end
+					if((elements.item (j, i).value /= 0 and elements.item (j, i).value = elements.item (k, i).value) or (cell_ocuped and elements.item(k, i).value = 0 ))
 					then
 						-- Two cells have the same value or the cell of up is a free cell
 						can_move := True

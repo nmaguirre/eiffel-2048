@@ -20,7 +20,7 @@ feature -- Positive Tests
 			board: BOARD_2048
 		do
 			create board.make_empty
-			assert ("You can move up, this test should return true", board.can_move_up)
+			assert ("You can't move up", not board.can_move_up)
 		end
 
 	can_move_up_test_with_full_board_and_no_have_moves
