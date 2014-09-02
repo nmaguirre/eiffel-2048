@@ -8,7 +8,7 @@ class
 	USER_2048
 
 create
-	make_new_user, make_existant_user
+	make_new_user, make_existant_user, make_with_nickname, make_with_nick_and_pass
 
 feature -- Initialisation
 
@@ -61,7 +61,7 @@ feature -- Initialisation
 		password:=pass
 	end
 
-	
+
 
 feature -- Status report
 	name: STRING
