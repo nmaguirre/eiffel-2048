@@ -52,7 +52,7 @@ feature -- Game State
 		do
 			finished := False
 			if not board.can_move_up and not board.can_move_down and not board.can_move_left and not board.can_move_right then
-				Result := True
+				finished := True
 			else
 				finished := board.is_winning_board
 			end
