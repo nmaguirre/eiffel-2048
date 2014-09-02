@@ -12,7 +12,7 @@ create
 
 feature -- Initialisation
 
-	make_existant_user(existant_name:STRING, existant_surname: STRING, existant_nickname: STRING, existant_password: STRING, existant_game: BOARD_2048)
+	make_existant_user(existant_name, existant_surname, existant_nickname, existant_password: STRING; existant_game: BOARD_2048)
 	require
 		is_valid_name(existant_name)
 		is_valid_password(existant_password)
@@ -23,25 +23,25 @@ feature -- Initialisation
 		nickname:=existant_nickname
 		password:=existant_password
 
-		has_unfinished_game:= TRUE
+
 	end
 
 
-	make_new_user(new_name:STRING, new_surname: STRING, new_nickname: STRING, new_password: STRING)
+	make_new_user(new_name, new_surname, new_nickname, new_password: STRING)
+	require
+		is_valid_name(new_name)
+		is_valid_password(new_password)
+		is_valid_nickname(new_nickname)
 	local
 		new_board: BOARD_2048
-	require
-		is_valid_name(existant_name)
-		is_valid_password(existant_password)
-		is_valid_nickname(existant_nickname)
 	do
 		name:=new_name
 		surname:=new_surname
 		nickname:=new_nickname
 		password:=new_password
 
-		game:= new_board.make
-		has_unfinished_game:= TRUE
+		game.make
+
 	end
 
 feature -- Status report
@@ -66,30 +66,30 @@ feature -- Status setting
 
 feature -- Control methods
 
-	is_valid_name(name: STRING): BOOLEAN
+	is_valid_name(name_control: STRING): BOOLEAN
 	do
 		if
-			not name.is_empty or name.at (1).is_alpha
+			not name_control.is_empty or name.at (1).is_alpha
 		then
 			Result:=TRUE
 		end
 	end
 
 
-	is_valid_password(pass: STRING): BOOLEAN
+	is_valid_password(pass_control: STRING): BOOLEAN
 	do
 		if
-			not pass.is_empty
+			not pass_control.is_empty
 		then
 			Result:=TRUE
 		end
 	end
 
 
-	is_valid_nickname(nickname: STRING): BOOLEAN
+	is_valid_nickname(nickname_control: STRING): BOOLEAN
 	do
 		if
-			not nickname.is_empty or name.at (1).is_alpha
+			not nickname_control.is_empty or name.at (1).is_alpha
 		then
 			Result:=TRUE
 		end
