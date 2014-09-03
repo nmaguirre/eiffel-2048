@@ -302,34 +302,6 @@ feature -- Movement commands
 
 feature {NONE} -- Auxiliary routines
 
-	set_random_free_cell
-			-- Sets an unset cell of the board with value 2 or 4
-			-- Position of unset cell is chosen randomly.
-			-- Value to set the cell (2 or 4) chosen randomly.
-		local
-			--			marca_zero: BOOLEAN
-			--			tx, ty: INTEGER
-			--			positionx: RANDOM
-			--			positiony: RANDOM
-		do
-				-- SEE THE COMMENT. METHOD DOES NOT DO WHAT IS SUPPOSED TO
-				--			from
-				--				marca_zero := False
-				--			until
-				--				marca_zero = True
-				--			loop
-				--				tx := positionx.next_random (3)
-				--				tx := tx + 1
-				--				ty := positiony.next_random (3)
-				--				tx := ty + 1
-				--				if board.elements.item (tx, ty).is_available then
-				--					board.elements.item (tx, ty).set_value (2)
-				--					marca_zero := True
-				--					coord_last_random_cell = [tx, ty]
-				--				end --end if
-				--			end --end loop
-		end --end do
-
 	position_right (row, val: INTEGER)
 			-- Method that receives as a parameter a row, and verifies the position which is more to the right
 			-- which is empty in that row and also inserts the value passed as parameter
@@ -349,5 +321,64 @@ feature {NONE} -- Auxiliary routines
 				end --end if
 			end --end loop
 		end --end do
+
+	set_random_free_cell
+
+		local
+		    random_sequence : RANDOM
+			random_cell_row : INTEGER
+			random_cell_col : INTEGER
+		do
+			--initialize random seed
+		    create random_sequence.set_seed(get_random_seed)
+			random_cell_row := get_random(random_sequence, 4) + 1;
+			random_cell_col := get_random(random_sequence, 4) + 1;
+		    from
+		    until
+		    	board.elements.item(random_cell_row, random_cell_col).is_available = True
+		    loop
+		    	--generate a random position
+				random_cell_row := get_random(random_sequence, 4) + 1;
+				random_cell_col := get_random(random_sequence, 4) + 1;
+		    end
+			-- set at cell random number
+			board.set_cell(random_cell_row, random_cell_col, random_number_two_or_four(random_sequence))
+		end
+
+	random_number_two_or_four (random_sequence: RANDOM) : INTEGER
+		-- Randomly returns two or four
+		local
+			random_number: INTEGER
+		do
+			random_number := (get_random (random_sequence, 2) + 1) * 2
+			Result := random_number
+		ensure
+			Result = 2 or Result = 4
+		end
+
+	get_random_seed : INTEGER
+		-- Returns a seed for random sequences
+		local
+			l_time: TIME
+	    	l_seed: INTEGER
+		do
+			create l_time.make_now
+		    l_seed := l_time.hour
+		    l_seed := l_seed * 60 + l_time.minute
+		    l_seed := l_seed * 60 + l_time.second
+		    l_seed := l_seed * 1000 + l_time.milli_second
+		    Result := l_seed
+		end
+
+	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
+		-- Returns a random integer minor that ceil from a random sequence
+		require
+			ceil >= 0
+		do
+			random_sequence.forth
+			Result := random_sequence.item \\ ceil;
+		ensure
+			Result < ceil
+		end
 
 end
