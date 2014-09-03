@@ -29,22 +29,37 @@ feature -- Login
 		do
 		end
 
-	login(username: STRING; password: STRING)
-		-- validate the user datas
-		-- load the user from the file into the user variable, or void if the user doesn't exist
+	login (username: STRING; password: STRING)
+			-- validate the user datas
+			-- load the user from the file into the user variable, or void if the user doesn't exist
+		require
+			username /= Void and password /= Void
+		local
+			possible_user: USER_2048
 		do
+			create possible_user.make_with_nickname (username)
+			if possible_user.has_unfinished_game then
+				possible_user.load_game
+				if password = possible_user.password then
+					user := possible_user
+				else
+					user := Void
+				end
+			else
+				user := Void
+			end
 		end
+
 feature --game
 
 	play
-		-- play the game with the current session
-		-- it allows the user to save the current game session
-		-- IMPORTANT: after saving the game, the game finished.
-		-- IMPORTANT: if the user has a saved session, then it cannot start a new game.
-		--            It should finished the previous game first.
-	do
-
-	end
+			-- play the game with the current session
+			-- it allows the user to save the current game session
+			-- IMPORTANT: after saving the game, the game finished.
+			-- IMPORTANT: if the user has a saved session, then it cannot start a new game.
+			--            It should finished the previous game first.
+		do
+		end
 
 feature -- Implementation
 
