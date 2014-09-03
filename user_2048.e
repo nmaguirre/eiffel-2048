@@ -68,13 +68,29 @@ feature -- Status report
 	name: STRING
 	surname:STRING
 	nickname: STRING
+		-- name under which the file is stored persistent game
+
 	password: STRING
 
 	game : BOARD_2048
 
-	has_unfinished_game : BOOLEAN
-	do
+	path_saved_games : STRING
+            -- Returns the path to the folder containing saved games
+        once
+            Result := ".saved_games/"
+        end
 
+	has_unfinished_game : BOOLEAN
+		-- Returns true if the user has an unfinished game	
+	require
+		valid_nickname: is_valid_nickname(nickname)
+	local
+		file : RAW_FILE
+	do
+		create file.make_with_name (path_saved_games+nickname)
+			if file.exists and then file.is_readable then
+				Result := True
+			end
 	end
 
 feature -- Status setting
