@@ -61,7 +61,7 @@ feature -- Initialisation
 		password:=pass
 	end
 
-feature {IS_VALID_NAME_AT_USER_2048}
+feature {IS_VALID_NAME_AT_USER_2048, APP_2048}
 
 	make_for_test()
 		-- This method allows to create a User withtout any restriction on the imputs
@@ -132,7 +132,7 @@ feature -- Control methods
 	is_valid_name(name_control: STRING): BOOLEAN
 	do
 		if
-			not name_control.is_empty and name_control.at (1).is_alpha and not name_control.is_equal ("")
+			(name_control /= Void) and (name_control.at (1).is_alpha) and (not name_control.is_equal (""))
 		then
 			Result:=TRUE
 		end
