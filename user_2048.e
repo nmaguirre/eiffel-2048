@@ -6,7 +6,8 @@ note
 
 class
 	USER_2048
-
+inherit
+	STORABLE
 
 create
 	make_new_user, make_existant_user, make_with_nickname, make_with_nick_and_pass
@@ -95,9 +96,16 @@ feature -- Status report
 
 feature -- Status setting
 
+	--Saves the state of the current game board corresponding to this user
+	--Requires that "new_game" is not void.
 	save_game (new_game: BOARD_2048)
+	require
+		new_game /= void
 	do
-
+		game := new_game
+		store_by_name(path_saved_games+nickname)
+	ensure
+		game = new_game
 	end
 
 	load_game
