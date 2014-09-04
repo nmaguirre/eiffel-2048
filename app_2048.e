@@ -60,70 +60,92 @@ feature --game
 			--            It should finished the previous game first.
 		require
 			controller /= void and user /= void and not(controller.is_finished)
+		local
+			quit_game: BOOLEAN
 		do
-			print ("|--------2048--------|%N")
-			print ("|                    |%N")
-			print ("|        MENU        |%N")
-			print ("|                    |%N")
-			print ("|q : QUIT AND SAVE   |%N")
-			print ("|a : LEFT            |%N")
-			print ("|d : RIGHT           |%N")
-			print ("|w : UP              |%N")
-			print ("|s : DOWN            |%N")
-			print ("|--------------------|%N")
-			io.putstring (controller.board.out)
 			from
+				quit_game := False
 			until
-				controller.is_finished or io.last_character.is_equal ('q')
+				quit_game
 			loop
-					--read character
-				io.read_character
-					--move left
-				if io.last_character.is_equal ('a') then
-					if controller.board.can_move_left then
-						controller.left
-							--update board
-						io.put_string (controller.board.out)
+				print ("|--------2048--------|%N")
+				print ("|                    |%N")
+				print ("|        MENU        |%N")
+				print ("|                    |%N")
+				print ("|q : QUIT AND SAVE   |%N")
+				print ("|a : LEFT            |%N")
+				print ("|d : RIGHT           |%N")
+				print ("|w : UP              |%N")
+				print ("|s : DOWN            |%N")
+				print ("|--------------------|%N")
+				io.putstring (controller.board.out)
+				from
+				until
+					controller.is_finished or io.last_character.is_equal ('q')
+				loop
+						--read character
+					io.read_character
+						--move left
+					if io.last_character.is_equal ('a') then
+						if controller.board.can_move_left then
+							controller.left
+								--update board
+							io.put_string (controller.board.out)
+						end
 					end
-				end
-					--move down
-				if io.last_character.is_equal ('s') then
-					if controller.board.can_move_down then
-						controller.down
-							--update board
-						io.put_string (controller.board.out)
+						--move down
+					if io.last_character.is_equal ('s') then
+						if controller.board.can_move_down then
+							controller.down
+								--update board
+							io.put_string (controller.board.out)
+						end
 					end
-				end
-					--move right
-				if io.last_character.is_equal ('d') then
-					if controller.board.can_move_right then
-						controller.right
-							--update board
-						io.put_string (controller.board.out)
+						--move right
+					if io.last_character.is_equal ('d') then
+						if controller.board.can_move_right then
+							controller.right
+								--update board
+							io.put_string (controller.board.out)
+						end
 					end
-				end
-					--move up
-				if io.last_character.is_equal ('w') then
-					if controller.board.can_move_up then
-						controller.up
-							--update board
-						io.put_string (controller.board.out)
+						--move up
+					if io.last_character.is_equal ('w') then
+						if controller.board.can_move_up then
+							controller.up
+								--update board
+							io.put_string (controller.board.out)
+						end
 					end
-				end
-					--exit
+						--exit
 
-			end
-				--finish game
-			if controller.is_finished then
-				if controller.board.is_winning_board then
-					print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!! :D")
-				else
-					print ("you lost :'( ")
 				end
-				-- restart of play per game completed.
-				controller.board.make
-			else
-				print ("q pressed, exit game")
+					--finish game
+				if controller.is_finished then
+					if controller.board.is_winning_board then
+						print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!! :D")
+					else
+						print ("you lost :'( ")
+					end
+					print ("%N")
+					print ("|--------2048--------|%N")
+					print ("|                    |%N")
+					print ("|        MENU        |%N")
+					print ("|                    |%N")
+					print ("|q : QUIT GAME       |%N")
+					print ("|n : NEW GAME        |%N")
+					print ("|--------------------|%N")
+					--read character
+					io.read_character
+					if io.last_character.is_equal ('q') then
+						quit_game := True
+					end
+					-- restart of play per game completed.
+					controller.board.make
+				else
+					print ("q pressed, exit game")
+					quit_game := True
+				end
 			end
 			-- Save game
 			user.save_game (controller.board)
