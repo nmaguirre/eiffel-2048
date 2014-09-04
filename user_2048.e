@@ -111,12 +111,12 @@ feature -- Status setting
 	load_game
 		-- Load a saved_game
 	do
---		if attached {USER_2048} retrieve_by_name("/.saved_games/"+nickname) as user_file then
---			name := user_file.name
---			surname := user_file.surname
---			password := user_file.password
---			game := user_file.game
---		end
+		if attached {USER_2048} retrieve_by_name("/.saved_games/"+nickname) as user_file then
+			name := user_file.name
+			surname := user_file.surname
+			password := user_file.password
+			game := user_file.game
+		end
 	end
 
 feature -- Control methods
