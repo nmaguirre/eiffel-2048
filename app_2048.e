@@ -59,7 +59,7 @@ feature --game
 			-- IMPORTANT: if the user has a saved session, then it cannot start a new game.
 			--            It should finished the previous game first.
 		require
-			controller /= void and user /= void
+			controller /= void and user /= void and not(controller.is_finished)
 		do
 			print ("|--------2048--------|%N")
 			print ("|                    |%N")
@@ -120,10 +120,13 @@ feature --game
 				else
 					print ("you lost :'( ")
 				end
+				-- restart of play per game completed.
+				controller.board.make
 			else
 				print ("q pressed, exit game")
-				user.save_game (controller.board)
 			end
+			-- Save game
+			user.save_game (controller.board)
 		end
 
 feature -- Implementation
