@@ -247,7 +247,7 @@ feature -- Status report
 			from
 				i := 1
 			until
-				i >= columns or can_move
+				i > columns or can_move
 			loop
 				cell_ocuped := false
 				from
