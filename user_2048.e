@@ -110,13 +110,17 @@ feature -- Status setting
 
 	load_game
 		-- Load a saved_game
+	require
+		existing_file(nickname)
 	do
-		if attached {USER_2048} retrieve_by_name("/.saved_games/"+nickname) as user_file then
+		if attached {USER_2048} retrieve_by_name(path_saved_games+nickname) as user_file then
 			name := user_file.name
 			surname := user_file.surname
 			password := user_file.password
 			game := user_file.game
 		end
+	ensure
+		(name /= Void) and (surname /= Void) and (password /= Void) and (game /= Void)
 	end
 
 feature -- Control methods
@@ -150,5 +154,14 @@ feature -- Control methods
 		end
 	end
 
+	existing_file(nickname_control: STRING): BOOLEAN
+		-- Check if file exists
+	do
+		if attached retrieve_by_name(path_saved_games+nickname_control) as file then
+			Result := True
+		else
+			Result := False
+		end
+	end
 
 end
