@@ -36,7 +36,7 @@ feature -- Test routines
 		end
 
 	load_game_existent_user
-
+			--test for existent user
 		local
 			user : USER_2048
 			game : BOARD_2048

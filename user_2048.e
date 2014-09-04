@@ -114,13 +114,17 @@ feature -- Status setting
 
 	load_game
 		-- Load a saved_game
+	require
+		existing_file(nickname)
 	do
-		if attached {USER_2048} retrieve_by_name("/.saved_games/"+nickname) as user_file then
+		if attached {USER_2048} retrieve_by_name(path_saved_games+nickname) as user_file then
 			name := user_file.name
 			surname := user_file.surname
 			password := user_file.password
 			game := user_file.game
 		end
+	ensure
+		(name /= Void) and (surname /= Void) and (password /= Void) and (game /= Void)
 	end
 
 feature -- Control methods
@@ -141,6 +145,27 @@ feature -- Control methods
 			not pass_control.is_empty
 		then
 			Result:=TRUE
+		end
+	end
+
+
+
+	is_valid_nickname(nickname_control: STRING): BOOLEAN
+	do
+		if
+			not nickname_control.is_empty or name.at (1).is_alpha
+		then
+			Result:=TRUE
+		end
+	end
+
+	existing_file(nickname_control: STRING): BOOLEAN
+		-- Check if file exists
+	do
+		if attached retrieve_by_name(path_saved_games+nickname_control) as file then
+			Result := True
+		else
+			Result := False
 		end
 	end
 
