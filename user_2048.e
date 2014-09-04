@@ -155,8 +155,9 @@ feature -- Control methods
 	end
 
 	existing_file(nickname_control: STRING): BOOLEAN
+		-- Check if file exists
 	do
-		if attached {USER_2048} retrieve_by_name(path_saved_games+nickname_control) as user_file then
+		if attached retrieve_by_name(path_saved_games+nickname_control) as file then
 			Result := True
 		else
 			Result := False
