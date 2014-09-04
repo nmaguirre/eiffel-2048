@@ -24,6 +24,7 @@
 		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
 		                <tests name="board_2048" location=".\tests\board_2048\"/>
 		                <tests name="app_2048" location=".\tests\app_2048\"/>
+                        <tests name="user_2048" location=".\tests\user_2048"/>
 			</cluster>
 		</cluster>
 	</target>
