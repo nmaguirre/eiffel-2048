@@ -48,10 +48,10 @@ feature -- Test routines
 			user.save_game (game)
 			user.load_game
 			-- Correct atributtes
-			assert("The name is correct", user.name="user_name")
-			assert("The surname is correct", user.surname="user_surname")
-			assert("The nickname is correct", user.nickname="user_nickname")
-			assert("The password is correct", user.password="user_pwd")
+			assert("The name is correct", equal(user.name,"user_name"))
+			assert("The surname is correct", equal(user.surname,"user_surname"))
+			assert("The nickname is correct", equal(user.nickname,"user_nickname"))
+			assert("The password is correct", equal(user.password,"user_pwd"))
 			-- Correct board
 			assert("Correct cell 1", user.game.elements.item (1, 1).value=4)
 			assert("Correct cell 2", user.game.elements.item (1, 2).value=8)
