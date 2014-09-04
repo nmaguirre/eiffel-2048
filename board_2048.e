@@ -220,9 +220,11 @@ feature -- Status report
 				until
 					(j+1) > columns or move_ok
 				loop
-					if ((elements.item (i,j).value = elements.item (i,j+1).value) or (elements.item(i,j+1).value = 0)) then
+					if not (elements.item (i, j).value = 0) then
+						if ((elements.item (i,j).value = elements.item (i,j+1).value) or (elements.item(i,j+1).value = 0)) then
 						-- evaluates if the value is equal to the right or if value is equal 0
 						move_ok := True
+						end
 					end
 					j:= j+1
 				end
