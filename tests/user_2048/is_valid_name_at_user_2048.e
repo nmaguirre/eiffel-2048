@@ -1,8 +1,9 @@
 note
-	description: "Summary description for {IS_VALID_NAME_AT_USER_2048}."
-	author: ""
-	date: "$Date$"
-	revision: "$Revision$"
+
+	description: "Test class for routine is_valid_name at USER_2048"
+	author: "adriangalfioni"
+	date: "September 5, 2014"
+	revision: "0.01"
 
 class
 	IS_VALID_NAME_AT_USER_2048
@@ -18,7 +19,7 @@ feature
 			user : USER_2048
 		do
 			create user.make_for_test
-			assert ("void name must be invalid", user.is_valid_name ("new_user"))
+			assert ("name that starts with alpha must be correct", user.is_valid_name ("new_user"))
 		end
 
 
@@ -28,7 +29,7 @@ feature
 			user : USER_2048
 		do
 			create user.make_for_test
-			assert ("void name must be invalid", not user.is_valid_name ("1asdasd"))
+			assert ("name that starts with a number must be invalid", not user.is_valid_name ("1asdasd"))
 		end
 
 	is_valid_name_with_empty_name
@@ -37,11 +38,11 @@ feature
 			user : USER_2048
 		do
 			create user.make_for_test
-			assert ("void name must be invalid", not user.is_valid_name (""))
+			assert ("empty name must be invalid", not user.is_valid_name (""))
 		end
 
 	is_valid_name_with_void_name
-			-- Using an empty name
+			-- Using a void string
 		local
 			user : USER_2048
 			name: STRING

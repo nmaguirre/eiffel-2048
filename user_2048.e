@@ -15,6 +15,7 @@ create
 feature -- Initialisation
 
 	make_existant_user(existant_name, existant_surname, existant_nickname, existant_password: STRING; existant_game: BOARD_2048)
+		-- Create a new user with existant user status
 	require
 		is_valid_name(existant_name)
 		is_valid_password(existant_password)
@@ -30,6 +31,7 @@ feature -- Initialisation
 
 
 	make_new_user(new_name, new_surname, new_nickname, new_password: STRING)
+		-- Create a new user with all atributes
 	require
 		is_valid_name(new_name)
 		is_valid_password(new_password)
@@ -45,6 +47,7 @@ feature -- Initialisation
 	end
 
 	make_with_nickname(nick: STRING)
+		-- Create a new user with nickname atribute
 	require
 		is_valid_name(nick)
 	do
@@ -53,6 +56,7 @@ feature -- Initialisation
 
 
 	make_with_nick_and_pass(nick, pass: STRING)
+		-- Create a new user with nickname and password atribute
 	require
 		is_valid_password(pass)
 		is_valid_name(nick)
@@ -130,6 +134,7 @@ feature -- Status setting
 feature -- Control methods
 
 	is_valid_name(name_control: STRING): BOOLEAN
+		-- Validate if name isnt void, empty or starts with a number
 	do
 		if
 			(name_control /= Void) and (name_control.at (1).is_alpha) and (not name_control.is_equal (""))
@@ -140,9 +145,10 @@ feature -- Control methods
 
 
 	is_valid_password(pass_control: STRING): BOOLEAN
+		-- Validate if pass isnt void or empty
 	do
 		if
-			not pass_control.is_empty
+			(pass_control /= Void) and (not pass_control.is_equal (""))
 		then
 			Result:=TRUE
 		end
