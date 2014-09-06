@@ -21,12 +21,12 @@ feature -- Initialisation
 		is_valid_password(existant_password)
 		is_valid_name(existant_nickname)
 	do
-		name:=name
+		name:=existant_name
 		surname:=existant_surname
 		nickname:=existant_nickname
 		password:=existant_password
 
-
+		game := existant_game
 	end
 
 
