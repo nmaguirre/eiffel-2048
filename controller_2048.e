@@ -46,7 +46,7 @@ feature -- Game State
 
 	is_finished: BOOLEAN
 			-- Indicates whether the game is finished or not.
-			-- Game finishes when either 2048 is reached, or if any movement is possible.
+			-- Game finishes when either 2048 is reached, or if there is no possible movement.
 		local
 			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
 		do

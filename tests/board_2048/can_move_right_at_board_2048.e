@@ -20,7 +20,7 @@ feature -- Test routines
 			board: BOARD_2048
 		do
 			create board.make_empty
-			assert ("Can move right: ok", board.can_move_right)
+			assert ("Can move right: ok", not board.can_move_right)
 		end
 
 	can_move_right_at_board_filled
