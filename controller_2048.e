@@ -344,7 +344,6 @@ feature {NONE} -- Auxiliary routines
 			-- set at cell random number
 			board.set_cell(random_cell_row, random_cell_col, random_number_two_or_four(random_sequence))
 			coord_last_random_cell := [random_cell_row,random_cell_col]
-			
 		end
 
 	random_number_two_or_four (random_sequence: RANDOM) : INTEGER
