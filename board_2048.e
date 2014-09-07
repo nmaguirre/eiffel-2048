@@ -136,6 +136,7 @@ feature -- Status report
 		end
 
 	out: STRING
+	-- provides a string representation of the board content.
 		local
 			i: INTEGER
 			j: INTEGER
@@ -161,6 +162,8 @@ feature -- Status report
 					i:=i+1
 			end
 			Result := output
+			ensure then
+				Result.count>0
 		end
 
 	is_full: BOOLEAN
