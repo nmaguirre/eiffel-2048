@@ -252,20 +252,18 @@ feature -- Status report
 				cell_ocuped := false
 				from
 					j := rows
-					k := rows - 1
 				until
-					k < 1 or can_move
+					j <= 1 or can_move
 				loop
 					if not cell_ocuped then
 						cell_ocuped := elements.item (j, i).value /= 0
 					end
-					if((elements.item (j, i).value /= 0 and elements.item (j, i).value = elements.item (k, i).value) or (cell_ocuped and elements.item(k, i).value = 0 ))
+					if((elements.item (j, i).value /= 0 and elements.item (j, i).value = elements.item (j-1, i).value) or (cell_ocuped and elements.item(j-1, i).value = 0 ))
 					then
 						-- Two cells have the same value or the cell of up is a free cell
 						can_move := True
 					end
-					j := k
-					k := k-1
+					j := j-1
 				end
 				i := i+1
 			end
