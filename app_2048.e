@@ -113,35 +113,33 @@ feature --game
 				end
 					--exit
 
-			end
-				--finish game
-			if controller.is_finished then
-				if controller.board.is_winning_board then
-					print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!! :D")
-				else
-					print ("you lost :'( ")
+				if controller.is_finished then
+					if controller.board.is_winning_board then
+						print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!! :D")
+					else
+						print ("you lost :'( ")
+					end
+					print ("%N")
+					print ("|--------2048--------|%N")
+					print ("|                    |%N")
+					print ("|        MENU        |%N")
+					print ("|                    |%N")
+					print ("|q : QUIT GAME       |%N")
+					print ("|n : NEW GAME        |%N")
+					print ("|--------------------|%N")
+						--read character
+					io.read_character
+						-- restart of play per game completed.
+					controller.board.make
+					if io.last_character.is_equal ('n') then
+						io.putstring (controller.board.out)
+					end
 				end
-				print ("%N")
-				print ("|--------2048--------|%N")
-				print ("|                    |%N")
-				print ("|        MENU        |%N")
-				print ("|                    |%N")
-				print ("|q : QUIT GAME       |%N")
-				print ("|n : NEW GAME        |%N")
-				print ("|--------------------|%N")
-					--read character
-				io.read_character
-					-- restart of play per game completed.
-				controller.board.make
-				if io.last_character.is_equal ('n') then
-					io.putstring (controller.board.out)
-				end
-			else
-				print ("q pressed, exit game")
 			end
 				-- Save game
 			user.save_game (controller.board)
 		end
+
 
 feature -- Implementation
 
