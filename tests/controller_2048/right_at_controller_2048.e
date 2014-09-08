@@ -43,17 +43,12 @@ feature --Test routines
 			controller.board.set_cell(2, 4, 2)
 			controller.board.set_cell(3, 1, 2)
 			controller.right
-			if controller.board.elements.item(1, 2).value = 2 and
-			   controller.board.elements.item(1, 3).value = 4 and
-			   controller.board.elements.item(1, 4).value = 4 and
-               controller.board.elements.item(2, 3).value = 8 and
-			   controller.board.elements.item(2, 4).value = 2 and
-			   controller.board.elements.item(3, 4).value = 2
-		       then
-			   assert("The board has moved right correctly", True)
-			else
-			   assert("The board has moved right correctly", False)
-			end
+			assert ("First row moved right correctly", controller.board.elements.item(1, 2).value = 2 and
+													   controller.board.elements.item(1, 3).value = 4 and
+													   controller.board.elements.item(1, 4).value = 4)
+			assert ("Second row moved right correctly", controller.board.elements.item(2, 3).value = 8 and
+			                                            controller.board.elements.item(2, 4).value = 2)
+			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
 		end --end do
 
 	test_movs_right_cell_value_is_valid
@@ -194,15 +189,10 @@ feature --Test routines
 			controller.board.set_cell(3, 2, 8)
 			controller.board.set_cell(4, 1, 16)
 			controller.right
-			if controller.board.elements.item(1, 4).value = 2 and
-			   controller.board.elements.item(2, 4).value = 4 and
-			   controller.board.elements.item(3, 4).value = 8 and
-               controller.board.elements.item(4, 4).value = 16
-		       then
-			   assert("The board has moved right correctly", True)
-			else
-			   assert("The board has moved right correctly", False)
-			end
+			assert ("First row moved right correctly", controller.board.elements.item(1, 4).value = 2)
+			assert ("Second row moved right correctly", controller.board.elements.item(2, 4).value = 4)
+			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 8)
+			assert ("Fourth row moved right correctly", controller.board.elements.item(4, 4).value = 16)
 		end --end do		
 
 	test_move_right_not_movement_of_cells
@@ -232,15 +222,10 @@ feature --Test routines
 			controller.board.set_cell(3, 4, 2)
 			controller.board.set_cell(4, 4, 2)
 			controller.right
-			if controller.board.elements.item(1, 4).value = 2 and
-			   controller.board.elements.item(2, 4).value = 2 and
-			   controller.board.elements.item(3, 4).value = 2 and
-               controller.board.elements.item(4, 4).value = 2
-		       then
-			   assert("The board has moved right correctly", True)
-			else
-			   assert("The board has moved right correctly", False)
-			end
+			assert ("First row moved right correctly", controller.board.elements.item(1, 4).value = 2)
+			assert ("Second row moved right correctly", controller.board.elements.item(2, 4).value = 2)
+			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
+			assert ("Fourth row moved right correctly", controller.board.elements.item(4, 4).value = 2)
 		end --end do			
 
 end
