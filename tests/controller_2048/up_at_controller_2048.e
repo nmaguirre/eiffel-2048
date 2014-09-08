@@ -12,7 +12,7 @@ inherit
 	feature -- Test routines
 
 		test_up_with_cant_move_up
-				--  Scenario: can't move up, pre condition is violated.
+				-- Scenario: can't move up, pre condition is violated.
 				-- Given the game board is in state, when I move up the funtion throw an error.
 				--  2 |	2 | 2 | 2
 				--	4 | 4 | 4 | 4
@@ -117,28 +117,46 @@ inherit
 			assert (" the value of cell [1,3] must be 2 ", controller.board.elements.item (1, 3).value = 2)
 		end
 
-	test_move_up_not_movement_of_cells
-			--  Scenario: Moving up don't changes board state.
-			-- Given the game board is in state
-			--  x |	x | x | 2
-			--	x | x | x | 0
-			--	x | x | x | 0
-			--	x | x | x | 0
-			-- When i move up, then I should obtain the same board.
+	test_up_with_cant_move_up_2
+			-- Scenario: can't move up, pre condition is violated.
+			-- Given the game board is in state, when I move up the funtion throw an error.
+			--  2 | 2 | 2 | 2
+			--	0 | 0 | 0 | 0
+			--	0 | 0 | 0 | 0
+			--	0 | 0 | 0 | 0		
 		local
 			controller: CONTROLLER_2048
 			board: BOARD_2048
+			ok, second_time: BOOLEAN
 		do
-			create board.make
-			create controller.make_with_board (board)
-			controller.board.set_cell (1, 4, 2)
-			controller.board.set_cell (2, 4, 0)
-			controller.board.set_cell (3, 4, 0)
-			controller.board.set_cell (4, 4, 0)
-			controller.up
-			assert (" the value of cell [1,4] must be 2 ", controller.board.elements.item (1, 4).value = 2)
+			if not second_time then
+		   		ok := True
+				create board.make
+				create controller.make_with_board (board)
+				controller.board.set_cell (1, 1, 2)
+					controller.board.set_cell (2, 1, 0)
+				controller.board.set_cell (3, 1, 0)
+				controller.board.set_cell (4, 1, 0)
+				controller.board.set_cell (1, 2, 2)
+				controller.board.set_cell (2, 2, 0)
+				controller.board.set_cell (3, 2, 0)
+				controller.board.set_cell (4, 2, 0)
+				controller.board.set_cell (1, 3, 2)
+				controller.board.set_cell (2, 3, 0)
+				controller.board.set_cell (3, 3, 0)
+				controller.board.set_cell (4, 3, 0)
+				controller.board.set_cell (1, 4, 2)
+				controller.board.set_cell (2, 4, 0)
+				controller.board.set_cell (3, 4, 0)
+				controller.board.set_cell (4, 4, 0)
+				controller.up -- Must throw an exception
+				ok := False
+			end
+		    assert ("The rutine has to fail", ok)
+			rescue
+		    	second_time := True
+		     	if ok then   -- ok = true means that the rutine failed
+		        	retry
+		    	end
 		end
-
-
-
 end
