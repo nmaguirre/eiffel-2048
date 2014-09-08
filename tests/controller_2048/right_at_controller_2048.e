@@ -12,7 +12,7 @@ inherit
 
 feature --Test routines
 
-	test_movs_right
+	test_moves_right
 			--	        Scenario: Moving RIGHT changes board state colapsing crashing cells with
 			--                        similar values
 			--                Given the game board is in state
@@ -51,7 +51,7 @@ feature --Test routines
 			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
 		end --end do
 
-	test_movs_right_cell_value_is_valid
+	test_moves_right_cell_value_is_valid
 			--	        Scenario: Moving RIGHT changes board state colapsing crashing cells with
 			--                        similar values
 			--                Given the game board is in state
