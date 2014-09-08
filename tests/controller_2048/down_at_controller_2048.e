@@ -31,7 +31,7 @@ feature -- Test routines
 			board: BOARD_2048
 			controller: CONTROLLER_2048
 		do
-			create board.make
+			create board.make_empty
 			create controller.make_with_board (board)
 
 			controller.board.set_cell (1, 1, 2)
@@ -171,7 +171,7 @@ feature -- Test routines
 		do
 			if not second_time then
           		failed := True
-				create board.make
+				create board.make_empty
 				create controller.make_with_board(board)
 				controller.board.set_cell(1, 1, 32)
 				controller.board.set_cell(2, 1, 128)
