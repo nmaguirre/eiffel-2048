@@ -31,9 +31,39 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 			board: BOARD_2048
 		do
 			create board.make_empty
-			print(board.out)
 			assert ("String is not empty", board.out.count/=0)
 		end
+
+	string_has_2_or_4
+			-- symbols
+			-- Must return TRUE
+		local
+			board: BOARD_2048
+		do
+			create board.make
+			assert ("String has 2 of a 4 when created", board.out.has ('2') or board.out.has ('4'))
+		end
+
+	string_has_2_or_4_or_else_done
+			-- symbols
+			-- Must return TRUE
+		local
+			app: APP_2048
+		do
+			create app.make
+
+			--just perform some available moves
+				app.controller.up
+				app.controller.down
+				app.controller.left
+				app.controller.right
+			--then assert the existence of 2 or 4 in the board
+
+			assert ("String has 2 of a 4 when created", app.controller.board.out.has ('2') or app.controller.board.out.has ('4'))
+		end
+
+
+
 
 
 end
