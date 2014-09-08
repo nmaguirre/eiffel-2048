@@ -175,5 +175,12 @@ feature -- Control methods
 		end
 	end
 
+feature{HAS_UNFINISHED_GAME_AT_USER_2048}
+
+	set_nickname(nick : STRING)
+		--
+	do
+		nickname:= nick
+	end
 
 end
