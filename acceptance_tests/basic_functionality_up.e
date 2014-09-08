@@ -46,7 +46,7 @@ feature -- Test routines
 			controller.up
 			if attached {INTEGER} controller.last_random_cell_coordinates.item (1) as row_new then
 				if attached {INTEGER} controller.last_random_cell_coordinates.item (2) as col_new then
-					assert ("(1,3) has a 4", controller.board.elements [4, 3].value = 4)
+					assert ("(1,3) has a 4", controller.board.elements [1, 3].value = 4)
 					assert ("board has two filled cells", controller.board.nr_of_filled_cells = 2)
 					assert ("coordinates of new cell is not (1,3)", row_new /= 1 or col_new /= 3)
 					assert ("new cell has a 2 or a 4", controller.board.elements [row_new, col_new].value = 2 or controller.board.elements [row_new, col_new].value = 4)
