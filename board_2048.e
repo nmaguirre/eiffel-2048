@@ -142,9 +142,10 @@ feature -- Status report
 			j: INTEGER
 			output: STRING
 		do
-			output:=""
+
 			from
 				i:= 1
+				output:=""
 			until
 				i> rows
 			loop
