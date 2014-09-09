@@ -131,24 +131,12 @@ inherit
 		do
 			if not second_time then
 		   		ok := True
-				create board.make
+				create board.make_empty
 				create controller.make_with_board (board)
 				controller.board.set_cell (1, 1, 2)
-					controller.board.set_cell (2, 1, 0)
-				controller.board.set_cell (3, 1, 0)
-				controller.board.set_cell (4, 1, 0)
 				controller.board.set_cell (1, 2, 2)
-				controller.board.set_cell (2, 2, 0)
-				controller.board.set_cell (3, 2, 0)
-				controller.board.set_cell (4, 2, 0)
 				controller.board.set_cell (1, 3, 2)
-				controller.board.set_cell (2, 3, 0)
-				controller.board.set_cell (3, 3, 0)
-				controller.board.set_cell (4, 3, 0)
 				controller.board.set_cell (1, 4, 2)
-				controller.board.set_cell (2, 4, 0)
-				controller.board.set_cell (3, 4, 0)
-				controller.board.set_cell (4, 4, 0)
 				controller.up -- Must throw an exception
 				ok := False
 			end
