@@ -2,7 +2,7 @@
 		description: "Test class for LEFT_AT_CONTROLLER_2048 class"
 		author: "Bono Federico David"
 		date: "September 8, 2014"
-		revision "0.01"
+		revision: "0.01"
 		testing:"type/manual"
 
 		class
@@ -11,7 +11,7 @@
 
 		inherit
 			EQA_TEST_SET
-	
+
 		feature -- Test routines
 
 
@@ -100,7 +100,7 @@
 			assert ("Row Two incorrect",controller.board.elements.item(2, 1).value /= 8)
  			assert ("Row Three incorrect",controller.board.elements.item(3, 1).value /= 16)
  			assert ("Row Four incorrect",controller.board.elements.item(4,1).value /= 4 or controller.board.elements.item(4, 2).value /= 16)
-			
+
 		end
 
 
@@ -130,11 +130,11 @@
 			controller.board.set_cell(3,3,2)
 			controller.board.set_cell(4,3,2)
 			controller.left
-			assert ("Row One incorrect",controller.board.elements.item(1,1).value /= 4 or controller.board.elements.item(1,2).value /= 8) 
-			assert ("Row Two incorrect",controller.board.elements.item(2, 1).value /= 4) 
+			assert ("Row One incorrect",controller.board.elements.item(1,1).value /= 4 or controller.board.elements.item(1,2).value /= 8)
+			assert ("Row Two incorrect",controller.board.elements.item(2, 1).value /= 4)
  			assert ("Row Three incorrect",controller.board.elements.item(3, 1).value /= 2)
-			assert ("Row Four incorrect" controller.board.elements.item(4,1).value /= 2)
-				
+			assert ("Row Four incorrect", controller.board.elements.item(4,1).value /= 2)
+
 		end
 
 
@@ -209,8 +209,9 @@
 			controller.board.set_cell(4, 3,64)
 			controller.board.set_cell(4, 4,64)
 			controller.left
-			assert ("Row One correct",controller.board.elements.item(1,1).value = 8 and controller.board.elements.item(1,2).value = 4) 
+			assert ("Row One correct",controller.board.elements.item(1,1).value = 8 and controller.board.elements.item(1,2).value = 4)
 			assert ("Row Two correct",controller.board.elements.item(2, 1).value = 32  and controller.board.elements.item(2,2).value = 16) 			      assert ("Row Three correct",controller.board.elements.item(3,1).value = 64 and controller.board.elements.item(3, 2).value = 32)  				assert ("Row Four correct",controller.board.elements.item(4, 1).value = 256 and controller.board.elements.item(4, 2).value = 128)
 		end
 
 
+end
