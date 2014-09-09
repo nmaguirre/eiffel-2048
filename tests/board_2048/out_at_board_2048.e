@@ -15,7 +15,7 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 
 
 	string_has_even_amount_of_numbers
-			-- symbols
+			-- String out lenght must be even
 			-- Must return TRUE
 		local
 			board: BOARD_2048
@@ -25,7 +25,7 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 		end
 
 	string_is_not_empty
-			-- symbols
+			-- String out of a new board shouldn't be empty
 			-- Must return TRUE
 		local
 			board: BOARD_2048
@@ -35,35 +35,15 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 		end
 
 	string_has_2_or_4
-			-- symbols
+			-- Board.out shall contain either two 2, two 4 or one each.
 			-- Must return TRUE
 		local
 			board: BOARD_2048
+			res: INTEGER
 		do
 			create board.make
-			assert ("String has 2 of a 4 when created", board.out.has ('2') or board.out.has ('4'))
+			res := board.out.occurrences ('2')+board.out.occurrences ('4')
+			assert ("Board.out contains either two 2, two 4 or a 2 and a 4", res = 2)
 		end
-
-	string_has_2_or_4_or_else_done
-			-- symbols
-			-- Must return TRUE
-		local
-			app: APP_2048
-		do
-			create app.make
-
-			--just perform some available moves
-				app.controller.up
-				app.controller.down
-				app.controller.left
-				app.controller.right
-			--then assert the existence of 2 or 4 in the board
-
-			assert ("String has 2 of a 4 when created", app.controller.board.out.has ('2') or app.controller.board.out.has ('4'))
-		end
-
-
-
-
 
 end
