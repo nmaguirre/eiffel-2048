@@ -222,12 +222,97 @@ feature -- Movement commands
 			set_random_free_cell
 		end -- end do
 
-	left
-			-- Moves the cells to the leftmost possible point of the game board.
+	 left
+	                -- Moves the cells to the leftmost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
-		do
-		end
+			require
+					board.can_move_left
+			local
+					n1: INTEGER
+					n2: INTEGER
+					n3: INTEGER
+			do
+					from
+						 n1 := 1
+					until
+						 n1 > 4
+					loop -- loop the rows
+						from
+						 	n2 := 1
+						until
+						 	n2 >= 4
+						loop -- loop the columns
+							if (board.elements.item (n1, n2).value /= 0) and (n2 < 4) then
+								n3 := n2 + 1
+							from
+
+							until
+								 (board.elements.item(n1,n3).value /= 0) or (n3 >= 4)
+							loop
+								n3 := n3 +1;
+							end
+							    if(n3 <= 4) then
+
+								if (board.elements.item(n1, n2).value = board.elements.item(n1, n3).value) then
+										board.set_cell(n1, n2, (board.elements.item(n1, n3).value + board.elements.item(n1, n2).value))
+								    n2 := n3 + 1 										
+										board.set_cell(n1, n3, 0)
+										
+								else
+										n2 := n3
+								end
+							    end
+							end
+								
+						else
+								n2 := n2 + 1
+						end
+					end --end loop n2
+						n1 := n1 + 1
+				end -- end loop n1
+
+				from
+					n1 := 1
+				until
+					n1 > 4
+				loop
+					from
+						n2 := 1
+					until
+						n2 < 4
+					loop
+						if (board.elements.item(n1, n2).value /= 0) then
+								position_left(n1, board.elements.item (n1, n2).value)
+								n2 := n2 + 1
+								
+						end --end if
+						n2 := n2 + 1
+					end --end loop n2
+					n1 := n1 + 1
+				end --end loop n1
+					set_random_free_cell
+			end --end do
+
+
+			position_left (row, val: INTEGER)
+			-- We as a parameter the row, and we see the position you are more left this gap in that row and insert it as parameter
+				local
+					column: INTEGER
+				do
+					from
+						column := 1
+					until
+						column > 4
+					loop
+						if not(board.elements.item(row, column).value = 0) then
+							column := column + 1
+						else
+							board.set_cell(row, column, val)
+							column := 0
+						end --end if
+					end --end loop
+				end --end do
 
 	right
 			-- Moves the cells to the rightmost possible point of the game board.
