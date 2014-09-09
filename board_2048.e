@@ -174,6 +174,12 @@ feature -- Status report
 		ensure Result = (nr_of_filled_cells = 16)
 		end
 
+	is_empty:BOOLEAN
+		-- Indicates if all cells in the board are not set
+		do
+			Result := (nr_of_filled_cells = 0) -- Board is full when all 16 cells are filled
+		ensure Result = (nr_of_filled_cells = 0)
+		end
 	can_move_left: BOOLEAN
 		-- Indicates whether the board would change through a movement to the left
 		require

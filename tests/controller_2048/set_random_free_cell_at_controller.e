@@ -1,7 +1,7 @@
 note
 	description: "testing the generation of random coordinate to set starting an empty cell with a value that can be equal to 2 or 4"
-	author: "guille85"
-	date: "04 September, 2014"
+	author: "lputruele and agusbauer"
+	date: "09 September, 2014"
 	revision: "type/manual"
 
 class
@@ -12,133 +12,83 @@ inherit
 feature -- Test routines
 
 
-test_random_mov_right
- --Scenario: Moving RIGHT changes board state moving all cells to the rightmost empty cell
- --			 and create random value (2 or 4).
- --          Given the game board is in state
- --          When i move RIGHT,
-
- --                        | 2 |   |   |   |
- --                        |   |   |   |   |
- --                        |   |   | 2 |   |
- --                        |   |   |   |   |					
- --                    Then I should obtain
- --                        | ? | ? | ? | 2 |
- --                        | ? | ? | ? | ? |
- --                        | ? | ? | ? | 2 |
- --                        | ? | ? | ? | ? |	
- --                    And one of the cell with question mark remaining filled with 2 or 4.
-
- local
- 	board: BOARD_2048
-	controller: CONTROLLER_2048
-
- 	do
- 	create board.make_empty
-	create controller.make_with_board (board)
-	controller.board.set_cell (1,1,2)
-	controller.board.set_cell (3,3,2)
-	controller.right
-	print(board.out)
+	test_with_empty_board
+		-- test set random free cell on an empty board
+	local
+		controller:CONTROLLER_2048
+		board:BOARD_2048
+	do
+		create board.make_empty
+		create controller.make_with_board (board)
+		controller.set_random_free_cell
+		assert("board is not empty anymore",not board.is_empty)
 	end
 
-test_random_mov_up
- --Scenario: Moving UP changes board state moving all cells to the upmost empty cell
- --			 and create random value (2 or 4).
- --          Given the game board is in state
- --          When i move UP,
-
- --                        |   |   | 4 |   |
- --                        | 2 |   |   |   |
- --                        |   |   | 2 |   |
- --                        | 2 |   |   |   |					
- --                    Then I should obtain
- --                        | 4 | ? | 4 | ? |
- --                        | ? | ? | 2 | ? |
- --                        | ? | ? | ? | ? |
- --                        | ? | ? | ? | ? |	
- --                    And one of the cell with question mark remaining filled with 2 or 4.
-
-
- local
- 	board: BOARD_2048
-	controller: CONTROLLER_2048
-
- 	do
- 	create board.make_empty
-	create controller.make_with_board (board)
-	controller.board.set_cell (2,1,2)
-	controller.board.set_cell (4,1,2)
-	controller.board.set_cell (1,3,4)
-	controller.board.set_cell (3,3,2)
-	controller.up
-	print(board.out)
+	test_with_board_with_only_one_available_cell
+		-- test set random free cell on an empty board
+	local
+		controller:CONTROLLER_2048
+		board:BOARD_2048
+		i,j:INTEGER
+	do
+		create board.make_empty
+		from
+			i:=1
+		until
+			i>4
+		loop
+			from
+				j:=1
+			until
+				j>4
+			loop
+				board.set_cell (i, j,2)
+				j:=j+1
+			end
+			i:=i+1
+		end
+		board.set_cell (2, 2, 0)
+		create controller.make_with_board (board)
+		controller.set_random_free_cell
+		assert("board is full now",board.is_full)
 	end
 
-test_random_mov_down
- --Scenario: Moving DOWN changes board state moving all cells to the downmost empty cell
- --			 and create random value (2 or 4).
- --          Given the game board is in state
- --          When i move DOWN,
-
- --                        |   |   | 4 |   |
- --                        | 2 |   |   |   |
- --                        |   |   | 2 |   |
- --                        | 2 |   |   |   |					
- --                    Then I should obtain
- --                        | ? | ? | ? | ? |
- --                        | ? | ? | ? | ? |
- --                        | ? | ? | 4 | ? |
- --                        | 4 | ? | 2 | ? |	
- --                    And one of the cell with question mark remaining filled with 2 or 4.
-
-
- local
- 	board: BOARD_2048
-	controller: CONTROLLER_2048
-
- 	do
- 	create board.make_empty
-	create controller.make_with_board (board)
-	controller.board.set_cell (2,1,2)
-	controller.board.set_cell (4,1,2)
-	controller.board.set_cell (1,3,4)
-	controller.board.set_cell (3,3,2)
-	controller.down
-	print(board.out)
-	end
-
-test_random_mov_left
- --Scenario: Moving LEFT changes board state moving all cells to the leftmost empty cell
- --			 and create random value (2 or 4).
- --          Given the game board is in state
- --          When i move LEFT,
-
- --                        |   |   | 4 |   |
- --                        | 2 |   |   |   |
- --                        |   |   | 2 |   |
- --                        | 2 |   |   |   |					
- --                    Then I should obtain
- --                        | 4 | ? | ? | ? |
- --                        | 2 | ? | ? | ? |
- --                        | 2 | ? | ? | ? |
- --                        | 2 | ? | ? | ? |	
- --                    And one of the cell with question mark remaining filled with 2 or 4.
-
-
- local
- 	board: BOARD_2048
-	controller: CONTROLLER_2048
-
- 	do
- 	create board.make_empty
-	create controller.make_with_board (board)
-	controller.board.set_cell (2,1,2)
-	controller.board.set_cell (4,1,2)
-	controller.board.set_cell (1,3,4)
-	controller.board.set_cell (3,3,2)
-	controller.left
-	print(board.out)
+	negative_test_with_full_board
+		--test set ramdom free sell with a full board
+	local
+  		controller:CONTROLLER_2048
+		board:BOARD_2048
+		i,j:INTEGER
+		ok, second_time: BOOLEAN
+	do
+		create board.make_empty
+		from
+			i:=1
+		until
+			i>4
+		loop
+			from
+				j:=1
+			until
+				j>4
+			loop
+				board.set_cell (i, j,2)
+				j:=j+1
+			end
+			i:=i+1
+		end
+		create controller.make_with_board (board)
+    	if not second_time then
+         	ok := True
+          	controller.set_random_free_cell -- Must throw an exception
+          	ok := False
+    	end
+    	assert ("The rutine has to fail", ok)
+	rescue
+     		second_time := True
+     		if ok then   -- ok = true means that the rutine failed
+           		retry
+    		end
 	end
 
 
