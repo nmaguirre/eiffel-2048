@@ -29,15 +29,32 @@ feature {ANY} -- Status report
 				-- Provides a string representation of a cell (shows its value as a string)
 				local
 					t: STRING
+					cad: STRING
+
 				do
 
 				 	  if value = 0 then
-				 	  	t := ""
-				 	  	else  t := value.out
+				 	  	t := "    "
+				 	  else
+				 	  	if value < 10 then
+				 	  		 t := "   " + value.out --cad.make_filled("4",3) + value.out
+				 	  	else
+				 	  		if value >= 10 and value <= 99 then
+				 	  			t := "  " + value.out --cad.make_filled("4",2) + value.out
+				 	  		else
+				 	  			if  value >= 100 and value <= 999 then
+				 	  				t := " " + value.out--cad.make_filled("4",1) + value.out
+				 	  			else
+				 	  				t := value.out
+				 	  			end
+				 	  		end
+				 	    end
 
 				 	  end
-				Result := t
-				end
+
+					  Result := t
+
+				end -- end do
 
 
 feature {ANY} -- Initialization

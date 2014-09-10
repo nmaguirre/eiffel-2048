@@ -1,32 +1,33 @@
-note
-	description: "Test class for LEFT_AT_CONTROLLER_2048 class"
-	author: "Bono Federico David"
-	date: "September 8, 2014"
-	revision: "0.01"
-	testing: "type/manual"
+	note
+		description: "Test class for LEFT_AT_CONTROLLER_2048 class"
+		author: "Bono Federico David"
+		date: "September 8, 2014"
+		revision: "0.01"
+		testing:"type/manual"
 
-class
-	LEFT_AT_CONTROLLER_2048
+		class
 
-inherit
+			LEFT_AT_CONTROLLER_2048
 
-	EQA_TEST_SET
+		inherit
+			EQA_TEST_SET
 
-feature -- Test routines
+		feature -- Test routines
 
-	one_element_board_test
 
-			--Given the game board is in state
-			-- | | | | |
-			-- | | | | |
-			-- | | | | |
-			-- | |2| | |
-			--move at left
-			---| | | | |
-			-- | | | | |
-			-- | | | | |
-			-- |2| | | |
-			--Correct score to move left
+		one_element_board_test
+
+		--Given the game board is in state
+		-- | | | | |
+		-- | | | | |
+		-- | | | | |
+		-- | |2| | |
+	 	--move at left
+		---| | | | |
+		-- | | | | |
+		-- | | | | |
+		-- |2| | | |
+		--Correct score to move left
 		local
 			board: BOARD_2048
 			controller: CONTROLLER_2048
@@ -98,6 +99,7 @@ feature -- Test routines
 			controller.board.set_cell (4, 1, 4)
 			controller.board.set_cell (4, 2, 16)
 			controller.left
+
 			assert ("Row One correct", not (controller.board.elements.item (1, 1).value /= 2 or controller.board.elements.item (1, 2).value /= 4))
 			assert ("Row Two correct", not (controller.board.elements.item (2, 1).value /= 8))
 			assert ("Row Three correct", not (controller.board.elements.item (3, 1).value /= 16))
@@ -234,10 +236,12 @@ feature -- Test routines
 			controller.board.set_cell (4, 3, 64)
 			controller.board.set_cell (4, 4, 64)
 			controller.left
-			assert ("Row One correct", controller.board.elements.item (1, 1).value = 8 and controller.board.elements.item (1, 2).value = 4)
-			assert ("Row Two correct", controller.board.elements.item (2, 1).value = 32 and controller.board.elements.item (2, 2).value = 16)
-			assert ("Row Three correct", controller.board.elements.item (3, 1).value = 64 and controller.board.elements.item (3, 2).value = 32)
-			assert ("Row Four correct", controller.board.elements.item (4, 1).value = 256 and controller.board.elements.item (4, 2).value = 128)
+
+			assert ("Row One correct",controller.board.elements.item(1,1).value = 8 and controller.board.elements.item(1,2).value = 4)
+			assert ("Row Two correct",controller.board.elements.item(2, 1).value = 32  and controller.board.elements.item(2,2).value = 16)
+			assert ("Row Three correct",controller.board.elements.item(3,1).value = 64 and controller.board.elements.item(3, 2).value = 32)
+			assert ("Row Four correct",controller.board.elements.item(4, 1).value = 256 and controller.board.elements.item(4, 2).value = 128)
 		end
+
 
 end
