@@ -10,4 +10,7 @@ class
 inherit
 	STRING
 
+create
+	make
+
 end

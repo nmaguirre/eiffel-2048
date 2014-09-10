@@ -18,8 +18,17 @@ feature {NONE} -- Initialization
 	make
 			-- Run application.
 		do
+
 		end
 
+	play
+			-- Main game loop
+		do
+
+		end
+
+
+feature	-- User events' handling and communication with server
 
 	begin
 			-- Should send a "Begin" command to the server.
@@ -45,5 +54,26 @@ feature {NONE} -- Initialization
 
 		end
 
+	handle_left
+			-- Handles the event when the user pressed up
+			-- Should send an "Left" command to the server and
+			-- and wait for the response with the new board status
+		do
+
+		end
+
+	handle_right
+			-- Handles the event when the user pressed up
+			-- Should send an "Right" command to the server and
+			-- and wait for the response with the new board status
+		do
+
+		end
+
+	exit
+			-- Should send a "Exit" command to the server.
+		do
+
+		end
 
 end
