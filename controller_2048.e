@@ -99,7 +99,7 @@ feature -- Movement commands
 							k := k + 1;
 						end
 						if (k <= 4) then
-							if (board.elements.item (i, j) .value = board.elements.item (k, j).value) then
+							if (board.elements.item (i, j).value = board.elements.item (k, j).value) then
 								board.set_cell (i, j, (board.elements.item (k, j).value + board.elements.item (i, j).value))
 								board.set_cell (k, j, 0)
 								i := k + 1
@@ -152,14 +152,14 @@ feature -- Movement commands
 		end --end do
 
 	down -- Moves the cells to the lowermost possible point of the game board.
-		 -- Movement colapses cells with the same value.
-		 -- It adds one more random cell with value 2 or 4, after the movement.
+			-- Movement colapses cells with the same value.
+			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
 			board.can_move_down
 		local
-			i ,j ,aux : INTEGER
+			i, j, aux: INTEGER
 		do
-			-- add all possible cells downward
+				-- add all possible cells downward
 			from -- columns
 				i := 1
 			until
@@ -172,29 +172,29 @@ feature -- Movement commands
 				loop
 					if board.elements.item (j, i).value /= 0 then
 						aux := j;
-						j := j-1;
+						j := j - 1;
 						from
-							-- search for the next element /= 0
+								-- search for the next element /= 0
 						until
-							(j<1) or (board.elements.item (j, i).value /= 0)
+							(j < 1) or (board.elements.item (j, i).value /= 0)
 						loop
-							j := j-1;
+							j := j - 1;
 						end
-						if j>=1 then -- if search is succesful
-							if board.elements.item (aux, i).value = board.elements.item (j, i).value  then
+						if j >= 1 then -- if search is succesful
+							if board.elements.item (aux, i).value = board.elements.item (j, i).value then
 								board.set_cell (aux, i, (board.elements.item (aux, i).value + board.elements.item (j, i).value))
 								board.set_cell (j, i, 0)
-								j := j-1;
+								j := j - 1;
 							end
 						end
 					else
-						j := j-1;
+						j := j - 1;
 					end -- end if /=0
 				end -- end loop j
 				i := i + 1;
 			end -- end loop i
 
-			--occupy all empty spaces downward
+				--occupy all empty spaces downward
 			from -- columns
 				i := 1
 			until
@@ -205,36 +205,94 @@ feature -- Movement commands
 				until
 					j = 1
 				loop
-					if ((board.elements.item (j, i).value = 0) and (board.elements.item (j-1, i).value) /= 0) then -- if j,i = 0 and the one above it is =/ 0
-						 board.set_cell(j, i, board.elements.item (j-1, i).value)
-						 board.set_cell(j-1, i, 0)
-						 if (j < 4) then --if not at the lowermost cell
-						 	j := j+1; -- continues moving downward until it reaches an ocupied cell
-						 else
-						 	j := j-1; -- continues moving upward
-						 end
+					if ((board.elements.item (j, i).value = 0) and (board.elements.item (j - 1, i).value) /= 0) then -- if j,i = 0 and the one above it is =/ 0
+						board.set_cell (j, i, board.elements.item (j - 1, i).value)
+						board.set_cell (j - 1, i, 0)
+						if (j < 4) then --if not at the lowermost cell
+							j := j + 1; -- continues moving downward until it reaches an ocupied cell
+						else
+							j := j - 1; -- continues moving upward
+						end
 					else
-						j := j-1;
+						j := j - 1;
 					end
 				end -- end loop j
-				i := i+1;
+				i := i + 1;
 			end -- end loop i
 			set_random_free_cell
 		end -- end do
 
-	 left
-	        -- Moves the cells to the leftmost possible point of the game board.
+	left
+			-- Moves the cells to the leftmost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
-			require
-					board.can_move_left
-			local
-					n1: INTEGER
-					n2: INTEGER
-					n3: INTEGER
-			do
+		require
+			board.can_move_left
+		local
+			i, j, k: INTEGER
+		do
+			from
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j >= 4
+				loop
+					if board.elements.item (i, j).value /= 0 then
+						k := j + 1
+						from
+						until
+							(k > 4) or (board.elements.item (i, k).value /= 0)
+						loop
+							k := k + 1
+						end
+						if (k <= 4) then
+							if (board.elements.item (i, j).value = board.elements.item (i, k).value) then
+								board.set_cell (i, j, (board.elements.item (i, k).value + board.elements.item (i, j).value))
+								board.set_cell (i, k, 0)
+								j := k + 1
+							else 
+								j := k
+							end -- end if
+						else
+							j := k
+						end
+					else
+						j := j + 1
+					end -- end if /=0
+				end --end loop j
+				i := i + 1
+			end --end loop i
 
-			end --end do
+			from --
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j >= 4
+				loop
+					if (board.elements.item (i, j).value = 0) and (board.elements.item (i, j + 1).value /= 0) then
+						board.set_cell (i, j, board.elements.item (i, j + 1).value)
+						board.set_cell (i, j + 1, 0)
+						if (j = 1) then --if at the leftrmost cell
+							j := j + 1; -- continues moving to the right until it reaches an occupied cell
+						else
+							j := j - 1; -- continues moving left
+						end
+					else
+						j:= j + 1
+					end -- end if
+				end --end loop j
+				i := i + 1
+			end --end loop i
+			set_random_free_cell
+		end --end do	
 
 	right
 			-- Moves the cells to the rightmost possible point of the game board.
@@ -243,7 +301,6 @@ feature -- Movement commands
 
 		require
 			board.can_move_right
-
 		local
 			i, j, k, v: INTEGER
 		do
@@ -257,35 +314,35 @@ feature -- Movement commands
 				until
 					j <= 1
 				loop
-					if board.elements.item(i, j).value /= 0 then
-					   if j > 1 then
-					   	  k := j - 1
-					      from
-					      until
-					        (k <= 1) or (board.elements.item(i, k).value /= 0)
-					 	  loop
-						  	 k := k - 1
-						  end
-						  if (k >= 1) then
-						  	 if (board.elements.item(i, j).value = board.elements.item(i, k).value) then
-							 	 board.set_cell(i, j, (board.elements.item(i, k).value + board.elements.item(i, j).value))
-								 board.set_cell(i, k, 0)
-								 j := k - 1
-							 else
-								 j := k
-							 end
-						  end
-					   end
+					if board.elements.item (i, j).value /= 0 then
+						if j > 1 then
+							k := j - 1
+							from
+							until
+								(k <= 1) or (board.elements.item (i, k).value /= 0)
+							loop
+								k := k - 1
+							end
+							if (k >= 1) then
+								if (board.elements.item (i, j).value = board.elements.item (i, k).value) then
+									board.set_cell (i, j, (board.elements.item (i, k).value + board.elements.item (i, j).value))
+									board.set_cell (i, k, 0)
+									j := k - 1
+								else
+									j := k
+								end
+							end
+						end
 					else
 						j := j - 1
 					end
 				end --end loop j
 				i := i + 1
-			end --end loop i		
+			end --end loop i
 
 			from --
 				i := 1
-		    until
+			until
 				i > 4
 			loop
 				from
@@ -293,16 +350,16 @@ feature -- Movement commands
 				until
 					j < 1
 				loop
-				    if board.elements.item(i, j).value /= 0 then
-				    	v := board.elements.item (i, j).value
-				    	board.set_cell (i, j, 0)
-				        position_right(i, v)
+					if board.elements.item (i, j).value /= 0 then
+						v := board.elements.item (i, j).value
+						board.set_cell (i, j, 0)
+						position_right (i, v)
 						j := j - 1;
 					else
-                        j := j - 1
-                    end --end if
-                end --end loop j
-                i := i + 1
+						j := j - 1
+					end --end if
+				end --end loop j
+				i := i + 1
 			end --end loop i
 			set_random_free_cell
 		end --end do
@@ -320,8 +377,8 @@ feature {NONE} -- Auxiliary routines
 			until
 				column < 1
 			loop
-				if board.elements.item(row, column).value = 0 then
-					board.set_cell(row, column, val)
+				if board.elements.item (row, column).value = 0 then
+					board.set_cell (row, column, val)
 					column := 0
 				else
 					column := column - 1
@@ -330,31 +387,30 @@ feature {NONE} -- Auxiliary routines
 		end --end do
 
 	set_random_free_cell
-
 		local
-		    random_sequence : RANDOM
-			random_cell_row : INTEGER
-			random_cell_col : INTEGER
+			random_sequence: RANDOM
+			random_cell_row: INTEGER
+			random_cell_col: INTEGER
 		do
-			--initialize random seed
-		    create random_sequence.set_seed(get_random_seed)
-			random_cell_row := get_random(random_sequence, 4) + 1;
-			random_cell_col := get_random(random_sequence, 4) + 1;
-		    from
-		    until
-		    	board.elements.item(random_cell_row, random_cell_col).is_available = True
-		    loop
-		    	--generate a random position
-				random_cell_row := get_random(random_sequence, 4) + 1;
-				random_cell_col := get_random(random_sequence, 4) + 1;
-		    end
-			-- set at cell random number
-			board.set_cell(random_cell_row, random_cell_col, random_number_two_or_four(random_sequence))
-			coord_last_random_cell := [random_cell_row,random_cell_col]
+				--initialize random seed
+			create random_sequence.set_seed (get_random_seed)
+			random_cell_row := get_random (random_sequence, 4) + 1;
+			random_cell_col := get_random (random_sequence, 4) + 1;
+			from
+			until
+				board.elements.item (random_cell_row, random_cell_col).is_available = True
+			loop
+					--generate a random position
+				random_cell_row := get_random (random_sequence, 4) + 1;
+				random_cell_col := get_random (random_sequence, 4) + 1;
+			end
+				-- set at cell random number
+			board.set_cell (random_cell_row, random_cell_col, random_number_two_or_four (random_sequence))
+			coord_last_random_cell := [random_cell_row, random_cell_col]
 		end
 
-	random_number_two_or_four (random_sequence: RANDOM) : INTEGER
-		-- Randomly returns two or four
+	random_number_two_or_four (random_sequence: RANDOM): INTEGER
+			-- Randomly returns two or four
 		local
 			random_number: INTEGER
 		do
@@ -364,22 +420,22 @@ feature {NONE} -- Auxiliary routines
 			Result = 2 or Result = 4
 		end
 
-	get_random_seed : INTEGER
-		-- Returns a seed for random sequences
+	get_random_seed: INTEGER
+			-- Returns a seed for random sequences
 		local
 			l_time: TIME
-	    	l_seed: INTEGER
+			l_seed: INTEGER
 		do
 			create l_time.make_now
-		    l_seed := l_time.hour
-		    l_seed := l_seed * 60 + l_time.minute
-		    l_seed := l_seed * 60 + l_time.second
-		    l_seed := l_seed * 1000 + l_time.milli_second
-		    Result := l_seed
+			l_seed := l_time.hour
+			l_seed := l_seed * 60 + l_time.minute
+			l_seed := l_seed * 60 + l_time.second
+			l_seed := l_seed * 1000 + l_time.milli_second
+			Result := l_seed
 		end
 
-	get_random (random_sequence: RANDOM; ceil: INTEGER) : INTEGER
-		-- Returns a random integer minor that ceil from a random sequence
+	get_random (random_sequence: RANDOM; ceil: INTEGER): INTEGER
+			-- Returns a random integer minor that ceil from a random sequence
 		require
 			ceil >= 0
 		do
