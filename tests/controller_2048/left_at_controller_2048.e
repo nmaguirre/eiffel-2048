@@ -70,7 +70,7 @@ feature -- Test routines
 			assert ("Number of filled cells must be five", controller.board.nr_of_filled_cells = 5)
 		end
 
-	test_movs_left
+	test_move_left
 			--Given the game board is in state
 			-- |2 |4 | | |
 			-- |4 |4 | | |
@@ -104,7 +104,7 @@ feature -- Test routines
 			assert ("Row Four correct", not (controller.board.elements.item (4, 1).value /= 4 or controller.board.elements.item (4, 2).value /= 16))
 		end
 
-	test_movs_left2
+	test_move_left2
 			--Given the game board is in state
 			-- |2|2|4|4|
 			-- |2|4|4|2|
@@ -153,7 +153,7 @@ feature -- Test routines
 			assert ("4,3", controller.board.elements.item (4, 3).value = 8)
 		end
 
-	test_movs_left3
+	test_move_left3
 			--Given the game board is in state
 			-- |2| | | |
 			-- |4| |4|2|
@@ -189,7 +189,7 @@ feature -- Test routines
 			assert ("4,1", (controller.board.elements.item (4, 1).value = 8))
 		end
 
-	test_movs_left4
+	test_move_left4
 			--Given the game board is in state
 			-- |4  |4  |2 |2 |
 			-- |16 |16 |8 |8 |
