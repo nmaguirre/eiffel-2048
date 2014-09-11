@@ -154,7 +154,7 @@ feature --Test routines
 				controller.right -- Must throw an exception
 				ok := False
 			end
-    		assert ("The rutine has to fail", ok)
+    		assert ("The routine RIGHT has to fail", ok)
 			rescue
      			second_time := True
      			if ok then   -- ok = true means that the rutine failed
@@ -214,19 +214,26 @@ feature --Test routines
 		local
 			board      : BOARD_2048
 			controller : CONTROLLER_2048
+			ok, second_time: BOOLEAN
 		do
-			create board.make_empty
-			create controller.make_with_board(board)
-			controller.board.set_cell(1, 4, 2)
-			controller.board.set_cell(2, 4, 2)
-			controller.board.set_cell(3, 4, 2)
-			controller.board.set_cell(4, 4, 2)
-			controller.right
-			assert ("First row moved right correctly", controller.board.elements.item(1, 4).value = 2)
-			assert ("Second row moved right correctly", controller.board.elements.item(2, 4).value = 2)
-			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
-			assert ("Fourth row moved right correctly", controller.board.elements.item(4, 4).value = 2)
-		end --end do			
+			if not second_time then
+          		ok := True
+			    create board.make_empty
+				create controller.make_with_board(board)
+				controller.board.set_cell(1, 4, 2)
+				controller.board.set_cell(2, 4, 2)
+				controller.board.set_cell(3, 4, 2)
+				controller.board.set_cell(4, 4, 2)
+				controller.right -- Must throw an exception
+				ok := False
+			end
+    		assert ("The routine RIGHT has to fail", ok)
+			rescue
+     			second_time := True
+     			if ok then   -- ok = true means that the rutine failed
+           			retry
+    			end
+		end --end do				
 
 end
 
