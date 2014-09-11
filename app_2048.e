@@ -153,16 +153,18 @@ feature --game
 			print ("|                    |%N")
 			print ("|        MENU        |%N")
 			print ("|                    |%N")
-			print ("|q : QUIT AND SAVE   |%N")
 			print ("|a : LEFT            |%N")
 			print ("|d : RIGHT           |%N")
 			print ("|w : UP              |%N")
 			print ("|s : DOWN            |%N")
+			print ("|                    |%N")
+			print ("|q : QUIT            |%N")
+			print ("|e : SAVE AND QUIT   |%N")
 			print ("|--------------------|%N")
 			io.putstring (controller.board.out)
 			from
 			until
-				io.last_character.is_equal ('q')
+				io.last_character.is_equal ('q') or io.last_character.is_equal ('e')
 			loop
 					--read character
 				io.read_character
@@ -202,10 +204,11 @@ feature --game
 
 				if controller.is_finished then
 					if controller.board.is_winning_board then
-						print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!! :D")
+						print ("CONGRATULATIONS!!!!!!! YOU WON!!!!!!!!")
 					else
-						print ("you lost :'( ")
+						print ("you lost")
 					end
+					print ("%N")
 					print ("%N")
 					print ("|--------2048--------|%N")
 					print ("|                    |%N")
@@ -219,12 +222,32 @@ feature --game
 						-- restart of play per game completed.
 					controller.board.make
 					if io.last_character.is_equal ('n') then
+						print ("%N")
+						print ("%N")
+						print ("|--------2048--------|%N")
+						print ("|                    |%N")
+						print ("|        MENU        |%N")
+						print ("|                    |%N")
+						print ("|a : LEFT            |%N")
+						print ("|d : RIGHT           |%N")
+						print ("|w : UP              |%N")
+						print ("|s : DOWN            |%N")
+						print ("|                    |%N")
+						print ("|q : QUIT            |%N")
+						print ("|e : SAVE AND QUIT   |%N")
+						print ("|--------------------|%N")
 						io.putstring (controller.board.out)
+					else
+						if io.last_character.is_equal ('q') then
+							user.save_game (controller.board)
+						end
 					end
 				end
 			end
+			if io.last_character.is_equal ('e') then
 				-- Save game
-			user.save_game (controller.board)
+				user.save_game (controller.board)
+			end
 		end
 
 
