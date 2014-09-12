@@ -18,7 +18,7 @@ feature {NONE} -- Initialization
 	make -- Run application.
 		do
 			login_screen
-			user.load_game
+			create controller.make_with_board (user.game)
 			play
 		end
 
