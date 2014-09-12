@@ -75,7 +75,7 @@ feature -- Login
 			-- validate the user datas
 			-- load the user from the file into the user variable, or void if the user doesn't exist
 		require
-			username /= Void and username /= "" and not attached {INTEGER} username[0] and password /= Void
+			username /= Void and username /= "" and not username[1].is_digit and password /= Void
 		local
 			possible_user: USER_2048
 		do
