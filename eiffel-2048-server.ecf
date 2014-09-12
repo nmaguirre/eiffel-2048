@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-13-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-13-0 http://www.eiffel.com/developers/xml/configuration-1-13-0.xsd" name="eiffel-2048" uuid="79D3EB60-2CAB-44B3-941F-C98B55ED428B">
 	<target name="eiffel-2048-server">
-		<root class="CONTROLLER_2048" feature="make"/>
+		<root class="SERVER_2048" feature="make"/>
 		<option warning="true" void_safety="none">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
@@ -17,8 +17,8 @@
 				<exclude>/EIFGENs$</exclude>
 				<exclude>/features$</exclude>
 				<exclude>/CVS$</exclude>
-				<exclude>/.svn$</exclude>
 				<exclude>/.saved_games$</exclude>
+				<exclude>/.svn$</exclude>
 				<exclude>/.git$</exclude>
 			</file_rule>
 		</cluster>
