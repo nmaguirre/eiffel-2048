@@ -38,7 +38,7 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	handle_up
+	handle_up_event
 			-- Handles the event when the user pressed up
 			-- Should send an "Up" command to the server and
 			-- and wait for the response with the new board status
@@ -46,7 +46,7 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	handle_down
+	handle_down_event
 			-- Handles the event when the user pressed up
 			-- Should send an "Down" command to the server and
 			-- and wait for the response with the new board status
@@ -54,7 +54,7 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	handle_left
+	handle_left_event
 			-- Handles the event when the user pressed up
 			-- Should send an "Left" command to the server and
 			-- and wait for the response with the new board status
@@ -62,7 +62,7 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	handle_right
+	handle_right_event
 			-- Handles the event when the user pressed up
 			-- Should send an "Right" command to the server and
 			-- and wait for the response with the new board status
