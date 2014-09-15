@@ -82,7 +82,7 @@ feature -- Login
 			create possible_user.make_with_nickname (username)
 			if possible_user.has_unfinished_game then
 				possible_user.load_game
-				if password = possible_user.password then
+				if equal(password, possible_user.password) then
 					user := possible_user
 				else
 					user := Void
