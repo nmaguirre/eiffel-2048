@@ -8,6 +8,7 @@ class
 	RIGHT_AT_CONTROLLER_2048
 
 inherit
+
 	EQA_TEST_SET
 
 feature --Test routines
@@ -29,26 +30,23 @@ feature --Test routines
 			--                And one of the empty cells remaining filled with 2 or 4.
 
 		local
-			board      : BOARD_2048
-			controller : CONTROLLER_2048
+			board: BOARD_2048
+			controller: CONTROLLER_2048
 		do
 			create board.make_empty
-			create controller.make_with_board(board)
-			controller.board.set_cell(1, 1, 2)
-			controller.board.set_cell(1, 2, 2)
-			controller.board.set_cell(1, 3, 2)
-			controller.board.set_cell(1, 4, 4)
-			controller.board.set_cell(2, 1, 4)
-			controller.board.set_cell(2, 3, 4)
-			controller.board.set_cell(2, 4, 2)
-			controller.board.set_cell(3, 1, 2)
+			create controller.make_with_board (board)
+			controller.board.set_cell (1, 1, 2)
+			controller.board.set_cell (1, 2, 2)
+			controller.board.set_cell (1, 3, 2)
+			controller.board.set_cell (1, 4, 4)
+			controller.board.set_cell (2, 1, 4)
+			controller.board.set_cell (2, 3, 4)
+			controller.board.set_cell (2, 4, 2)
+			controller.board.set_cell (3, 1, 2)
 			controller.right
-			assert ("First row moved right correctly", controller.board.elements.item(1, 2).value = 2 and
-													   controller.board.elements.item(1, 3).value = 4 and
-													   controller.board.elements.item(1, 4).value = 4)
-			assert ("Second row moved right correctly", controller.board.elements.item(2, 3).value = 8 and
-			                                            controller.board.elements.item(2, 4).value = 2)
-			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
+			assert ("First row moved right correctly", controller.board.elements.item (1, 2).value = 2 and controller.board.elements.item (1, 3).value = 4 and controller.board.elements.item (1, 4).value = 4)
+			assert ("Second row moved right correctly", controller.board.elements.item (2, 3).value = 8 and controller.board.elements.item (2, 4).value = 2)
+			assert ("Third row moved right correctly", controller.board.elements.item (3, 4).value = 2)
 		end --end do
 
 	test_moves_right_cell_value_is_valid
@@ -71,20 +69,20 @@ feature --Test routines
 			--                the conditions that they must meet to be lost.
 
 		local
-			board                : BOARD_2048
-			controller           : CONTROLLER_2048
+			board: BOARD_2048
+			controller: CONTROLLER_2048
 			i, j, count_incorrect: INTEGER
 		do
 			create board.make_empty
-			create controller.make_with_board(board)
-			controller.board.set_cell(1, 2, 16)
-			controller.board.set_cell(1, 4, 16)
-			controller.board.set_cell(2, 1, 32)
-			controller.board.set_cell(2, 3, 32)
-			controller.board.set_cell(3, 2, 64)
-			controller.board.set_cell(3, 3, 64)
-			controller.board.set_cell(4, 1, 128)
-			controller.board.set_cell(4, 4, 128)
+			create controller.make_with_board (board)
+			controller.board.set_cell (1, 2, 16)
+			controller.board.set_cell (1, 4, 16)
+			controller.board.set_cell (2, 1, 32)
+			controller.board.set_cell (2, 3, 32)
+			controller.board.set_cell (3, 2, 64)
+			controller.board.set_cell (3, 3, 64)
+			controller.board.set_cell (4, 1, 128)
+			controller.board.set_cell (4, 4, 128)
 			controller.right
 			count_incorrect := 0
 			from
@@ -97,22 +95,22 @@ feature --Test routines
 				until
 					j = 4
 				loop
-					if board.elements.item(i, j).value /= 0 then
-					   if not board.elements.item(i, j).is_valid_value(board.elements.item(i, j).value) then
-					   	  count_incorrect := count_incorrect + 1
-					   else
-					      j := j + 1
-					   end
+					if board.elements.item (i, j).value /= 0 then
+						if not board.elements.item (i, j).is_valid_value (board.elements.item (i, j).value) then
+							count_incorrect := count_incorrect + 1
+						else
+							j := j + 1
+						end
 					else
-					   j := j + 1
+						j := j + 1
 					end
 				end -- end loop j
 				i := i + 1
-			end --end loop i	
+			end --end loop i
 			if count_incorrect > 0 then
-			   assert("All cells have valid values", False)
+				assert ("All cells have valid values", False)
 			else
-			   assert("All cells have valid values", True)
+				assert ("All cells have valid values", True)
 			end
 		end --end do
 
@@ -132,34 +130,34 @@ feature --Test routines
 			ok, second_time: BOOLEAN
 		do
 			if not second_time then
-          		ok := True
+				ok := True
 				create board.make
-				create controller.make_with_board(board)
-				controller.board.set_cell(1, 1, 32)
-				controller.board.set_cell(2, 1, 128)
-				controller.board.set_cell(3, 1, 16)
-				controller.board.set_cell(4, 1, 64)
-				controller.board.set_cell(1, 2, 16)
-				controller.board.set_cell(2, 2, 64)
-				controller.board.set_cell(3, 2, 32)
-				controller.board.set_cell(4, 2, 128)
-				controller.board.set_cell(1, 3, 32)
-				controller.board.set_cell(2, 3, 128)
-				controller.board.set_cell(3, 3, 16)
-				controller.board.set_cell(4, 3, 64)
-				controller.board.set_cell(1, 4, 16)
-				controller.board.set_cell(2, 4, 64)
-				controller.board.set_cell(3, 4, 32)
-				controller.board.set_cell(4, 4, 128)
+				create controller.make_with_board (board)
+				controller.board.set_cell (1, 1, 32)
+				controller.board.set_cell (2, 1, 128)
+				controller.board.set_cell (3, 1, 16)
+				controller.board.set_cell (4, 1, 64)
+				controller.board.set_cell (1, 2, 16)
+				controller.board.set_cell (2, 2, 64)
+				controller.board.set_cell (3, 2, 32)
+				controller.board.set_cell (4, 2, 128)
+				controller.board.set_cell (1, 3, 32)
+				controller.board.set_cell (2, 3, 128)
+				controller.board.set_cell (3, 3, 16)
+				controller.board.set_cell (4, 3, 64)
+				controller.board.set_cell (1, 4, 16)
+				controller.board.set_cell (2, 4, 64)
+				controller.board.set_cell (3, 4, 32)
+				controller.board.set_cell (4, 4, 128)
 				controller.right -- Must throw an exception
 				ok := False
 			end
-    		assert ("The rutine has to fail", ok)
-			rescue
-     			second_time := True
-     			if ok then   -- ok = true means that the rutine failed
-           			retry
-    			end
+			assert ("The rutine has to fail", ok)
+		rescue
+			second_time := True
+			if ok then -- ok = true means that the rutine failed
+				retry
+			end
 		end --end do
 
 	test_move_right_movement_of_cells
@@ -170,30 +168,30 @@ feature --Test routines
 			--                        |   |   |   |2  |
 			--                        |   |   |4  |   |
 			--                        |   |8  |   |   |
-			--                        |16 |   |   |   |					
+			--                        |16 |   |   |   |
 			--                    Then I should obtain
 			--                        |   |   |   | 2 |
 			--                        |   |   |   | 4 |
 			--                        |   |   |   | 8 |
-			--                        |   |   |   |16 |	
-			--                    And one of the empty cells remaining filled with 2 or 4.			
+			--                        |   |   |   |16 |
+			--                    And one of the empty cells remaining filled with 2 or 4.
 
 		local
-			board      : BOARD_2048
-			controller : CONTROLLER_2048
+			board: BOARD_2048
+			controller: CONTROLLER_2048
 		do
 			create board.make_empty
-			create controller.make_with_board(board)
-			controller.board.set_cell(1, 4, 2)
-			controller.board.set_cell(2, 3, 4)
-			controller.board.set_cell(3, 2, 8)
-			controller.board.set_cell(4, 1, 16)
+			create controller.make_with_board (board)
+			controller.board.set_cell (1, 4, 2)
+			controller.board.set_cell (2, 3, 4)
+			controller.board.set_cell (3, 2, 8)
+			controller.board.set_cell (4, 1, 16)
 			controller.right
-			assert ("First row moved right correctly", controller.board.elements.item(1, 4).value = 2)
-			assert ("Second row moved right correctly", controller.board.elements.item(2, 4).value = 4)
-			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 8)
-			assert ("Fourth row moved right correctly", controller.board.elements.item(4, 4).value = 16)
-		end --end do		
+			assert ("First row moved right correctly", controller.board.elements.item (1, 4).value = 2)
+			assert ("Second row moved right correctly", controller.board.elements.item (2, 4).value = 4)
+			assert ("Third row moved right correctly", controller.board.elements.item (3, 4).value = 8)
+			assert ("Fourth row moved right correctly", controller.board.elements.item (4, 4).value = 16)
+		end --end do
 
 	test_move_right_not_movement_of_cells
 
@@ -203,30 +201,35 @@ feature --Test routines
 			--                        |   |   |   | 2 |
 			--                        |   |   |   | 2 |
 			--                        |   |   |   | 2 |
-			--                        |   |   |   | 2 |					
+			--                        |   |   |   | 2 |
 			--                    Then I should obtain the same board
 			--                        |   |   |   | 2 |
 			--                        |   |   |   | 2 |
 			--                        |   |   |   | 2 |
-			--                        |   |   |   | 2 |								
-			--                    And one of the empty cells remaining filled with 2 or 4.			
-
+			--                        |   |   |   | 2 |
+			--                    And one of the empty cells remaining filled with 2 or 4.
 		local
-			board      : BOARD_2048
-			controller : CONTROLLER_2048
+			board: BOARD_2048
+			controller: CONTROLLER_2048
+			ok, second_time: BOOLEAN
 		do
-			create board.make_empty
-			create controller.make_with_board(board)
-			controller.board.set_cell(1, 4, 2)
-			controller.board.set_cell(2, 4, 2)
-			controller.board.set_cell(3, 4, 2)
-			controller.board.set_cell(4, 4, 2)
-			controller.right
-			assert ("First row moved right correctly", controller.board.elements.item(1, 4).value = 2)
-			assert ("Second row moved right correctly", controller.board.elements.item(2, 4).value = 2)
-			assert ("Third row moved right correctly", controller.board.elements.item(3, 4).value = 2)
-			assert ("Fourth row moved right correctly", controller.board.elements.item(4, 4).value = 2)
-		end --end do			
+			if not second_time then
+				ok := True
+				create board.make_empty
+				create controller.make_with_board (board)
+				controller.board.set_cell (1, 4, 2)
+				controller.board.set_cell (2, 4, 2)
+				controller.board.set_cell (3, 4, 2)
+				controller.board.set_cell (4, 4, 2)
+				controller.right -- Must throw an exception
+				ok := False
+			end
+			assert ("The routine RIGHT has to fail", ok)
+		rescue
+			second_time := True
+			if ok then -- ok = true means that the rutine failed
+				retry
+			end
+		end --end do
 
 end
-
