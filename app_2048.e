@@ -223,8 +223,10 @@ feature --game
 					print ("|--------------------|%N")
 						--read character
 					io.read_character
+					io.read_character
+					print ("AAAAAAAAAAAAAAAAAAAAAA")
 						-- restart of play per game completed.
-					controller.board.make
+					controller.make
 					if io.last_character.is_equal ('n') then
 						print ("%N")
 						print ("%N")
