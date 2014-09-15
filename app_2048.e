@@ -50,10 +50,10 @@ feature -- Login
 						io.put_string ("Login %N")
 						io.put_string ("Insert your nickname %N")
 						io.read_line
-						nickname := io.last_string
+						nickname := io.last_string.string
 						io.put_string ("Insert your password %N")
 						io.read_line
-						password := io.last_string
+						password := io.last_string.string
 						login(nickname,password)
 						if user = void then
 							io.put_string ("invalid nickname or password %N")
@@ -65,7 +65,7 @@ feature -- Login
 				end
 			end
 		ensure
-			user /= void
+			user.game /= void
 		end
 
 
@@ -113,29 +113,33 @@ feature {NONE} --create user, screen
 			io.put_string ("Register as a new user %N")
 			io.put_string ("Insert your name %N")
 			io.read_line
-			name := io.last_string
+			name := io.last_string.string
 			io.put_string ("Insert your surname %N")
 			io.read_line
-			surname := io.last_string
+			surname := io.last_string.string
 			io.put_string ("Insert your nickname %N")
 			io.read_line
-			nickname := io.last_string
+			nickname := io.last_string.string
 			io.put_string ("Insert your new password %N")
 			io.read_line
-			password := io.last_string
-			if new_user.is_valid_name (name) and new_user.is_valid_name (nickname) and new_user.is_valid_password (password) then --validate the data
-				valid_data := True
+			password := io.last_string.string
+			if new_user.is_valid_name (name) and new_user.is_valid_name (surname) and new_user.is_valid_name (nickname) and new_user.is_valid_password (password) then --validate the data
+				if not  new_user.existing_file (nickname) then
+					valid_data := True
+				else
+					io.put_string ("Nickname already exists %N %N")
+				end
+
 			else
 				io.put_string ("Invalid data, Please ensure to enter the data correctly %N")
 			end
-
 		end
 			create new_user.make_new_user (name, surname,nickname,password)
 			user := new_user
 			io.put_string ("User successfully created %N")
-	rescue
-		io.put_string ("User could not be created, nickname already exists %N")
-		retry
+			io.put_string ("")
+	ensure
+		user /= void
 	end
 
 feature --game
