@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-13-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-13-0 http://www.eiffel.com/developers/xml/configuration-1-13-0.xsd" name="eiffel-2048" uuid="79D3EB60-2CAB-44B3-941F-C98B55ED428B">
 	<target name="eiffel-2048">
-		<root all_classes="true"/>
+		<root class="APP_2048" feature="make"/>
 		<option warning="true" void_safety="none">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
@@ -10,7 +10,7 @@
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
-		<cluster name="eiffel-2048" location=".\" recursive="true">
+		<cluster name="eiffel-2048" location=".\" recursive="false">
 			<file_rule>
 				<exclude>/EIFGENs$</exclude>
 				<exclude>/features$</exclude>
@@ -18,7 +18,13 @@
 				<exclude>/.svn$</exclude>
 				<exclude>/.git$</exclude>
 			</file_rule>
-			<tests name="acceptance_tests" location=".\eiffel-2048\acceptance_tests\"/>
+			<tests name="acceptance_tests" location=".\acceptance_tests\"/>
+			<cluster name="tests" location=".\tests\">
+		                <tests name="controller_2048" location=".\tests\controller_2048\"/>
+		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
+		                <tests name="board_2048" location=".\tests\board_2048\"/>
+		                <tests name="app_2048" location=".\tests\app_2048\"/>
+			</cluster>
 		</cluster>
 	</target>
 </system>
