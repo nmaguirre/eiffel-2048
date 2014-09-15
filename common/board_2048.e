@@ -9,11 +9,7 @@ class
 
 inherit
 
-<<<<<<< HEAD
 	ANY
-=======
-	STORABLE
->>>>>>> 7c8d4f3a4c56dc3d39016f58a3c07db1237f8a25
 		redefine
 			out
 		end
@@ -426,4 +422,5 @@ feature {CONTROLLER_2048}
 		ensure
 			Result = 2 or Result = 4
 		end
+
 end
