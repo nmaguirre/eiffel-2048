@@ -224,7 +224,7 @@ feature --game
 						--read character
 					io.read_character
 					io.read_character
-					print ("AAAAAAAAAAAAAAAAAAAAAA")
+
 						-- restart of play per game completed.
 					controller.make
 					if io.last_character.is_equal ('n') then
