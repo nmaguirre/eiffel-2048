@@ -8,8 +8,8 @@ class
 	BOARD_2048
 
 inherit
-	STORABLE, ANY
-	
+
+	STORABLE
 		redefine
 			out
 		end
