@@ -75,7 +75,7 @@ feature -- Login
 			-- validate the user datas
 			-- load the user from the file into the user variable, or void if the user doesn't exist
 		require
-			username /= Void and username /= "" and not username[1].is_digit and password /= Void
+			(create {USER_2048}.make_for_test).is_valid_nickname (username) and password /= Void
 		local
 			possible_user: USER_2048
 		do
