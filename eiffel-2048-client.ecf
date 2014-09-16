@@ -21,9 +21,6 @@
 				<exclude>/server$</exclude>
 				<exclude>/.git$</exclude>
 			</file_rule>
-			<cluster name="tests" location=".\tests\">
-		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
-			</cluster>
 		</cluster>
 	</target>
 </system>

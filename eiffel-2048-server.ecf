@@ -21,8 +21,8 @@
 				<exclude>/.svn$</exclude>
 				<exclude>/.git$</exclude>
 			</file_rule>
-			<cluster name="tests" location=".\tests\">
-		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
+			<cluster name="tests" location=".\server\tests\">
+		                <tests name="cell_2048" location=".\server\tests\cell_2048\"/>
 			</cluster>
 		</cluster>
 	</target>
