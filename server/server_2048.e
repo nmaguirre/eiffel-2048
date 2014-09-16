@@ -10,12 +10,12 @@ class
 create
 	make
 
-feature -- Creation	
+feature -- Creation
 
-			-- Sets up the server and port for listening requests.
-			-- Runs the main server loop.
+		-- Sets up the server and port for listening requests.
+		-- Runs the main server loop.
 
-make (argv: ARRAY [STRING])
+	make (argv: ARRAY [STRING])
 			-- Accept communication with client and exchange messages
 		local
 			count: INTEGER
@@ -44,15 +44,9 @@ make (argv: ARRAY [STRING])
 			end
 		end
 
-
-
-
-
-
 	process (soc1: NETWORK_STREAM_SOCKET)
 			-- Accepts communication and exchanges messages with client.
 		do
-
 		end
 
 	handle_begin_msg
@@ -67,25 +61,31 @@ make (argv: ARRAY [STRING])
 	handle_up_msg
 			-- Handles the reception of a "Up" message
 		do
-
 		end
 
 	handle_down_msg
 			-- Handles the reception of a "Down" message
 		do
-
 		end
 
 	handle_left_msg
 			-- Handles the reception of a "Left" message
 		do
-
 		end
 
-	handle_right_msg
+	handle_right_msg: BOOLEAN
 			-- Handles the reception of a "Right" message
 		do
-
+			if playing then
+				if controller.board.can_move_right then
+					controller.right
+					Result := True
+				else
+					Result := False
+				end
+			else
+				Result := False
+			end
 		end
 
 	handle_end_msg
@@ -101,7 +101,8 @@ make (argv: ARRAY [STRING])
 
 feature {NONE}
 
-	controller : CONTROLLER_2048
-	playing : BOOLEAN
+	controller: CONTROLLER_2048
+
+	playing: BOOLEAN
 
 end
