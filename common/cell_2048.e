@@ -25,20 +25,31 @@ feature {ANY} -- Status report
 			-- cell is not set.
 			-- Value should otherwise be a power of two (greater than one)
 
-   out:STRING
-				-- Provides a string representation of a cell (shows its value as a string)
-				local
-					t: STRING
-				do
-
-				 	  if value = 0 then
-				 	  	t := ""
-				 	  	else  t := value.out
-
-				 	  end
-				Result := t
+	out: STRING
+			-- Provides a string representation of a cell (shows its value as a string)
+		local
+			t: STRING
+			cad: STRING
+		do
+			if value = 0 then
+				t := "    "
+			else
+				if value < 10 then
+					t := "   " + value.out --cad.make_filled("4",3) + value.out
+				else
+					if value >= 10 and value <= 99 then
+						t := "  " + value.out --cad.make_filled("4",2) + value.out
+					else
+						if value >= 100 and value <= 999 then
+							t := " " + value.out --cad.make_filled("4",1) + value.out
+						else
+							t := value.out
+						end
+					end
 				end
-
+			end
+			Result := t
+		end -- end do
 
 feature {ANY} -- Initialization
 
@@ -51,7 +62,6 @@ feature {ANY} -- Initialization
 			value = 0
 		end
 
-
 	make_with_value (new_val: INTEGER)
 			-- creates a cell initialized with a user-provided value
 
@@ -62,7 +72,6 @@ feature {ANY} -- Initialization
 		ensure
 			value_set: value = new_val
 		end
-
 
 feature {ANY} -- Status setting
 
@@ -82,7 +91,7 @@ feature {ANY} -- Miscellaneous
 			-- Returns true if value is either 0, or a power of two
 			-- greater than 1.
 		do
-			Result := val = 0 or (val>1 and is_power_of_two(val))
+			Result := val = 0 or (val > 1 and is_power_of_two (val))
 		ensure
 			Result = (val = 0 or (val > 1 and is_power_of_two (val)))
 		end
@@ -108,8 +117,6 @@ feature {ANY} -- Miscellaneous
 				Result := power_of_two
 			end
 		end
-
-
 
 	is_available: BOOLEAN
 			--Returns true if a cell is available, that is that value is 0.
