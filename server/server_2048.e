@@ -76,10 +76,19 @@ make (argv: ARRAY [STRING])
 
 		end
 
-	handle_left_msg
+	handle_left_msg: BOOLEAN 
 			-- Handles the reception of a "Left" message
 		do
-
+			if playing then
+				if controller.board.can_move_left then
+					controller.left
+				    Result := True
+				else
+					Result := False
+				end
+			else
+				Result := False
+			end
 		end
 
 	handle_right_msg
