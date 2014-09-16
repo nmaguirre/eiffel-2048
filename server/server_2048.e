@@ -21,7 +21,7 @@ make (argv: ARRAY [STRING])
 			count: INTEGER
 			soc1: detachable NETWORK_STREAM_SOCKET
 		do
-			if argv.count /= 2 then 
+			if argv.count /= 2 then
 				io.error.putstring ("Usage: ")
 				io.error.putstring (argv.item (0))
 				io.error.putstring (" portnumber%N")
@@ -58,7 +58,8 @@ make (argv: ARRAY [STRING])
 	handle_begin_msg
 			-- Handles the reception of a "Begin" message
 		do
-
+			controller.make
+			playing = True
 		end
 
 	handle_up_msg
@@ -94,5 +95,5 @@ make (argv: ARRAY [STRING])
 feature {NONE}
 
 	controller : CONTROLLER_2048
-
+	playing: BOOLEAN
 end
