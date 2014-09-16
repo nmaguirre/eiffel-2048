@@ -68,83 +68,11 @@ feature -- Movement commands
 			-- Moves the cells to the uppermost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
-		require
-			board.can_move_up
-		local
-			i, k, j: INTEGER
+		obsolete
+			"obsolete routine, should call up@BOARD_2048"
 		do
-				--First I add the cells that can be added
-			from
-				j := 1
-			until
-				j > 4
-			loop
-				from
-					i := 1
-				until
-					i >= 4
-				loop
-					if board.elements.item (i, j).value /= 0 then
-						k := i + 1;
-						from
-								-- search for the next element /= 0
-						until
-							(k > 4) or (board.elements.item (k, j).value /= 0)
-						loop
-							k := k + 1;
-						end
-						if (k <= 4) then
-							if (board.elements.item (i, j).value = board.elements.item (k, j).value) then
-								board.set_cell (i, j, (board.elements.item (k, j).value + board.elements.item (i, j).value))
-								board.set_cell (k, j, 0)
-								i := k + 1
-							else
-								i := k
-							end
-						else
-							i := k
-						end
-					else
-						i := i + 1
-					end
-				end --end loop i
-				j := j + 1
-			end --end loop j
-				-- occupy available cells at the top.
-			from --
-				j := 1
-			until
-				j > 4
-			loop
-				from
-					i := 1
-				until
-					i >= 4
-				loop
-					if board.elements.item (i, j).value = 0 then
-						k := i + 1;
-						from
-								-- search for the next element /= 0
-						until
-							(k > 4) or (board.elements.item (k, j).value /= 0)
-						loop
-							k := k + 1;
-						end
-						if (k <= 4) then
-							board.set_cell (i, j, board.elements.item (k, j).value)
-							board.set_cell (k, j, 0)
-							i := i + 1
-						else
-							i := k
-						end
-					else
-						i := i + 1
-					end
-				end --end loop i
-				j := j + 1
-			end --end loop j
-			board.set_random_free_cell
-		end --end do
+				board.up
+		end
 
 	down
 		obsolete
