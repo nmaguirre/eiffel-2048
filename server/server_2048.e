@@ -21,7 +21,7 @@ make (argv: ARRAY [STRING])
 			count: INTEGER
 			soc1: detachable NETWORK_STREAM_SOCKET
 		do
-			if argv.count /= 2 then 
+			if argv.count /= 2 then
 				io.error.putstring ("Usage: ")
 				io.error.putstring (argv.item (0))
 				io.error.putstring (" portnumber%N")
@@ -88,11 +88,16 @@ make (argv: ARRAY [STRING])
 	handle_end_msg
 			-- Handles the reception of a "End" message
 		do
-
+			if playing then
+				playing := False
+				create controller.make
+			end
+		ensure
+			playing = False
 		end
 
 feature {NONE}
 
 	controller : CONTROLLER_2048
-
+	playing : BOOLEAN
 end
