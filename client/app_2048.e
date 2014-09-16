@@ -10,8 +10,16 @@ inherit
 
 	ARGUMENTS
 
+	SOCKET_RESOURCES
+
+	SED_STORABLE_FACILITIES
+
 create
 	make
+
+feature	{ANY}
+
+	local_board: BOARD_2048
 
 feature {NONE} -- Initialization
 
@@ -30,12 +38,22 @@ feature {NONE} -- Initialization
 
 feature	-- User events' handling and communication with server
 
-	begin
+	begin (soc: NETWORK_STREAM_SOCKET)
 			-- Should send a "Begin" command to the server.
 			-- Must wait for response from the server with
 			-- the new board.
+		local
+			begin_msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
-
+			begin_msg:="Begin"
+			create l_medium.make (soc)
+			l_medium.set_for_writing
+			independent_store (begin_msg, l_medium, True)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+				local_board := received_board
+			end
 		end
 
 	handle_up_event
@@ -75,5 +93,6 @@ feature	-- User events' handling and communication with server
 		do
 
 		end
+
 
 end
