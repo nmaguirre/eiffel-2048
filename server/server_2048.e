@@ -77,10 +77,19 @@ make (argv: ARRAY [STRING])
 
 		end
 
-	handle_left_msg
+	handle_left_msg: BOOLEAN
 			-- Handles the reception of a "Left" message
 		do
-
+			if playing then
+				if controller.board.can_move_left then
+					controller.left
+				    Result := True
+				else
+					Result := False
+				end
+			else
+				Result := False
+			end
 		end
 
 	handle_right_msg
@@ -89,12 +98,15 @@ make (argv: ARRAY [STRING])
 
 		end
 
-	handle_end_msg
+	handle_end_msg:BOOLEAN
 			-- Handles the reception of a "End" message
 		do
 			if playing then
 				playing := False
-				create controller.make
+				controller := Void
+				Result := True
+			else
+				Result := False
 			end
 		ensure
 			playing = False
