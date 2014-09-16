@@ -58,7 +58,10 @@ make (argv: ARRAY [STRING])
 	handle_begin_msg
 			-- Handles the reception of a "Begin" message
 		do
-
+			if not (playing) then
+				create controller.make
+				playing := True
+			end
 		end
 
 	handle_up_msg
@@ -100,4 +103,5 @@ feature {NONE}
 
 	controller : CONTROLLER_2048
 	playing : BOOLEAN
+
 end
