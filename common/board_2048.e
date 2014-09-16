@@ -393,7 +393,6 @@ feature {CONTROLLER_2048}
 			random_sequence: RANDOM
 			random_cell_row: INTEGER
 			random_cell_col: INTEGER
-			controller: CONTROLLER_2048
 		do
 				--initialize random seed
 			create random_sequence.set_seed (get_random_seed)
