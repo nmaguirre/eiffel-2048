@@ -49,13 +49,14 @@ feature -- Creation
 		do
 		end
 
-	handle_begin_msg
+	handle_begin_msg : BOOLEAN
 			-- Handles the reception of a "Begin" message
 		do
 			if not (playing) then
 				create controller.make
 				playing := True
 			end
+			Result := playing
 		end
 
 	handle_up_msg
