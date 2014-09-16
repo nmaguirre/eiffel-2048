@@ -335,6 +335,80 @@ feature -- Status report
 			Result := is_winning
 		end
 
+feature -- Movement commands
+
+	down -- Moves the cells to the lowermost possible point of the game board.
+			-- Movement colapses cells with the same value.
+			-- It adds one more random cell with value 2 or 4, after the movement.
+		require
+			can_move_down
+		local
+			i, j, aux: INTEGER
+		do
+				-- add all possible cells downward
+			from -- columns
+				i := 1
+			until
+				i > 4
+			loop
+				from -- rows (from the lowermost to the uppermost row)
+					j := 4
+				until
+					j <= 1
+				loop
+					if elements.item (j, i).value /= 0 then
+						aux := j;
+						j := j - 1;
+						from
+								-- search for the next element /= 0
+						until
+							(j < 1) or (elements.item (j, i).value /= 0)
+						loop
+							j := j - 1;
+						end
+						if j >= 1 then -- if search is succesful
+							if elements.item (aux, i).value = elements.item (j, i).value then
+								set_cell (aux, i, (elements.item (aux, i).value + elements.item (j, i).value))
+								set_cell (j, i, 0)
+								j := j - 1;
+							end
+						end
+					else
+						j := j - 1;
+					end -- end if /=0
+				end -- end loop j
+				i := i + 1;
+			end -- end loop i
+
+				--occupy all empty spaces downward
+			from -- columns
+				i := 1
+			until
+				i > 4
+			loop
+				from -- rows (from the lowermost to the uppermost row)
+					j := 4
+				until
+					j = 1
+				loop
+					if ((elements.item (j, i).value = 0) and (elements.item (j - 1, i).value) /= 0) then -- if j,i = 0 and the one above it is =/ 0
+						set_cell (j, i, elements.item (j - 1, i).value)
+						set_cell (j - 1, i, 0)
+						if (j < 4) then --if not at the lowermost cell
+							j := j + 1; -- continues moving downward until it reaches an ocupied cell
+						else
+							j := j - 1; -- continues moving upward
+						end
+					else
+						j := j - 1;
+					end
+				end -- end loop j
+				i := i + 1;
+			end -- end loop i
+			set_random_free_cell
+		end -- end do
+
+
 feature -- Status setting
 
 	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
