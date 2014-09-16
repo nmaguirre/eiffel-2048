@@ -9,7 +9,7 @@ class
 
 inherit
 
-	ANY
+	STORABLE
 		redefine
 			out
 		end
