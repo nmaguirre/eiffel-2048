@@ -91,11 +91,17 @@ make (argv: ARRAY [STRING])
 	handle_end_msg
 			-- Handles the reception of a "End" message
 		do
-
+			if playing then
+				playing := False
+				create controller.make
+			end
+		ensure
+			playing = False
 		end
 
 feature {NONE}
 
 	controller : CONTROLLER_2048
-	playing: BOOLEAN
+	playing : BOOLEAN
+
 end
