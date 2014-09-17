@@ -579,4 +579,12 @@ feature {CONTROLLER_2048}
 			Result = 2 or Result = 4
 		end
 
+	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
+		-- Returns the coordinates of the last randomly introduced cell
+		-- Value should be (0,0) if no cell has been introduced in the last movement
+		-- or if the game state is the initial state.
+		do
+			Result := coord_last_random_cell
+		end
+
 end
