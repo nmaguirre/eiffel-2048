@@ -491,6 +491,76 @@ feature -- Movement commands
 			set_random_free_cell
 		end --end do
 
+	left
+			-- Moves the cells to the leftmost possible point of the game board.
+			-- Movement colapses cells with the same value.
+			-- It adds one more random cell with value 2 or 4, after the movement.
+		require
+			can_move_left
+		local
+			i, j, k: INTEGER
+		do
+			from
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j >= 4
+				loop
+					if elements.item (i, j).value /= 0 then
+						k := j + 1
+						from
+						until
+							(k > 4) or (elements.item (i, k).value /= 0)
+						loop
+							k := k + 1
+						end
+						if (k <= 4) then
+							if (elements.item (i, j).value = elements.item (i, k).value) then
+								set_cell (i, j, (elements.item (i, k).value + elements.item (i, j).value))
+								set_cell (i, k, 0)
+								j := k + 1
+							else
+								j := k
+							end -- end if
+						else
+							j := k
+						end
+					else
+						j := j + 1
+					end -- end if /=0
+				end --end loop j
+				i := i + 1
+			end --end loop i
+			from --
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 1
+				until
+					j >= 4
+				loop
+					if (elements.item (i, j).value = 0) and (elements.item (i, j + 1).value /= 0) then
+						set_cell (i, j, elements.item (i, j + 1).value)
+						set_cell (i, j + 1, 0)
+						if (j = 1) then --if at the leftrmost cell
+							j := j + 1; -- continues moving to the right until it reaches an occupied cell
+						else
+							j := j - 1; -- continues moving left
+						end
+					else
+						j:= j + 1
+					end -- end if
+				end --end loop j
+				i := i + 1
+			end --end loop i
+			set_random_free_cell
+		end --end do
 
 feature -- Status setting
 

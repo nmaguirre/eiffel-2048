@@ -82,17 +82,11 @@ feature -- Movement commands
 		end
 
 	left
-			-- Moves the cells to the leftmost possible point of the game board.
-			-- Movement colapses cells with the same value.
-			-- It adds one more random cell with value 2 or 4, after the movement.
-		require
-			board.can_move_left
-		local
-			n1: INTEGER
-			n2: INTEGER
-			n3: INTEGER
+		obsolete
+			"obsolete routine, should call left@BOARD_2048"
 		do
-		end --end do
+			board.left
+		end
 
 	right
 			-- Moves the cells to the rightmost possible point of the game board.
