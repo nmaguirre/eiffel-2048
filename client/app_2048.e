@@ -56,11 +56,25 @@ feature	-- User events' handling and communication with server
 			end
 		end
 
-	handle_up_event
-			-- Handles the event when the user pressed up
-			-- Should send an "Up" command to the server and
-			-- and wait for the response with the new board status
+	handle_up_event (soc: NETWORK_STREAM_SOCKET) : BOOLEAN
+			-- Handles the event when the user pressed up.
+			-- Should send an "Up" command to the server.
+			-- And wait for the response with the new board status
+		local
+			up_msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
+			up_msg := "Up"
+			create l_medium.make (soc)
+			l_medium.set_for_writing
+			independent_store (up_msg, l_medium, True)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+			   local_board := received_board
+			   Result := True
+			else
+			   Result := False
+			end
 
 		end
 
