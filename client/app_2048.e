@@ -115,16 +115,16 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	exit (soc: NETWORK_STREAM_SOCKET)
-			-- Should send a "Exit" command to the server.
+	handle_end_event (soc: NETWORK_STREAM_SOCKET)
+			-- Should send a "End" command to the server.
 		local
-			exit_msg: STRING
+			end_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
-			exit_msg:="Exit"
+			end_msg:="End"
 			create l_medium.make (soc)
 			l_medium.set_for_writing
-			independent_store (exit_msg, l_medium, True)
+			independent_store (end_msg, l_medium, True)
 		end
 
 
