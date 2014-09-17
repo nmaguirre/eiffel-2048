@@ -29,8 +29,9 @@ feature -- Creation
 				create soc1.make_server_by_port (argv.item (1).to_integer)
 				from
 					soc1.listen (5)
+					count :=0
 				until
-
+					count =1
 				loop
 					process (soc1) -- See below
 				end
