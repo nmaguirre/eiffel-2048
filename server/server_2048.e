@@ -21,12 +21,11 @@ feature -- Creation
 			count: INTEGER
 			soc1: detachable NETWORK_STREAM_SOCKET
 		do
-			if argv.count /= 2 then
-				io.error.putstring ("Usage: ")
-				io.error.putstring (argv.item (0))
-				io.error.putstring (" portnumber%N")
+			if argv.count /= 1 then
+				io.error.putstring ("Error ")
+
 			else
-				create soc1.make_server_by_port (argv.item (1).to_integer)
+				create soc1.make_server_by_port (2000)
 				from
 					soc1.listen (5)
 					count :=0
@@ -57,7 +56,7 @@ feature -- Creation
 				Result := True
 			else
 				Result := False
-			end	
+			end
 		ensure
 			(playing = True) and (controller.board /= Void)
 		end
