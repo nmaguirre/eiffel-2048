@@ -497,7 +497,7 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_left
+			valid_move_left: can_move_left
 		local
 			i, j, k: INTEGER
 		do
