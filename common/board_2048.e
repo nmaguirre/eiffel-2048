@@ -168,7 +168,7 @@ feature -- Status report
 			end
 			Result := output
 		ensure then
-			Result.count > 0
+			string_is_not_empty: Result.count > 0
 		end
 
 	is_full: BOOLEAN
@@ -415,7 +415,7 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_up
+			can_not_move_up_feature_up: can_move_up
 		local
 			i, k, j: INTEGER
 		do
@@ -497,7 +497,7 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_left
+			valid_move_left: can_move_left
 		local
 			i, j, k: INTEGER
 		do
