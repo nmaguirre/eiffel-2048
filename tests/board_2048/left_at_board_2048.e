@@ -81,24 +81,7 @@ feature -- Test routines
 			-- And one of the empty cells remaining filled with 2 or 4.
 		local
 			board: BOARD_2048
-			controller: CONTROLLER_2048
 		do
-			create board.make_empty
-			create controller.make_with_board (board)
-			controller.board.set_cell (1, 1, 2)
-			controller.board.set_cell (1, 2, 4)
-			controller.board.set_cell (2, 1, 4)
-			controller.board.set_cell (2, 2, 4)
-			controller.board.set_cell (3, 1, 8)
-			controller.board.set_cell (3, 2, 8)
-			controller.board.set_cell (4, 1, 4)
-			controller.board.set_cell (4, 2, 16)
-			controller.left
-			assert ("Row One correct", not (controller.board.elements.item (1, 1).value /= 2 or controller.board.elements.item (1, 2).value /= 4))
-			assert ("Row Two correct", not (controller.board.elements.item (2, 1).value /= 8))
-			assert ("Row Three correct", not (controller.board.elements.item (3, 1).value /= 16))
-			assert ("Row Four correct", not (controller.board.elements.item (4, 1).value /= 4 or controller.board.elements.item (4, 2).value /= 16))
-
 			create board.make_empty
 			board.set_cell (1, 1, 2)
 			board.set_cell (1, 2, 4)
@@ -108,12 +91,11 @@ feature -- Test routines
 			board.set_cell (3, 2, 8)
 			board.set_cell (4, 1, 4)
 			board.set_cell (4, 2, 16)
-			board.left
+            board.left
 			assert ("Row One correct", not (board.elements.item (1, 1).value /= 2 or board.elements.item (1, 2).value /= 4))
 			assert ("Row Two correct", not (board.elements.item (2, 1).value /= 8))
 			assert ("Row Three correct", not (board.elements.item (3, 1).value /= 16))
 			assert ("Row Four correct", not (board.elements.item (4, 1).value /= 4 or board.elements.item (4, 2).value /= 16))
-
 		end
 
 	test_movs_left2

@@ -168,7 +168,7 @@ feature -- Status report
 			end
 			Result := output
 		ensure then
-			Result.count > 0
+			string_is_not_empty: Result.count > 0
 		end
 
 	is_full: BOOLEAN
