@@ -123,7 +123,7 @@ feature {ANY} -- Miscellaneous
 		do
 			Result := (value = 0)
 		ensure
-			Result = (value = 0)
+			is_available: Result = (value = 0)
 		end
 
 invariant
