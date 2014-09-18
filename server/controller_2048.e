@@ -54,14 +54,7 @@ feature -- Game State
 			Result := finished
 		end
 
-	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
-			-- Returns the coordinates of th last randomly introduced
-			-- cell. Value should be (0,0) if no cell has been introduced in the last movement
-			-- or if the game state is the initial state.
-		do
-			Result := board.coord_last_random_cell
-		end
-
+	
 feature -- Movement commands
 
 	up
