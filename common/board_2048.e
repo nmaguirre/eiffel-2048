@@ -312,7 +312,8 @@ feature -- Status report
 	is_winning_board: BOOLEAN
 			-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
 		require
-			elements.height = 4 and elements.width = 4
+			height_is_four: elements.height = 4
+			width_is_four: elements.width = 4
 		local
 			i, j: INTEGER
 			is_winning: BOOLEAN
