@@ -107,7 +107,9 @@ feature	-- User events' handling and communication with server
 			-- Handles the event when the user pressed up
 			-- Should send an "Left" command to the server and
 			-- and wait for the response with the new board status
-		local
+        require
+            soca /= Void
+        local
 			msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
@@ -122,6 +124,8 @@ feature	-- User events' handling and communication with server
 			else
 			   Result := False
 			end
+        ensure
+            received_board /= Void
 		end
 
 	handle_right_event (soct: NETWORK_STREAM_SOCKET) : BOOLEAN

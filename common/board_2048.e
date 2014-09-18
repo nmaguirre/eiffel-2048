@@ -415,7 +415,7 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_up
+			can_not_move_up_feature_up: can_move_up
 		local
 			i, k, j: INTEGER
 		do
@@ -677,7 +677,7 @@ feature {NONE} -- Auxiliary routines
 			random_value := (get_random (random_sequence, 2) + 1) * 2
 			Result := random_value
 		ensure
-			Result = 2 or Result = 4
+			random_value_is_two_or_four: Result = 2 or Result = 4
 		end
 
 	get_random_seed: INTEGER
@@ -697,12 +697,12 @@ feature {NONE} -- Auxiliary routines
 	get_random (random_sequence: RANDOM; ceil: INTEGER): INTEGER
 			-- Returns a random integer  minor that ceil from a random sequence
 		require
-			ceil >= 0
+			upper_limit_of_random_is_greater_than_zero: ceil >= 0
 		do
 			random_sequence.forth
 			Result := random_sequence.item \\ ceil;
 		ensure
-			Result < ceil
+			random_is_minor_than_upper_limit: Result < ceil
 		end
 
 feature {CONTROLLER_2048}
