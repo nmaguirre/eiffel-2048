@@ -176,7 +176,7 @@ feature -- Status report
 		do
 			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure
-			Result = (nr_of_filled_cells = 16)
+			full_board: Result = (nr_of_filled_cells = 16)
 		end
 
 	can_move_left: BOOLEAN
