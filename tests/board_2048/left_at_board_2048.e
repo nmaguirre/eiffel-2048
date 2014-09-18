@@ -52,7 +52,6 @@ feature -- Test routines
 			-- And one of the empty cells remaining filled with 2 or 4.
 		local
 			board: BOARD_2048
-			controller: CONTROLLER_2048
 		do
 			create board.make_empty
 			board.set_cell (1, 1, 8)
