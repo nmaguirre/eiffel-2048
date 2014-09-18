@@ -677,7 +677,7 @@ feature {NONE} -- Auxiliary routines
 			random_value := (get_random (random_sequence, 2) + 1) * 2
 			Result := random_value
 		ensure
-			Result = 2 or Result = 4
+			random_value_is_two_or_four: Result = 2 or Result = 4
 		end
 
 	get_random_seed: INTEGER
