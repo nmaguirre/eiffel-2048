@@ -63,9 +63,19 @@ feature -- Creation
 		do
 		end
 
-	handle_down_msg
+	handle_down_msg: BOOLEAN
 			-- Handles the reception of a "Down" message
 		do
+			if playing then
+				if controller.board.can_move_down then
+					controller.down
+				    Result := True
+				else
+					Result := False
+				end
+			else
+				Result := False
+			end
 		end
 
 	handle_left_msg: BOOLEAN
