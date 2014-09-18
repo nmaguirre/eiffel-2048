@@ -147,6 +147,8 @@ feature	-- User events' handling and communication with server
 
 	handle_end_event (soc: NETWORK_STREAM_SOCKET)
 			-- Should send a "End" command to the server.
+		require
+			soc /= Void
 		local
 			end_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
