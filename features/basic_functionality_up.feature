@@ -1,6 +1,10 @@
 Feature: Game appropriately reacts to basic movements, and basic game logic. This feature corresponds to
                 Appropriate reaction to the up command (movement to the up).
 
+        Background:
+                Given that the server has been started
+                And I have successfully connected to it through the client
+                And I have successfully initiated the game
 
         Scenario: Moving up changes board state colapsing crashing cells with
                         similar values

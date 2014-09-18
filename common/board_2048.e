@@ -114,7 +114,7 @@ feature -- Status report
 	nr_of_filled_cells: INTEGER
 			-- Returns the number of filled cells in the board
 		require
-			elements /= Void
+			elements_void_in_nr_of_filled_cells_feature: elements /= Void
 		local
 			filled_cells: INTEGER
 			i: INTEGER
@@ -176,7 +176,7 @@ feature -- Status report
 		do
 			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure
-			Result = (nr_of_filled_cells = 16)
+			full_board: Result = (nr_of_filled_cells = 16)
 		end
 
 	can_move_left: BOOLEAN
