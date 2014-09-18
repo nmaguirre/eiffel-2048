@@ -97,6 +97,8 @@ feature -- Initialisation
 			set_cell (first_random_cell_row, first_random_cell_col, get_random_cell_two_or_four (random_sequence))
 			set_cell (second_random_cell_row, second_random_cell_col, get_random_cell_two_or_four (random_sequence))
 			coord_last_random_cell := [second_random_cell_row, second_random_cell_col]
+		ensure
+			rows = 4 and columns = 4 and nr_of_filled_cells = 2
 		end
 
 feature -- Status report
@@ -247,7 +249,7 @@ feature -- Status report
 		require
 			elements /= Void
 		local
-			i, j, k: INTEGER
+			i, j: INTEGER
 			can_move, cell_occupied: BOOLEAN
 		do
 			from
@@ -408,7 +410,6 @@ feature -- Movement commands
 			set_random_free_cell
 		end -- end do
 
-
 	up
 			-- Moves the cells to the uppermost possible point of the game board.
 			-- Movement colapses cells with the same value.
@@ -554,7 +555,7 @@ feature -- Movement commands
 							j := j - 1; -- continues moving left
 						end
 					else
-						j:= j + 1
+						j := j + 1
 					end -- end if
 				end --end loop j
 				i := i + 1
@@ -650,9 +651,9 @@ feature {CONTROLLER_2048}
 		end
 
 	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
-		-- Returns the coordinates of the last randomly introduced cell
-		-- Value should be (0,0) if no cell has been introduced in the last movement
-		-- or if the game state is the initial state.
+			-- Returns the coordinates of the last randomly introduced cell
+			-- Value should be (0,0) if no cell has been introduced in the last movement
+			-- or if the game state is the initial state.
 		do
 			Result := coord_last_random_cell
 		end
