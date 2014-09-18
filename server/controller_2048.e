@@ -72,95 +72,13 @@ feature -- Movement commands
 		end
 
 	right
-			-- Moves the cells to the rightmost possible point of the game board.
-			-- Movement colapses cells with the same value.
-			-- It adds one more random cell with value 2 or 4, after the movement.
-
-		require
-			board.can_move_right
-		local
-			i, j, k, v: INTEGER
+		obsolete
+			"obsolete routine, should call left@BOARD_2048"
 		do
-			from
-				i := 1
-			until
-				i > 4
-			loop
-				from
-					j := 4
-				until
-					j <= 1
-				loop
-					if board.elements.item (i, j).value /= 0 then
-						if j > 1 then
-							k := j - 1
-							from
-							until
-								(k <= 1) or (board.elements.item (i, k).value /= 0)
-							loop
-								k := k - 1
-							end
-							if (k >= 1) then
-								if (board.elements.item (i, j).value = board.elements.item (i, k).value) then
-									board.set_cell (i, j, (board.elements.item (i, k).value + board.elements.item (i, j).value))
-									board.set_cell (i, k, 0)
-									j := k - 1
-								else
-									j := k
-								end
-							end
-						end
-					else
-						j := j - 1
-					end
-				end --end loop j
-				i := i + 1
-			end --end loop i
-
-			from --
-				i := 1
-			until
-				i > 4
-			loop
-				from
-					j := 4
-				until
-					j < 1
-				loop
-					if board.elements.item (i, j).value /= 0 then
-						v := board.elements.item (i, j).value
-						board.set_cell (i, j, 0)
-						position_right (i, v)
-						j := j - 1;
-					else
-						j := j - 1
-					end --end if
-				end --end loop j
-				i := i + 1
-			end --end loop i
-			board.set_random_free_cell
-		end --end do
+			board.right
+		end
 
 feature {NONE} -- Auxiliary routines
 
-	position_right (row, val: INTEGER)
-			-- Method that receives as a parameter a row, and verifies the position which is more to the right
-			-- which is empty in that row and also inserts the value passed as parameter
-		local
-			column: INTEGER
-		do
-			from
-				column := 4
-			until
-				column < 1
-			loop
-				if board.elements.item (row, column).value = 0 then
-					board.set_cell (row, column, val)
-					column := 0
-				else
-					column := column - 1
-				end --end if
-			end --end loop
-		end --end do
 
 end
