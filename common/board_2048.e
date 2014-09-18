@@ -686,12 +686,12 @@ feature {NONE} -- Auxiliary routines
 	get_random (random_sequence: RANDOM; ceil: INTEGER): INTEGER
 			-- Returns a random integer  minor that ceil from a random sequence
 		require
-			ceil >= 0
+			upper_limit_of_random_is_greater_than_zero: ceil >= 0
 		do
 			random_sequence.forth
 			Result := random_sequence.item \\ ceil;
 		ensure
-			Result < ceil
+			random_is_minor_than_upper_limit: Result < ceil
 		end
 
 feature {CONTROLLER_2048}
