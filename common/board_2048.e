@@ -249,7 +249,7 @@ feature -- Status report
 		require
 			elements /= Void
 		local
-			i, j: INTEGER
+			i, j, k: INTEGER
 			can_move, cell_occupied: BOOLEAN
 		do
 			from
