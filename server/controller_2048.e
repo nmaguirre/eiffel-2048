@@ -54,18 +54,8 @@ feature -- Game State
 			Result := finished
 		end
 
-	
-feature -- Movement commands
 
-	up
-			-- Moves the cells to the uppermost possible point of the game board.
-			-- Movement colapses cells with the same value.
-			-- It adds one more random cell with value 2 or 4, after the movement.
-		obsolete
-			"obsolete routine, should call up@BOARD_2048"
-		do
-				board.up
-		end
+feature -- Movement commands
 
 	down
 		obsolete
