@@ -107,12 +107,25 @@ feature	-- User events' handling and communication with server
 			end
 		end
 
-	handle_right_event
+	handle_right_event (soct: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Right" command to the server and
 			-- and wait for the response with the new board status
+		local
+			msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
-
+			msg := "Right"
+			create l_medium.make (soct)
+			l_medium.set_for_writing
+			independent_store (msg, l_medium, True)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+			   local_board := received_board
+			   Result := True
+			else
+			   Result := False
+			end
 		end
 
 	handle_end_event (soc: NETWORK_STREAM_SOCKET)
