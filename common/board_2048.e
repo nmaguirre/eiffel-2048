@@ -23,7 +23,7 @@ feature {ANY}
 			-- Stores the game board. Indices for cells must go from 1 to 4, both
 			-- for rows and for columns.
 
-	coord_last_random_cell: TUPLE [INTEGER, INTEGER]
+	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
 			-- Tuple containing the coordinates of the last random cell.
 
 feature -- Initialisation
@@ -96,7 +96,7 @@ feature -- Initialisation
 				-- set cells
 			set_cell (first_random_cell_row, first_random_cell_col, get_random_cell_two_or_four (random_sequence))
 			set_cell (second_random_cell_row, second_random_cell_col, get_random_cell_two_or_four (random_sequence))
-			coord_last_random_cell := [second_random_cell_row, second_random_cell_col]
+			last_random_cell_coordinates := [second_random_cell_row, second_random_cell_col]
 		ensure
 			rows = 4 and columns = 4 and nr_of_filled_cells = 2
 		end
@@ -636,7 +636,7 @@ feature {CONTROLLER_2048}
 			end
 				-- set at cell random number
 			set_cell (random_cell_row, random_cell_col, random_number_two_or_four (random_sequence))
-			coord_last_random_cell := [random_cell_row, random_cell_col]
+			last_random_cell_coordinates := [random_cell_row, random_cell_col]
 		end
 
 	random_number_two_or_four (random_sequence: RANDOM): INTEGER
@@ -648,14 +648,6 @@ feature {CONTROLLER_2048}
 			Result := random_number
 		ensure
 			Result = 2 or Result = 4
-		end
-
-	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
-			-- Returns the coordinates of the last randomly introduced cell
-			-- Value should be (0,0) if no cell has been introduced in the last movement
-			-- or if the game state is the initial state.
-		do
-			Result := coord_last_random_cell
 		end
 
 end
