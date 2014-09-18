@@ -114,7 +114,7 @@ feature -- Status report
 	nr_of_filled_cells: INTEGER
 			-- Returns the number of filled cells in the board
 		require
-			elements /= Void
+			elements_void_in_nr_of_filled_cells_feature: elements /= Void
 		local
 			filled_cells: INTEGER
 			i: INTEGER
