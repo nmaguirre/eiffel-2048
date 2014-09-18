@@ -114,7 +114,7 @@ feature -- Status report
 	nr_of_filled_cells: INTEGER
 			-- Returns the number of filled cells in the board
 		require
-			elements /= Void
+			elements_void_in_nr_of_filled_cells_feature: elements /= Void
 		local
 			filled_cells: INTEGER
 			i: INTEGER
@@ -176,7 +176,7 @@ feature -- Status report
 		do
 			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure
-			Result = (nr_of_filled_cells = 16)
+			full_board: Result = (nr_of_filled_cells = 16)
 		end
 
 	can_move_left: BOOLEAN
@@ -561,6 +561,97 @@ feature -- Movement commands
 				i := i + 1
 			end --end loop i
 			set_random_free_cell
+		end --end do
+
+	right
+			-- Moves the cells to the rightmost possible point of the game board.
+			-- Movement colapses cells with the same value.
+			-- It adds one more random cell with value 2 or 4, after the movement.
+
+		require
+			can_move_right
+		local
+			i, j, k, v: INTEGER
+		do
+			from
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 4
+				until
+					j <= 1
+				loop
+					if elements.item (i, j).value /= 0 then
+						if j > 1 then
+							k := j - 1
+							from
+							until
+								(k <= 1) or (elements.item (i, k).value /= 0)
+							loop
+								k := k - 1
+							end
+							if (k >= 1) then
+								if (elements.item (i, j).value = elements.item (i, k).value) then
+									set_cell (i, j, (elements.item (i, k).value + elements.item (i, j).value))
+									set_cell (i, k, 0)
+									j := k - 1
+								else
+									j := k
+								end
+							end
+						end
+					else
+						j := j - 1
+					end
+				end --end loop j
+				i := i + 1
+			end --end loop i
+
+			from --
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 4
+				until
+					j < 1
+				loop
+					if elements.item (i, j).value /= 0 then
+						v := elements.item (i, j).value
+						set_cell (i, j, 0)
+						position_right (i, v)
+						j := j - 1;
+					else
+						j := j - 1
+					end --end if
+				end --end loop j
+				i := i + 1
+			end --end loop i
+			set_random_free_cell
+		end --end do			
+
+
+	position_right (row, val: INTEGER)
+			-- Method that receives as a parameter a row, and verifies the position which is more to the right
+			-- which is empty in that row and also inserts the value passed as parameter
+		local
+			column: INTEGER
+		do
+			from
+				column := 4
+			until
+				column < 1
+			loop
+				if elements.item (row, column).value = 0 then
+					set_cell (row, column, val)
+					column := 0
+				else
+					column := column - 1
+				end --end if
+			end --end loop
 		end --end do
 
 feature -- Status setting
