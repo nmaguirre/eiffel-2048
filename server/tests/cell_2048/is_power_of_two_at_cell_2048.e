@@ -62,7 +62,7 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
     		assert ("The rutine has to fail", ok)
 		rescue
      		second_time := True
-     		if ok then   -- ok = true means that the rutine failed
+     		if ok then   -- ok = true means that the routine failed
            		retry
     		end
 		end
@@ -83,7 +83,7 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
     		assert ("The rutine has to fail", ok)
 		rescue
      		second_time := True
-     		if ok then   -- ok = true means that the rutine failed
+     		if ok then   -- ok = true means that the routine failed
            		retry
     		end
 		end
