@@ -54,8 +54,12 @@ feature -- Creation
 			if not (playing) then
 				create controller.make
 				playing := True
-			end
-			Result := playing
+				Result := True
+			else
+				Result := False
+			end	
+		ensure
+			(playing = True) and (controller.board /= Void)
 		end
 
 	handle_up_msg
