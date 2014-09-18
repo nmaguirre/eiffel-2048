@@ -78,12 +78,29 @@ feature	-- User events' handling and communication with server
 
 		end
 
-	handle_down_event
+	handle_down_event (nssocket: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Down" command to the server and
 			-- and wait for the response with the new board status
+		require
+			nssocket /= Void
+		local
+			down_msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
-
+			down_msg := "Down"
+			create l_medium.make (nssocket)
+			l_medium.set_for_writing
+			store (down_msg, l_medium)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+			   local_board := received_board
+			   Result := True
+			else
+			   Result := False
+			end
+		ensure
+			local_board /= Void
 		end
 
 	handle_left_event (soca: NETWORK_STREAM_SOCKET) : BOOLEAN
