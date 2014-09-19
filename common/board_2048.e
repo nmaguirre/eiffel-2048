@@ -634,9 +634,28 @@ feature -- Movement commands
 		end --end do			
 
 
+
+
+feature -- Status setting
+
+	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
+			-- Set cell in [row,col] position with a given value
+		require
+			valid_range: (row >= 1 and row <= 4 and col >= 1 and col <= 4)
+			valid_value: ((create {CELL_2048}.make).is_valid_value (value))
+		do
+			elements.item (row, col).set_value (value) --Set the new value in cell
+		ensure
+			elements.item (row, col).value = value --Must ensure that cell has the correct value
+		end
+
+feature {NONE} -- Auxiliary routines
+
 	position_right (row, val: INTEGER)
 			-- Method that receives as a parameter a row, and verifies the position which is more to the right
 			-- which is empty in that row and also inserts the value passed as parameter
+		require
+			valid_row: (row>=1 and row <= 4)
 		local
 			column: INTEGER
 		do
@@ -654,20 +673,6 @@ feature -- Movement commands
 			end --end loop
 		end --end do
 
-feature -- Status setting
-
-	set_cell (row: INTEGER; col: INTEGER; value: INTEGER)
-			-- Set cell in [row,col] position with a given value
-		require
-			valid_range: (row >= 1 and row <= 4 and col >= 1 and col <= 4)
-			valid_value: ((create {CELL_2048}.make).is_valid_value (value))
-		do
-			elements.item (row, col).set_value (value) --Set the new value in cell
-		ensure
-			elements.item (row, col).value = value --Must ensure that cell has the correct value
-		end
-
-feature {NONE} -- Auxiliary routines
 
 	get_random_cell_two_or_four (random_sequence: RANDOM): INTEGER
 			-- Randomly returns two or four
