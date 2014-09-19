@@ -60,6 +60,8 @@ feature	-- User events' handling and communication with server
 			-- Handles the event when the user pressed up.
 			-- Should send an "Up" command to the server.
 			-- And wait for the response with the new board status
+		require
+			soc /= Void
 		local
 			up_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
@@ -75,7 +77,8 @@ feature	-- User events' handling and communication with server
 			else
 			   Result := False
 			end
-
+		ensure
+			local_board /= Void
 		end
 
 	handle_down_event (nssocket: NETWORK_STREAM_SOCKET) : BOOLEAN
