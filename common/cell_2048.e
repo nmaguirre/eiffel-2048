@@ -127,7 +127,8 @@ feature {ANY} -- Miscellaneous
 		end
 
 invariant
-		--a cell must have either zero, or a value that is a power of two greater than 1
-	value = 0 or (is_power_of_two (value) and value /= 1)
+		--a cell must have either zero or a value that is a power of two greater than 1
+	value_can_not_be_other_that_zero_or_power_of_two: value = 0 or is_power_of_two (value)
+	value_can_not_be_one: value /= 1
 
 end
