@@ -137,7 +137,7 @@ feature -- Control methods
 		-- Validate if name isnt void, empty or starts with a number
 	do
 		if
-			(name_control /= Void) and (name_control.at (1).is_alpha) and (not name_control.is_equal (""))
+			(name_control /= Void) and (not name_control.is_equal ("")) and (name_control.at (1).is_alpha)
 		then
 			Result:=TRUE
 		end
