@@ -94,8 +94,8 @@ feature -- Initialisation
 			end
 
 				-- set cells
-			set_cell (first_random_cell_row, first_random_cell_col, get_random_cell_two_or_four (random_sequence))
-			set_cell (second_random_cell_row, second_random_cell_col, get_random_cell_two_or_four (random_sequence))
+			set_cell (first_random_cell_row, first_random_cell_col, random_number_two_or_four (random_sequence))
+			set_cell (second_random_cell_row, second_random_cell_col, random_number_two_or_four (random_sequence))
 			last_random_cell_coordinates := [second_random_cell_row, second_random_cell_col]
 		ensure
 			rows = 4 and columns = 4 and nr_of_filled_cells = 2
@@ -312,7 +312,8 @@ feature -- Status report
 	is_winning_board: BOOLEAN
 			-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
 		require
-			elements.height = 4 and elements.width = 4
+			height_is_four: elements.height = 4
+			width_is_four: elements.width = 4
 		local
 			i, j: INTEGER
 			is_winning: BOOLEAN
@@ -674,17 +675,6 @@ feature {NONE} -- Auxiliary routines
 		end --end do
 
 
-	get_random_cell_two_or_four (random_sequence: RANDOM): INTEGER
-			-- Randomly returns two or four
-		local
-			random_value: INTEGER
-		do
-			random_value := (get_random (random_sequence, 2) + 1) * 2
-			Result := random_value
-		ensure
-			random_value_is_two_or_four: Result = 2 or Result = 4
-		end
-
 	get_random_seed: INTEGER
 			-- Returns a seed for random sequences
 		local
@@ -743,7 +733,7 @@ feature {CONTROLLER_2048}
 			random_number := (get_random (random_sequence, 2) + 1) * 2
 			Result := random_number
 		ensure
-			Result = 2 or Result = 4
+			valid_random_number: Result = 2 or Result = 4
 		end
 
 end
