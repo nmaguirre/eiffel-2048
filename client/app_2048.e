@@ -125,7 +125,7 @@ feature	-- User events' handling and communication with server
 			   Result := False
 			end
         ensure
-            received_board /= Void
+            local_board /= Void
 		end
 
 	handle_right_event (soct: NETWORK_STREAM_SOCKET) : BOOLEAN
