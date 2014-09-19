@@ -68,16 +68,15 @@ feature -- Creation
 
 	handle_down_msg: BOOLEAN
 			-- Handles the reception of a "Down" message
+
 		do
 			if playing then
 				if controller.board.can_move_down then
 					controller.down
 				    Result := True
-				else
-					Result := False
 				end
 			else
-				Result := False
+				Result := False -- not playing 
 			end
 		end
 
