@@ -17,7 +17,7 @@ Eiffel-2048 is a student project with the following goals:
 2. Learn and use correctly the [Design by Contract] [Design-by-contract] approach.
 3. Learn and work using the following software development processes:
     - [Test Driven Development] [TDD]
-    - [Behavoiur Driven Development] [BDD]
+    - [Behaviour Driven Development] [BDD]
 
 Technologies Involved
 ---------------------
@@ -35,7 +35,7 @@ Repository Content
 Road Map
 =======
 
-The core of the game is already implemented. The game is playable right now trough the binaries provided in the [alpha release] [alpha-release].
+The core of the game is already implemented. The game is playable right now through the binaries provided in the [alpha release] [alpha-release].
 The functionalities currently missing or being implemented are:
 
 1. User management with saved games.
