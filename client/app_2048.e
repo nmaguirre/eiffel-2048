@@ -20,13 +20,15 @@ create
 feature	{ANY}
 
 	local_board: BOARD_2048
+	socket: NETWORK_STREAM_SOCKET
 
 feature {NONE} -- Initialization
 
 	make
 			-- Run application.
 		do
-
+			create_connection
+            play
 		end
 
 	play
@@ -127,5 +129,55 @@ feature	-- User events' handling and communication with server
 			independent_store (end_msg, l_medium, True)
 		end
 
+	create_connection
+		-- Ask for host and port and create the socket
+		local
+			a_peer_port: INTEGER_32
+			a_peer_host: STRING_8
+		do
+			a_peer_host := ask_for_host
+			a_peer_port := ask_for_port
+			print ("Conecting...")
+			print (a_peer_host)
+			print (":")
+			print (a_peer_port)
+			print ("%N")
 
+			create socket.make_client_by_port (a_peer_port, a_peer_host)
+			socket.connect
+
+			if socket.is_connected then
+				print("Successfully connected%N")
+			else
+				print("Connection failed%N")
+			end
+		ensure
+			socket /= Void
+		end
+
+	ask_for_host : STRING_8
+		-- Read from command line a string
+		local
+			host: STRING_8
+		do
+			print ("Insert the server host%N")
+			io.read_line
+			host := io.last_string
+			Result := host
+		ensure
+			valid_host: Result /= Void
+		end
+
+	ask_for_port : INTEGER_32
+		-- Read from command line a integer
+		local
+			port: INTEGER_32
+		do
+			print ("Insert the server port%N")
+			io.read_integer_32
+			port := io.last_integer_32
+			Result := port
+		ensure
+			valid_port: Result /= Void
+		end
 end
