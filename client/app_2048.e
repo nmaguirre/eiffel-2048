@@ -17,9 +17,10 @@ inherit
 create
 	make
 
-feature	{ANY}
+feature {ANY}
 
 	local_board: BOARD_2048
+
 	socket: NETWORK_STREAM_SOCKET
 
 feature {NONE} -- Initialization
@@ -28,19 +29,41 @@ feature {NONE} -- Initialization
 			-- Run application.
 		do
 			create_connection
-            play
+			play
 		end
 
 	play
-			-- Main game loop
+		local
+			ghost: BOOLEAN
 		do
-
+			from
+			until
+				local_board.is_finished or io.last_character.is_equal ('q')
+			loop
+					--read character
+				io.read_character
+					--move left
+				if io.last_character.is_equal ('a') then
+					ghost := handle_left_event (socket)
+				end
+					--move down
+				if io.last_character.is_equal ('s') then
+					ghost := handle_down_event (socket)
+				end
+					--move right
+				if io.last_character.is_equal ('d') then
+					ghost := handle_right_event (socket)
+				end
+					--move up
+				if io.last_character.is_equal ('w') then
+					ghost := handle_up_event (socket)
+				end
+			end
 		end
 
+feature -- User events' handling and communication with server
 
-feature	-- User events' handling and communication with server
-
-	begin (soc: NETWORK_STREAM_SOCKET) : BOOLEAN
+	begin (soc: NETWORK_STREAM_SOCKET): BOOLEAN
 			-- Should send a "Begin" command to the server.
 			-- Must wait for response from the server with
 			-- the new board.
@@ -48,18 +71,18 @@ feature	-- User events' handling and communication with server
 			begin_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
-			begin_msg:="Begin"
+			begin_msg := "Begin"
 			create l_medium.make (soc)
 			l_medium.set_for_writing
 			independent_store (begin_msg, l_medium, True)
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
 				local_board := received_board
-				Result:=True
+				Result := True
 			end
 		end
 
-	handle_up_event (soc: NETWORK_STREAM_SOCKET) : BOOLEAN
+	handle_up_event (soc: NETWORK_STREAM_SOCKET): BOOLEAN
 			-- Handles the event when the user pressed up.
 			-- Should send an "Up" command to the server.
 			-- And wait for the response with the new board status
@@ -75,16 +98,16 @@ feature	-- User events' handling and communication with server
 			independent_store (up_msg, l_medium, True)
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
-			   local_board := received_board
-			   Result := True
+				local_board := received_board
+				Result := True
 			else
-			   Result := False
+				Result := False
 			end
 		ensure
 			local_board /= Void
 		end
 
-	handle_down_event (nssocket: NETWORK_STREAM_SOCKET) : BOOLEAN
+	handle_down_event (nssocket: NETWORK_STREAM_SOCKET): BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Down" command to the server and
 			-- and wait for the response with the new board status
@@ -100,22 +123,22 @@ feature	-- User events' handling and communication with server
 			store (down_msg, l_medium)
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
-			   local_board := received_board
-			   Result := True
+				local_board := received_board
+				Result := True
 			else
-			   Result := False
+				Result := False
 			end
 		ensure
 			local_board /= Void
 		end
 
-	handle_left_event (soca: NETWORK_STREAM_SOCKET) : BOOLEAN
+	handle_left_event (soca: NETWORK_STREAM_SOCKET): BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Left" command to the server and
 			-- and wait for the response with the new board status
-        require
-            soca /= Void
-        local
+		require
+			soca /= Void
+		local
 			msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
@@ -125,16 +148,16 @@ feature	-- User events' handling and communication with server
 			independent_store (msg, l_medium, True)
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
-			   local_board := received_board
-			   Result := True
+				local_board := received_board
+				Result := True
 			else
-			   Result := False
+				Result := False
 			end
-        ensure
-            local_board /= Void
+		ensure
+			local_board /= Void
 		end
 
-	handle_right_event (soct: NETWORK_STREAM_SOCKET) : BOOLEAN
+	handle_right_event (soct: NETWORK_STREAM_SOCKET): BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Right" command to the server and
 			-- and wait for the response with the new board status
@@ -148,10 +171,10 @@ feature	-- User events' handling and communication with server
 			independent_store (msg, l_medium, True)
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
-			   local_board := received_board
-			   Result := True
+				local_board := received_board
+				Result := True
 			else
-			   Result := False
+				Result := False
 			end
 		end
 
@@ -163,14 +186,14 @@ feature	-- User events' handling and communication with server
 			end_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
-			end_msg:="End"
+			end_msg := "End"
 			create l_medium.make (soc)
 			l_medium.set_for_writing
 			independent_store (end_msg, l_medium, True)
 		end
 
 	create_connection
-		-- Ask for host and port and create the socket
+			-- Ask for host and port and create the socket
 		local
 			a_peer_port: INTEGER_32
 			a_peer_host: STRING_8
@@ -182,21 +205,19 @@ feature	-- User events' handling and communication with server
 			print (":")
 			print (a_peer_port)
 			print ("%N")
-
 			create socket.make_client_by_port (a_peer_port, a_peer_host)
 			socket.connect
-
 			if socket.is_connected then
-				print("Successfully connected%N")
+				print ("Successfully connected%N")
 			else
-				print("Connection failed%N")
+				print ("Connection failed%N")
 			end
 		ensure
 			socket /= Void
 		end
 
-	ask_for_host : STRING_8
-		-- Read from command line a string
+	ask_for_host: STRING_8
+			-- Read from command line a string
 		local
 			host: STRING_8
 		do
@@ -208,8 +229,8 @@ feature	-- User events' handling and communication with server
 			valid_host: Result /= Void
 		end
 
-	ask_for_port : INTEGER_32
-		-- Read from command line a integer
+	ask_for_port: INTEGER_32
+			-- Read from command line a integer
 		local
 			port: INTEGER_32
 		do
@@ -220,4 +241,5 @@ feature	-- User events' handling and communication with server
 		ensure
 			valid_port: Result /= Void
 		end
+
 end
