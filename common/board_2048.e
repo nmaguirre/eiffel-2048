@@ -101,6 +101,24 @@ feature -- Initialisation
 			rows = 4 and columns = 4 and nr_of_filled_cells = 2
 		end
 
+feature -- Game State
+
+
+	is_finished: BOOLEAN
+			-- Indicates whether the game is finished or not.
+			-- Game finishes when either 2048 is reached, or if there is no possible movement.
+		local
+			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
+		do
+			finished := False
+			if not can_move_up and not can_move_down and not can_move_left and not can_move_right then
+				finished := True
+			else
+				finished := is_winning_board
+			end
+			Result := finished
+		end
+
 feature -- Status report
 
 	rows: INTEGER = 4
