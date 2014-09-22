@@ -18,6 +18,10 @@ inherit
 create
 	make
 
+feature {ANY}
+
+	local_board: BOARD_2048
+
 feature -- Creation
 
 		-- Sets up the server and port for listening requests.
@@ -143,6 +147,14 @@ feature -- Creation
 	handle_up_msg: BOOLEAN
 			-- Handles the reception of a "Up" message
 		do
+			if playing then
+				if local_board.can_move_up then
+					local_board.up
+				    Result := True
+				end
+			else
+				Result := False -- not playing
+			end
 		end
 
 	handle_down_msg: BOOLEAN
