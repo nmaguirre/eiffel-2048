@@ -588,7 +588,7 @@ feature -- Movement commands
 			-- It adds one more random cell with value 2 or 4, after the movement.
 
 		require
-			can_move_right
+            require_can_move_right: can_move_right
 		local
 			i, j, k, v: INTEGER
 		do
