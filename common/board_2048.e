@@ -23,7 +23,7 @@ feature {ANY}
 			-- Stores the game board. Indices for cells must go from 1 to 4, both
 			-- for rows and for columns.
 
-	coord_last_random_cell: TUPLE [INTEGER, INTEGER]
+	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
 			-- Tuple containing the coordinates of the last random cell.
 
 feature -- Initialisation
@@ -94,9 +94,11 @@ feature -- Initialisation
 			end
 
 				-- set cells
-			set_cell (first_random_cell_row, first_random_cell_col, get_random_cell_two_or_four (random_sequence))
-			set_cell (second_random_cell_row, second_random_cell_col, get_random_cell_two_or_four (random_sequence))
-			coord_last_random_cell := [second_random_cell_row, second_random_cell_col]
+			set_cell (first_random_cell_row, first_random_cell_col, random_number_two_or_four (random_sequence))
+			set_cell (second_random_cell_row, second_random_cell_col, random_number_two_or_four (random_sequence))
+			last_random_cell_coordinates := [second_random_cell_row, second_random_cell_col]
+		ensure
+			rows = 4 and columns = 4 and nr_of_filled_cells = 2
 		end
 
 feature -- Status report
@@ -112,7 +114,7 @@ feature -- Status report
 	nr_of_filled_cells: INTEGER
 			-- Returns the number of filled cells in the board
 		require
-			elements /= Void
+			elements_void_in_nr_of_filled_cells_feature: elements /= Void
 		local
 			filled_cells: INTEGER
 			i: INTEGER
@@ -166,7 +168,7 @@ feature -- Status report
 			end
 			Result := output
 		ensure then
-			Result.count > 0
+			string_is_not_empty: Result.count > 0
 		end
 
 	is_full: BOOLEAN
@@ -174,7 +176,7 @@ feature -- Status report
 		do
 			Result := (nr_of_filled_cells = 16) -- Board is full when all 16 cells are filled
 		ensure
-			Result = (nr_of_filled_cells = 16)
+			full_board: Result = (nr_of_filled_cells = 16)
 		end
 
 	can_move_left: BOOLEAN
@@ -247,7 +249,7 @@ feature -- Status report
 		require
 			elements /= Void
 		local
-			i, j, k: INTEGER
+			i, j: INTEGER
 			can_move, cell_occupied: BOOLEAN
 		do
 			from
@@ -310,7 +312,8 @@ feature -- Status report
 	is_winning_board: BOOLEAN
 			-- Indicates whether 2048 is present in the board, indicating that the board is a winning board
 		require
-			elements.height = 4 and elements.width = 4
+			height_is_four: elements.height = 4
+			width_is_four: elements.width = 4
 		local
 			i, j: INTEGER
 			is_winning: BOOLEAN
@@ -408,13 +411,12 @@ feature -- Movement commands
 			set_random_free_cell
 		end -- end do
 
-
 	up
 			-- Moves the cells to the uppermost possible point of the game board.
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_up
+			can_not_move_up_feature_up: can_move_up
 		local
 			i, k, j: INTEGER
 		do
@@ -496,7 +498,7 @@ feature -- Movement commands
 			-- Movement colapses cells with the same value.
 			-- It adds one more random cell with value 2 or 4, after the movement.
 		require
-			can_move_left
+			valid_move_left: can_move_left
 		local
 			i, j, k: INTEGER
 		do
@@ -554,13 +556,86 @@ feature -- Movement commands
 							j := j - 1; -- continues moving left
 						end
 					else
-						j:= j + 1
+						j := j + 1
 					end -- end if
 				end --end loop j
 				i := i + 1
 			end --end loop i
 			set_random_free_cell
 		end --end do
+
+	right
+			-- Moves the cells to the rightmost possible point of the game board.
+			-- Movement colapses cells with the same value.
+			-- It adds one more random cell with value 2 or 4, after the movement.
+
+		require
+			can_move_right
+		local
+			i, j, k, v: INTEGER
+		do
+			from
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 4
+				until
+					j <= 1
+				loop
+					if elements.item (i, j).value /= 0 then
+						if j > 1 then
+							k := j - 1
+							from
+							until
+								(k <= 1) or (elements.item (i, k).value /= 0)
+							loop
+								k := k - 1
+							end
+							if (k >= 1) then
+								if (elements.item (i, j).value = elements.item (i, k).value) then
+									set_cell (i, j, (elements.item (i, k).value + elements.item (i, j).value))
+									set_cell (i, k, 0)
+									j := k - 1
+								else
+									j := k
+								end
+							end
+						end
+					else
+						j := j - 1
+					end
+				end --end loop j
+				i := i + 1
+			end --end loop i
+
+			from --
+				i := 1
+			until
+				i > 4
+			loop
+				from
+					j := 4
+				until
+					j < 1
+				loop
+					if elements.item (i, j).value /= 0 then
+						v := elements.item (i, j).value
+						set_cell (i, j, 0)
+						position_right (i, v)
+						j := j - 1;
+					else
+						j := j - 1
+					end --end if
+				end --end loop j
+				i := i + 1
+			end --end loop i
+			set_random_free_cell
+		end --end do			
+
+
+
 
 feature -- Status setting
 
@@ -577,16 +652,28 @@ feature -- Status setting
 
 feature {NONE} -- Auxiliary routines
 
-	get_random_cell_two_or_four (random_sequence: RANDOM): INTEGER
-			-- Randomly returns two or four
+	position_right (row, val: INTEGER)
+			-- Method that receives as a parameter a row, and verifies the position which is more to the right
+			-- which is empty in that row and also inserts the value passed as parameter
+		require
+			valid_row: (row>=1 and row <= 4)
 		local
-			random_value: INTEGER
+			column: INTEGER
 		do
-			random_value := (get_random (random_sequence, 2) + 1) * 2
-			Result := random_value
-		ensure
-			Result = 2 or Result = 4
-		end
+			from
+				column := 4
+			until
+				column < 1
+			loop
+				if elements.item (row, column).value = 0 then
+					set_cell (row, column, val)
+					column := 0
+				else
+					column := column - 1
+				end --end if
+			end --end loop
+		end --end do
+
 
 	get_random_seed: INTEGER
 			-- Returns a seed for random sequences
@@ -605,12 +692,12 @@ feature {NONE} -- Auxiliary routines
 	get_random (random_sequence: RANDOM; ceil: INTEGER): INTEGER
 			-- Returns a random integer  minor that ceil from a random sequence
 		require
-			ceil >= 0
+			upper_limit_of_random_is_greater_than_zero: ceil >= 0
 		do
 			random_sequence.forth
 			Result := random_sequence.item \\ ceil;
 		ensure
-			Result < ceil
+			random_is_minor_than_upper_limit: Result < ceil
 		end
 
 feature {CONTROLLER_2048}
@@ -635,7 +722,7 @@ feature {CONTROLLER_2048}
 			end
 				-- set at cell random number
 			set_cell (random_cell_row, random_cell_col, random_number_two_or_four (random_sequence))
-			coord_last_random_cell := [random_cell_row, random_cell_col]
+			last_random_cell_coordinates := [random_cell_row, random_cell_col]
 		end
 
 	random_number_two_or_four (random_sequence: RANDOM): INTEGER
@@ -646,15 +733,7 @@ feature {CONTROLLER_2048}
 			random_number := (get_random (random_sequence, 2) + 1) * 2
 			Result := random_number
 		ensure
-			Result = 2 or Result = 4
-		end
-
-	last_random_cell_coordinates: TUPLE [INTEGER, INTEGER]
-		-- Returns the coordinates of the last randomly introduced cell
-		-- Value should be (0,0) if no cell has been introduced in the last movement
-		-- or if the game state is the initial state.
-		do
-			Result := coord_last_random_cell
+			valid_random_number: Result = 2 or Result = 4
 		end
 
 end

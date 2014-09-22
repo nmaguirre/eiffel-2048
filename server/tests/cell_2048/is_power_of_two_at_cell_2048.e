@@ -49,23 +49,43 @@ feature -- Rutine is_power_of_two at CELL_2048 class tests
 
 	power_of_two_test_with_zero
 			-- Test power_of_two with zero
-			-- Must return FALSE
 		local
 			cell: CELL_2048
+			ok, second_time, exception_raiser : BOOLEAN
 		do
-			create cell.make
-			assert ("Zero is not power of two", not cell.is_power_of_two(0))
+			if not second_time then
+          		ok := True
+          		create cell.make
+          		exception_raiser := cell.is_power_of_two (0) -- Should raise an exception.
+          		ok := False
+    		end
+    		assert ("The rutine has to fail", ok)
+		rescue
+     		second_time := True
+     		if ok then   -- ok = true means that the routine failed
+           		retry
+    		end
 		end
 
 
 	power_of_two_test_with_negative_number
 			-- Test power_of_two with negative number
-			-- Must return FALSE
 		local
 			cell: CELL_2048
+			ok, second_time, exception_raiser : BOOLEAN
 		do
-			create cell.make
-			assert ("Negative four is not power of two", not cell.is_power_of_two(-4))
+			if not second_time then
+          		ok := True
+          		create cell.make
+          		exception_raiser := cell.is_power_of_two (-1) -- Should raise an exception.
+          		ok := False
+    		end
+    		assert ("The rutine has to fail", ok)
+		rescue
+     		second_time := True
+     		if ok then   -- ok = true means that the routine failed
+           		retry
+    		end
 		end
 
 end

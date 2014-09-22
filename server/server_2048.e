@@ -21,12 +21,11 @@ feature -- Creation
 			count: INTEGER
 			soc1: detachable NETWORK_STREAM_SOCKET
 		do
-			if argv.count /= 2 then
-				io.error.putstring ("Usage: ")
-				io.error.putstring (argv.item (0))
-				io.error.putstring (" portnumber%N")
+			if argv.count /= 1 then
+				io.error.putstring ("Error ")
+
 			else
-				create soc1.make_server_by_port (argv.item (1).to_integer)
+				create soc1.make_server_by_port (2000)
 				from
 					soc1.listen (5)
 					count :=0
@@ -54,8 +53,12 @@ feature -- Creation
 			if not (playing) then
 				create controller.make
 				playing := True
+				Result := True
+			else
+				Result := False
 			end
-			Result := playing
+		ensure
+			(playing = True) and (controller.board /= Void)
 		end
 
 	handle_up_msg
@@ -65,16 +68,15 @@ feature -- Creation
 
 	handle_down_msg: BOOLEAN
 			-- Handles the reception of a "Down" message
+
 		do
 			if playing then
 				if controller.board.can_move_down then
 					controller.down
 				    Result := True
-				else
-					Result := False
 				end
 			else
-				Result := False
+				Result := False -- not playing 
 			end
 		end
 

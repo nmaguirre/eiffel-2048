@@ -62,6 +62,8 @@ feature	-- User events' handling and communication with server
 			-- Handles the event when the user pressed up.
 			-- Should send an "Up" command to the server.
 			-- And wait for the response with the new board status
+		require
+			soc /= Void
 		local
 			up_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
@@ -77,22 +79,42 @@ feature	-- User events' handling and communication with server
 			else
 			   Result := False
 			end
-
+		ensure
+			local_board /= Void
 		end
 
-	handle_down_event
+	handle_down_event (nssocket: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Down" command to the server and
 			-- and wait for the response with the new board status
+		require
+			nssocket /= Void
+		local
+			down_msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
-
+			down_msg := "Down"
+			create l_medium.make (nssocket)
+			l_medium.set_for_writing
+			store (down_msg, l_medium)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+			   local_board := received_board
+			   Result := True
+			else
+			   Result := False
+			end
+		ensure
+			local_board /= Void
 		end
 
 	handle_left_event (soca: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Left" command to the server and
 			-- and wait for the response with the new board status
-		local
+        require
+            soca /= Void
+        local
 			msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
 		do
@@ -107,18 +129,35 @@ feature	-- User events' handling and communication with server
 			else
 			   Result := False
 			end
+        ensure
+            local_board /= Void
 		end
 
-	handle_right_event
+	handle_right_event (soct: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Handles the event when the user pressed up
 			-- Should send an "Right" command to the server and
 			-- and wait for the response with the new board status
+		local
+			msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
-
+			msg := "Right"
+			create l_medium.make (soct)
+			l_medium.set_for_writing
+			independent_store (msg, l_medium, True)
+			l_medium.set_for_reading
+			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
+			   local_board := received_board
+			   Result := True
+			else
+			   Result := False
+			end
 		end
 
 	handle_end_event (soc: NETWORK_STREAM_SOCKET)
 			-- Should send a "End" command to the server.
+		require
+			soc /= Void
 		local
 			end_msg: STRING
 			l_medium: SED_MEDIUM_READER_WRITER
