@@ -7,6 +7,14 @@ note
 class
 	SERVER_2048
 
+inherit
+
+	ARGUMENTS
+
+	SOCKET_RESOURCES
+
+	SED_STORABLE_FACILITIES
+
 create
 	make
 
@@ -44,7 +52,78 @@ feature -- Creation
 
 	process (soc1: NETWORK_STREAM_SOCKET)
 			-- Accepts communication and exchanges messages with client.
+		local
+			error_msg: STRING
+			l_medium: SED_MEDIUM_READER_WRITER
 		do
+			soc1.accept
+			if attached {NETWORK_STREAM_SOCKET} soc1.accepted as soc2 then
+				create l_medium.make (soc2)
+				l_medium.set_for_reading
+				if attached {STRING} retrieved (l_medium, True) as received_string then
+					if (received_string = "Begin") then
+						if handle_begin_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+					  	  	error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+					if (received_string = "Up") then
+						if handle_up_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+							error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+					if (received_string = "Down") then
+						if handle_down_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+							error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+					if (received_string = "Left") then
+						if handle_left_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+							error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+					if (received_string = "Right") then
+						if handle_right_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+							error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+					if (received_string = "End") then
+						if handle_end_msg then
+					  	  	l_medium.set_for_writing
+							independent_store (controller.board, l_medium, True)
+					  	else
+					  	  	l_medium.set_for_writing
+							error_msg := "ERROR"
+							independent_store (error_msg, l_medium, True)
+					  	end
+					end
+				end
+				soc2.close
+			end
 		end
 
 	handle_begin_msg : BOOLEAN
@@ -61,7 +140,7 @@ feature -- Creation
 			(playing = True) and (controller.board /= Void)
 		end
 
-	handle_up_msg
+	handle_up_msg: BOOLEAN
 			-- Handles the reception of a "Up" message
 		do
 		end
@@ -76,7 +155,7 @@ feature -- Creation
 				    Result := True
 				end
 			else
-				Result := False -- not playing 
+				Result := False -- not playing
 			end
 		end
 
