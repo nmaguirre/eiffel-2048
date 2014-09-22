@@ -33,12 +33,17 @@ feature {NONE} -- Initialization
 		end
 
 	play
+
+		require
+			socket /= Void and local_board/= Void
 		local
 			ghost: BOOLEAN
 		do
+			ghost:= begin(socket)
+
 			from
 			until
-				local_board.is_finished or io.last_character.is_equal ('q')
+				local_board.is_finished
 			loop
 					--read character
 				io.read_character
@@ -58,6 +63,10 @@ feature {NONE} -- Initialization
 				if io.last_character.is_equal ('w') then
 					ghost := handle_up_event (socket)
 				end
+				if io.last_character.is_equal ('q') then
+					 handle_end_event (socket)
+				end
+
 			end
 		end
 
