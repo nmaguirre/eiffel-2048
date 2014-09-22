@@ -38,7 +38,7 @@ feature {NONE} -- Initialization
 
 feature	-- User events' handling and communication with server
 
-	begin (soc: NETWORK_STREAM_SOCKET)
+	begin (soc: NETWORK_STREAM_SOCKET) : BOOLEAN
 			-- Should send a "Begin" command to the server.
 			-- Must wait for response from the server with
 			-- the new board.
@@ -53,6 +53,7 @@ feature	-- User events' handling and communication with server
 			l_medium.set_for_reading
 			if attached {BOARD_2048} retrieved (l_medium, True) as received_board then
 				local_board := received_board
+				Result:=True
 			end
 		end
 
