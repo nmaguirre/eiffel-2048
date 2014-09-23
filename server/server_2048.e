@@ -177,7 +177,7 @@ feature -- Creation
 
 			if playing then
 				if controller.board.can_move_left then
-					controller.left
+					controller.board.left
 				    Result := True
 				else
 					Result := False

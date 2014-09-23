@@ -64,13 +64,6 @@ feature -- Movement commands
 			board.down
 		end
 
-	left
-		obsolete
-			"obsolete routine, should call left@BOARD_2048"
-		do
-			board.left
-		end
-
 	right
 		obsolete
 			"obsolete routine, should call right@BOARD_2048"
