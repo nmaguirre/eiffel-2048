@@ -57,13 +57,6 @@ feature -- Game State
 
 feature -- Movement commands
 
-	down
-		obsolete
-			"obsolete routine, should call down@BOARD_2048"
-		do
-			board.down
-		end
-
 	right
 		obsolete
 			"obsolete routine, should call right@BOARD_2048"

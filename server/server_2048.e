@@ -168,7 +168,7 @@ feature -- Creation
 		do
 			if playing then
 				if controller.board.can_move_down then
-					controller.down
+					controller.board.down
 				    Result := True
 				end
 			else
