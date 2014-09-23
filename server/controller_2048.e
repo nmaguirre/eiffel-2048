@@ -73,7 +73,7 @@ feature -- Movement commands
 
 	right
 		obsolete
-			"obsolete routine, should call left@BOARD_2048"
+			"obsolete routine, should call right@BOARD_2048"
 		do
 			board.right
 		end
