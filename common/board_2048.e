@@ -1,6 +1,6 @@
 note
 	description: "Class that represents the state of the 2048 game. It takes care of the logic of the game too."
-	author: ""
+	author: "ezensich, Matias-Bernal, bisoardi, lputruele, jpadula, ggiovannini, alangonzalez93, nricci, aechaves, agusbauer"
 	date: "August 25, 2014"
 	revision: "0.01"
 
