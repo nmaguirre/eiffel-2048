@@ -70,7 +70,7 @@ feature -- Creation
 				create l_medium.make (soc2)
 				l_medium.set_for_reading
 				if attached {STRING} retrieved (l_medium, True) as received_string then
-					if (received_string = "Begin") then
+					if (received_string.is_equal ("Begin")) then
 						if handle_begin_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
@@ -80,7 +80,7 @@ feature -- Creation
 							independent_store (error_msg, l_medium, True)
 					  	end
 					end
-					if (received_string = "Up") then
+					if (received_string.is_equal ("Up")) then
 						if handle_up_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
@@ -90,7 +90,7 @@ feature -- Creation
 							independent_store (error_msg, l_medium, True)
 					  	end
 					end
-					if (received_string = "Down") then
+					if (received_string.is_equal ("Down")) then
 						if handle_down_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
@@ -100,7 +100,7 @@ feature -- Creation
 							independent_store (error_msg, l_medium, True)
 					  	end
 					end
-					if (received_string = "Left") then
+					if (received_string.is_equal ("Left")) then
 						if handle_left_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
@@ -110,7 +110,7 @@ feature -- Creation
 							independent_store (error_msg, l_medium, True)
 					  	end
 					end
-					if (received_string = "Right") then
+					if (received_string.is_equal ("Right")) then
 						if handle_right_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
@@ -120,7 +120,7 @@ feature -- Creation
 							independent_store (error_msg, l_medium, True)
 					  	end
 					end
-					if (received_string = "End") then
+					if (received_string.is_equal ("End")) then
 						if handle_end_msg then
 					  	  	l_medium.set_for_writing
 							independent_store (controller.board, l_medium, True)
