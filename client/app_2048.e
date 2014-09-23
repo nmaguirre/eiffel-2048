@@ -27,8 +27,11 @@ feature {NONE} -- Initialization
 
 	make
 			-- Run application.
+		local
+			ghost: BOOLEAN
 		do
 			create_connection
+			ghost := begin (socket)
 			play
 		end
 
