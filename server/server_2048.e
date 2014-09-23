@@ -33,11 +33,16 @@ feature -- Creation
 			count: INTEGER
 			soc1: detachable NETWORK_STREAM_SOCKET
 		do
-			if argv.count /= 1 then
-				io.error.putstring ("Error ")
-
+			if argv.count >2 or argv.count<1 then
+				io.error.putstring ("Error!")
 			else
-				create soc1.make_server_by_port (2000)
+				if argv.count = 2 then
+					create soc1.make_server_by_port (argv.item (1).to_integer)
+				else
+					create soc1.make_server_by_port (2000)
+				end
+
+
 				from
 					soc1.listen (5)
 					count :=0
