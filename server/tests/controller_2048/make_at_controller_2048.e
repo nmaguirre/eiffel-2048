@@ -19,7 +19,8 @@ feature -- Test routines
 			controller: CONTROLLER_2048
 		do
 			create controller.make
-			assert ("is_finished must be false", not controller.is_finished)
+			--Obsolete
+			--assert ("is_finished must be false", not controller.is_finished)
 		end
 
 	test_initialized_board

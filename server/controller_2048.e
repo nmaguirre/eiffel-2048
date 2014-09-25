@@ -10,7 +10,8 @@ class
 create
 	make, make_with_board
 
-feature -- Initialisation
+feature -- Initialisation	
+	board: BOARD_2048
 
 	make_with_board (new_board: BOARD_2048)
 			-- Creates a controller with reference to a provided board
