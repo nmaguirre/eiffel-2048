@@ -32,29 +32,6 @@ feature -- Initialisation
 			board /= Void
 		end
 
-
-feature -- Game State
-
-	board: BOARD_2048
-			-- Reference to the object that maintains the state of the game
-			-- and takes care of the games logic.
-
-	is_finished: BOOLEAN
-			-- Indicates whether the game is finished or not.
-			-- Game finishes when either 2048 is reached, or if there is no possible movement.
-		local
-			finished: BOOLEAN -- Auxiliary variable to capture the finalization desicion
-		do
-			finished := False
-			if not board.can_move_up and not board.can_move_down and not board.can_move_left and not board.can_move_right then
-				finished := True
-			else
-				finished := board.is_winning_board
-			end
-			Result := finished
-		end
-
-
 feature -- Movement commands
 
 	right
