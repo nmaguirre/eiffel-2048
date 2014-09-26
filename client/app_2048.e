@@ -116,7 +116,7 @@ feature -- User events' handling and communication with server
 				Result := False
 			end
 		ensure
-			local_board /= Void
+			non_void: Result /= Void
 		end
 
 	handle_down_event (nssocket: NETWORK_STREAM_SOCKET): BOOLEAN
