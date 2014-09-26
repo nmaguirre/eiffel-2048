@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-13-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-13-0 http://www.eiffel.com/developers/xml/configuration-1-13-0.xsd" name="eiffel-2048" uuid="79D3EB60-2CAB-44B3-941F-C98B55ED428B">
 	<target name="eiffel-2048">
-		<root class="APP_2048" feature="make"/>
+		<root class="APP_2048_WEB" feature="make_and_launch"/>
 		<option warning="true" void_safety="none">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
-		<setting name="console_application" value="true"/>
+		<setting name="console_application" value="false"/>
 		<precompile name="base_pre" location="$ISE_PRECOMP\base-safe.ecf"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
-		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
+		<library name="default_nino" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\default\nino-safe.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
-		<cluster name="eiffel-2048" location=".\" recursive="false">
+		<library name="wsf" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\wsf-safe.ecf"/>
+		<cluster name="eiffel-2048" location=".\">
 			<file_rule>
 				<exclude>/EIFGENs$</exclude>
 				<exclude>/features$</exclude>
@@ -20,11 +21,13 @@
 			</file_rule>
 			<tests name="acceptance_tests" location=".\acceptance_tests\"/>
 			<cluster name="tests" location=".\tests\">
-		                <tests name="controller_2048" location=".\tests\controller_2048\"/>
-		                <tests name="cell_2048" location=".\tests\cell_2048\"/>
-		                <tests name="board_2048" location=".\tests\board_2048\"/>
-		                <tests name="app_2048" location=".\tests\app_2048\"/>
+				<tests name="controller_2048" location=".\tests\controller_2048\"/>
+				<tests name="cell_2048" location=".\tests\cell_2048\"/>
+				<tests name="board_2048" location=".\tests\board_2048\"/>
+				<tests name="app_2048" location=".\tests\app_2048\"/>
 			</cluster>
 		</cluster>
 	</target>
 </system>
+
+

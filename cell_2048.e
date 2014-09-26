@@ -34,16 +34,16 @@ feature {ANY} -- Status report
 				do
 
 				 	  if value = 0 then
-				 	  	t := "    "
+				 	  	t := ""
 				 	  else
 				 	  	if value < 10 then
-				 	  		 t := "   " + value.out --cad.make_filled("4",3) + value.out
+				 	  		 t := "" + value.out --cad.make_filled("4",3) + value.out
 				 	  	else
 				 	  		if value >= 10 and value <= 99 then
-				 	  			t := "  " + value.out --cad.make_filled("4",2) + value.out
+				 	  			t := "" + value.out --cad.make_filled("4",2) + value.out
 				 	  		else
 				 	  			if  value >= 100 and value <= 999 then
-				 	  				t := " " + value.out--cad.make_filled("4",1) + value.out
+				 	  				t := "" + value.out--cad.make_filled("4",1) + value.out
 				 	  			else
 				 	  				t := value.out
 				 	  			end
