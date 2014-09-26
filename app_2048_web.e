@@ -32,14 +32,16 @@ feature {NONE} -- Execution
 			-- Computed response message.
 		do
 			create Result.make
+			--TODO: Download the http://code.jquery.com/jquery-latest.min.js and call locally
 			Result.add_javascript_url ("http://code.jquery.com/jquery-latest.min.js")
-Result.add_javascript_content("function getChoice(keyCode){var ret;if (keyCode == 119)ret = 'w';if (keyCode == 115)ret = 's';if (keyCode == 100)ret = 'd';if (keyCode == 97)ret = 'a';return ret;}")
-Result.add_javascript_content ("$(document).keypress(function (e) {$.ajax({type : 'POST',url:'http://localhost:9999/',data:{user:getChoice(e.keyCode)},contentType:'json',headers: {Accept : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8','Content-Type': 'application/x-www-form-urlencoded'}}).done(function(data){document.open();document.write(data);document.close();})})")
+Result.add_javascript_content("function getChoice(keyCode){var ret='';if (keyCode == 119)ret = 'w';if (keyCode == 115)ret = 's';if (keyCode == 100)ret = 'd';if (keyCode == 97)ret = 'a';return ret;}")
+Result.add_javascript_content ("$(document).keypress(function (e) {var key = getChoice(e.keyCode);if(key != ''){$.ajax({type : 'POST',url:'http://localhost:9999/',data:{user:key},contentType:'json',headers: {Accept : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8','Content-Type': 'application/x-www-form-urlencoded'}}).done(function(data){document.open();document.write(data);document.close();})}})")
 
 
 			if not is_attached then
 				is_attached := true
 				create controller.make
+				--TODO: Download the http://gabrielecirulli.github.io/2048/style/main.css and call locally
 				Result.set_body (
 				"<link rel='stylesheet' type='text/css' href='http://gabrielecirulli.github.io/2048/style/main.css'>" +
 					controller.board.out)
@@ -73,7 +75,7 @@ Result.add_javascript_content ("$(document).keypress(function (e) {$.ajax({type 
 					if not controller.board.can_move_up and not controller.board.can_move_down and not controller.board.can_move_left and not controller.board.can_move_right then
 						Result.add_javascript_content ("alert('YOU LOST!!!!!!!!!!!!!!')")
 					end
-
+					--TODO: Download the http://gabrielecirulli.github.io/2048/style/main.css and call locally
 					Result.set_body (
 					"<link rel='stylesheet' type='text/css' href='http://gabrielecirulli.github.io/2048/style/main.css'>" +
 					controller.board.out

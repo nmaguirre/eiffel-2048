@@ -8,7 +8,7 @@ class
 	MAKE_EMPTY_AT_BOARD_2048
 
 inherit
-	EQA_TEST_SET
+	--EQA_TEST_SET
 
 feature
 

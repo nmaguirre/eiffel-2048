@@ -7,7 +7,7 @@ note
 class
 	SET_RANDOM_FREE_CELL_AT_CONTROLLER
 inherit
-	EQA_TEST_SET
+	--EQA_TEST_SET
 
 feature -- Test routines
 
