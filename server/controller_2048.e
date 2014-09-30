@@ -35,13 +35,6 @@ feature -- Initialisation
 
 feature -- Movement commands
 
-	right
-		obsolete
-			"obsolete routine, should call right@BOARD_2048"
-		do
-			board.right
-		end
-
 feature {NONE} -- Auxiliary routines
 
 
